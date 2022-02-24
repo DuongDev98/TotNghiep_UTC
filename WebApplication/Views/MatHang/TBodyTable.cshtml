@@ -1,0 +1,16 @@
+﻿@model List<WebApplication.Models.DMATHANG>
+@{ int i = 1; }
+@foreach (var item in Model)
+{
+    <tr data-id="@item.ID">
+        <th scope="row">@i</th>
+        <td>@item.CODE</td>
+        <td>@item.NAME</td>
+        <td>@Convert.ToDouble(item.GIANHAP).ToString("n0")</td>
+        <td>@Convert.ToDouble(item.GIABAN).ToString("n0")</td>
+        <td>@item.DNHOMMATHANG.NAME</td>
+        <td class="col-btn-125"><div class="btn btn-warning btnEdit">Chỉnh sửa</div></td>
+        <td class="col-btn-50"><div class="btn btn-danger btnDelete">Xóa</div></td>
+    </tr>
+    i++;
+}

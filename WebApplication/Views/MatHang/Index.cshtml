@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Danh sách mặt hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row justify-content-end">
+    <div class="form-group">
+        <input type="text" class="form-control ipSearch" placeholder="Tìm kiếm..." style="margin-right: 88px;">
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+        <table class="table table-hover tvMain">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nhóm hàng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="TatCa">
+                    <td>Tất cả</td>
+                </tr>
+                @foreach (var item in ViewBag.nhomHangs)
+                {
+                    <tr data-id="@item.ID">
+                        <td>@item.NAME</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-10">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mã hàng</th>
+                    <th scope="col">Mặt hàng</th>
+                    <th scope="col">Giá nhập</th>
+                    <th scope="col">Giá bán</th>
+                    <th scope="col">Nhóm hàng</th>
+                    <th scope="col" class="col-btn-125" colspan="2"><div class="btn btn-success btnAdd">Thêm mới</div></th>
+                </tr>
+            </thead>
+            <tbody class="tBodyMatHang">
+                @{
+                    Html.RenderAction("TBodyTable", "MatHang", new { page = 1, nhomId = "", s = "" });
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@if (ViewBag.totalItem != null && ViewBag.totalItem > 1)
+{
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @*@if (ViewBag.currentPage <= ViewBag.totalItem - 1)
+        {
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        }*@
+
+        @for (int i = 1; i <= ViewBag.totalItem; i++)
+        {
+            <li class="page-item"><a class="page-link">@i</a></li>
+        }
+
+        @*@if (ViewBag.totalItem >= ViewBag.currentPage + 1)
+        {
+            <li class="page-item">
+                <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        }*@
+    </ul>
+</nav>
+}

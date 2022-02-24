@@ -1,0 +1,29 @@
+﻿@model List<WebApplication.Models.DNHOMMATHANG>
+@{
+    ViewBag.Title = "Nhóm mặt hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Mã nhóm hàng</th>
+            <th scope="col">Nhóm hàng</th>
+            <th scope="col" class="col-btn-125" colspan="2"><div class="btn btn-success btnAdd">Thêm mới</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ID">
+                <th scope="row">@i</th>
+                <td>@item.CODE</td>
+                <td>@item.NAME</td>
+                <td class="col-btn-125"><div class="btn btn-warning btnEdit">Chỉnh sửa</div></td>
+                <td class="col-btn-50"><div class="btn btn-danger btnDelete">Xóa</div></td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
