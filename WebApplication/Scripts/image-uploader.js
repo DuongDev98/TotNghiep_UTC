@@ -92,7 +92,7 @@
                 }).appendTo($container),
 
                 // Create the icon and append it to the text container
-                $i = $('<i>', {class: 'iui-cloud-upload'}).appendTo($textContainer),
+                $i = $('<i>', { class: 'fa fa-cloud-upload'}).appendTo($textContainer),
 
                 // Create the text and append it to the text container
                 $span = $('<span>', {text: plugin.settings.label}).appendTo($textContainer);

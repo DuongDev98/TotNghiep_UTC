@@ -69,17 +69,38 @@ function ShowAddEditForm(title, html, urlSubmit) {
         '    </div>\n' +
         '</div>');
     $('#modal-dialog').modal('show');
+
     $('#modal-dialog').find("#btnYes").on("click", function () {
-        let formData = $('#modal-dialog').find("form").serializeArray();
-        $.post(urlSubmit, formData, (success) => {
-            if (success.length == 0) {
-                $('#modal-dialog').find(".alert-danger").attr("hidden", "hidden");
-                location.reload();
-            } else {
-                $('#modal-dialog').find(".alert-danger").removeAttr("hidden");
-                $('#modal-dialog').find(".alert-danger").text(success);
-            }
+        if (urlSubmit.indexOf("MatHang/UploadAnh") > -1) {
+            //upload ảnh mặt hàng
+            $('#modal-dialog').find("form").submit();
+        }
+        else {
+            //upload thông tin
+            let formData = $('#modal-dialog').find("form").serializeArray();
+            $.post(urlSubmit, formData, (success) => {
+                if (success.length == 0) {
+                    $('#modal-dialog').find(".alert-danger").attr("hidden", "hidden");
+                    location.reload();
+                } else {
+                    $('#modal-dialog').find(".alert-danger").removeAttr("hidden");
+                    $('#modal-dialog').find(".alert-danger").text(success);
+                }
+            });
+        }
+    });
+
+    $('#modal-dialog').find("form").submit(function (event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            url: urlSubmit,
+            method: "post",
+            data: formData,
+            processData: false,
+            contentType: false
         });
+        location.reload();
     });
 }
 //ajax post data
@@ -139,6 +160,25 @@ function showMatHang(id) {
         ShowAddEditForm(id.length == 0 ? "Thêm mới mặt hàng" : "Chỉnh sửa mặt hàng", data, "/MatHang/AddOrEdit/" + id);
     });
 }
+
+function QuanLyAnhMatHang(id, name) {
+    let html = '<form id="data" method="post" enctype="multipart/form-data"><div class="input-images"></div></form>';
+    ShowAddEditForm(name, html, "/MatHang/UploadAnh/" + id);
+    $.get("/MatHang/GetImage/" + id, function (dataStr) {
+        let preloaded = [];
+        if (dataStr != "[]") {
+            let dataArr = JSON.parse(dataStr);
+            for (let i = 0; i < dataArr.length; i++) {
+                let item = dataArr[i];
+                preloaded.push({ id: item.ID, src: item.LINK });
+            }
+        }
+        $('.input-images').imageUploader({
+            preloaded: preloaded
+        });
+    });
+}
+
 function deleteMatHang(id) {
     ShowYesNo("Lựa chọn", "Bạn muốn mặt hàng đang chọn?", () => {
         $.post("/MatHang/Delete/" + id, function (data) {
@@ -185,6 +225,14 @@ $(document).ready(function () {
         if (url.indexOf("NhomMatHang") > -1) deleteNhomHang(id);
         else if (url.indexOf("NhaCungCap") > -1) deleteNhaCungCap(id);
         else if (url.indexOf("MatHang") > -1) deleteMatHang(id);
+    });
+
+    //Quản lý ảnh
+    $('.btnUplloadFile').click(function () {
+        let id = $(this).closest("tr").attr("data-id");
+        if (url.indexOf("MatHang") > -1) {
+            QuanLyAnhMatHang(id, $(this).closest("tr").find('td')[1].innerText);
+        }
     });
 
     //lọc mặt hàng

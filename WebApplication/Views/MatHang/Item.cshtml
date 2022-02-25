@@ -1,10 +1,10 @@
 ﻿@model WebApplication.Models.DMATHANG
-<form enctype="multipart/form-data">
+<form id="data" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="ipCode">Mã hàng</label>
         @if (Model.ID != null)
         {
-            <input type="text" name="CODE" class="form-control" id="ipCode" value="@Model.CODE">
+            <input type="text" name="CODE" class="form-control" id="ipCode" value="@Model.CODE" readonly>
         }
         else
         {
@@ -17,21 +17,26 @@
     </div>
     <div class="form-group">
         <label for="ipGiaNhap">Giá nhập</label>
-        <input type="text" name="GIANHAP" class="form-control" id="ipGiaNhap" value="@Model.GIANHAP">
+        <input type="number" name="GIANHAP" class="form-control" id="ipGiaNhap" value="@Convert.ToInt32(Model.GIANHAP)">
     </div>
     <div class="form-group">
         <label for="ipGiaBan">Giá bán</label>
-        <input type="text" name="GIABAN" class="form-control" id="ipGiaBan" value="@Model.GIABAN">
+        <input type="number" name="GIABAN" class="form-control" id="ipGiaBan" value="@Convert.ToInt32(Model.GIABAN)">
     </div>
     <div class="form-group">
         <label for="ipNhomHang">Nhóm hàng</label>
-        <select class="form-control" id="ipNhomHang">
+        <select class="form-control" id="ipNhomHang" name="DNHOMMATHANGID">
             @foreach (var item in ViewBag.nhomHangs)
             {
-                <option value="@item.ID">@item.NAME</option>
+                if (Model.DNHOMMATHANGID == item.ID)
+                {
+                    <option value="@item.ID" selected>@item.NAME</option>
+                }
+                else
+                {
+                    <option value="@item.ID">@item.NAME</option>
+                }
             }
         </select>
     </div>
-
-    <div class="input-images"></div>
 </form>
