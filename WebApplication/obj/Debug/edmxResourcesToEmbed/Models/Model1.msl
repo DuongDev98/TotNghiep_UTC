@@ -47,7 +47,7 @@
       <EntityTypeMapping TypeName="DOANModel.DKHUYENMAICHITIET">
         <MappingFragment StoreEntitySet="DKHUYENMAICHITIET">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="DKHUYENMAI" ColumnName="DKHUYENMAI" />
+          <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -118,6 +118,7 @@
           <ScalarProperty Name="TIENGIAMGIA" ColumnName="TIENGIAMGIA" />
           <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
           <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

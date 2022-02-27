@@ -20,7 +20,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /* width */
@@ -43,6 +43,10 @@ textarea {
     background: #555;
 }
 
+.container-fluid {
+    margin-top: -46px;
+}
+
 .col-btn-125 {
     width: 125px;
 }
@@ -57,4 +61,34 @@ tbody {
 
 table tr {
     cursor: pointer;
+}
+
+.btn > a {
+    color: white !important;
+    text-decoration: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+li > .active {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+table thead {
+    position: sticky;
+    top: -1px;
+}
+
+.table-wrap {
+    overflow:auto;
+    padding-right:10px;
+}
+
+.divMatHang {
+    padding-left: 10px;
+    width: 100%;
 }

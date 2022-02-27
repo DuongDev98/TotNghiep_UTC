@@ -19,7 +19,9 @@ namespace WebApplication.Models
         {
             this.DANHSANPHAMs = new HashSet<DANHSANPHAM>();
             this.DKHUYENMAICHITIETs = new HashSet<DKHUYENMAICHITIET>();
+            this.DKHUYENMAICHITIETs1 = new HashSet<DKHUYENMAICHITIET>();
             this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
+            this.TDONHANGCHITIETs1 = new HashSet<TDONHANGCHITIET>();
         }
     
         public string ID { get; set; }
@@ -33,8 +35,13 @@ namespace WebApplication.Models
         public virtual ICollection<DANHSANPHAM> DANHSANPHAMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DKHUYENMAICHITIET> DKHUYENMAICHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DKHUYENMAICHITIET> DKHUYENMAICHITIETs1 { get; set; }
         public virtual DNHOMMATHANG DNHOMMATHANG { get; set; }
+        public virtual DNHOMMATHANG DNHOMMATHANG1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs1 { get; set; }
     }
 }

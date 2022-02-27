@@ -38,8 +38,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li class="dropdown-item">@Html.ActionLink("Danh mục nhà cung cấp", "Index", "NhaCungCap")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Nhập kho", "Index", "TrangChu")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Kiểm kê", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Nhập kho", "Index", "NhapKho", new { page = 1, s = "", fDate = "", tDate = "" }, null)</li>
                         </ul>
                     </li>
 

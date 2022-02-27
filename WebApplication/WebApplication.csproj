@@ -128,8 +128,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Contant\Contant.cs" />
     <Compile Include="Controllers\MatHangController.cs" />
     <Compile Include="Controllers\NhaCungCapController.cs" />
+    <Compile Include="Controllers\NhapKhoController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Controllers\NhomMatHangController.cs" />
     <Compile Include="Global.asax.cs">
@@ -197,13 +199,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\image-uploader.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -227,7 +222,7 @@
     <Content Include="Views\NhaCungCap\Index.cshtml" />
     <Content Include="Views\NhaCungCap\Item.cshtml" />
     <Content Include="Views\MatHang\Index.cshtml" />
-    <Content Include="Views\MatHang\TBodyTable.cshtml" />
+    <Content Include="Views\MatHang\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -239,8 +234,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Views\MatHang\Item.cshtml" />
+    <Content Include="Views\NhapKho\Index.cshtml" />
+    <Content Include="Views\NhapKho\AddOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -51,6 +51,8 @@ E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\roslyn\vbc.rsp
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\roslyn\VBCSCompiler.exe
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\roslyn\VBCSCompiler.exe.config
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\Antlr3.Runtime.dll
+E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.dll
+E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.SqlServer.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\Microsoft.Web.Infrastructure.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\Newtonsoft.Json.dll
@@ -62,6 +64,8 @@ E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.WebPages.Deploymen
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.WebPages.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.WebPages.Razor.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\WebGrease.dll
+E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.xml
+E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.SqlServer.xml
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.Helpers.xml
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.Mvc.xml
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\System.Web.Optimization.xml
@@ -77,7 +81,3 @@ E:\UTC\TOTNGHIEP\WebApplication\WebApplication\obj\Debug\WebApplication.csproj.C
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\obj\Debug\WebApplication.dll
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\obj\Debug\WebApplication.pdb
 E:\UTC\TOTNGHIEP\WebApplication\WebApplication\obj\Debug\WebApplication.csproj.AssemblyReference.cache
-E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.dll
-E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.SqlServer.dll
-E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.xml
-E:\UTC\TOTNGHIEP\WebApplication\WebApplication\bin\EntityFramework.SqlServer.xml

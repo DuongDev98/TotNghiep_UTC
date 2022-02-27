@@ -180,7 +180,7 @@ function QuanLyAnhMatHang(id, name) {
 }
 
 function deleteMatHang(id) {
-    ShowYesNo("Lựa chọn", "Bạn muốn mặt hàng đang chọn?", () => {
+    ShowYesNo("Lựa chọn", "Bạn muốn xóa mặt hàng đang chọn?", () => {
         $.post("/MatHang/Delete/" + id, function (data) {
             if (data.length == 0) location.reload();
             else alert(data);
@@ -188,14 +188,66 @@ function deleteMatHang(id) {
     });
 }
 
-function LocMatHang(nhomId, search) {
-    $.get("/MatHang/TBodyTable?page=1&nhomId=" + nhomId + "&s=" + search, function (data) {
-        $('.tBodyMatHang').empty();
-        $('.tBodyMatHang').append(data);
+function deleteNhapKho(id) {
+    ShowYesNo("Lựa chọn", "Bạn muốn xóa phiếu nhập đang chọn?", () => {
+        $.post("/NhapKho/Delete/" + id, function (data) {
+            if (data.length == 0) location.reload();
+            else alert(data);
+        });
     });
 }
 
+function LocMatHang(nhomId, search, itemCart) {
+    $.get("/MatHang/Table?page=1&nhomId=" + nhomId + "&s=" + search + "&itemCart=" + itemCart, function (data) {
+        $('.divMatHang').empty();
+        $('.divMatHang').append(data);
+        setTableScroll();
+    });
+}
+
+function loadDataPag(url, divClass) {
+    $.get(url, function (data) {
+        $(divClass).empty();
+        $(divClass).append(data);
+        setTableScroll();
+    });
+}
+
+function LocPhieuNhapKho() {
+    let s = $(".ipSearch").val();
+    let fDate = $(".dtTuNgay").val();
+    let tDate = $(".dtDenNgay").val();
+    let urlLoad = "/NhapKho/Index?page=1&s=" + s + "&fDate=" + fDate + "&tDate=" + tDate;
+    window.location.href = urlLoad;
+}
+
+function setTableScroll() {
+    let url = window.location.href;
+    let heightSc = window.innerHeight;
+    if (url.indexOf("MatHang") > -1) {
+        heightSc -= $('.navbar').height() + $('.justify-content-end').height() + 100;
+        $('.table-wrap').height(heightSc);
+        $('body').css("overflow", "hidden");
+        $('.divMatHang').find(".table-wrap").find("tr").each(function (i, e) {
+            if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
+        });
+    } else if (url.indexOf("NhapKho") > -1) {
+        //fix table mặt hàng
+        heightSc -= $('.navbar').height() + $('.ipSearch').height() + 120;
+        $('.divMatHang').find(".table-wrap").height(heightSc);
+        $('body').css("overflow", "hidden");
+        $('.divMatHang').find(".table-wrap").find("tr").each(function (i, e) {
+            if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
+        });
+        //fix table details
+        heightSc = window.innerHeight;
+        heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
+        $('.divDetails').find(".table_wrap").height(heightSc);
+    }
+}
+
 $(document).ready(function () {
+    let url = window.location.href;
     //css
     $('.table').find('tbody').find('tr').on("click", function () {
         $('.table').find('tbody').find('tr').each(function (i, e) {
@@ -203,9 +255,11 @@ $(document).ready(function () {
         });
         $(this).addClass("table-active");
     });
+
+    //set height table
+    setTableScroll();
     //end css
 
-    let url = window.location.href;
     //thêm
     $('.btnAdd').click(function () {
         if (url.indexOf("NhomMatHang") > -1) showNhomHang("");
@@ -225,6 +279,7 @@ $(document).ready(function () {
         if (url.indexOf("NhomMatHang") > -1) deleteNhomHang(id);
         else if (url.indexOf("NhaCungCap") > -1) deleteNhaCungCap(id);
         else if (url.indexOf("MatHang") > -1) deleteMatHang(id);
+        else if (url.indexOf("NhapKho") > -1) deleteNhapKho(id);
     });
 
     //Quản lý ảnh
@@ -241,12 +296,47 @@ $(document).ready(function () {
     });
 
     $('.ipSearch').change(function () {
-        let nhomId = "";
-        $('.tvMain').find("tbody").find("tr").each(function (i, e) {
-            if ($(e).hasClass("table-active")) {
-                nhomId = $(e).attr("data-id");
-            }
-        });
-        LocMatHang(nhomId, $(this).val());
+        //lọc mặt hàng
+        if (url.indexOf("MatHang") > -1 || url.indexOf("NhapKho/AddOrUpdate") > -1) {
+            let nhomId = "";
+            $('.tvMain').find("tbody").find("tr").each(function (i, e) {
+                if ($(e).hasClass("table-active")) {
+                    nhomId = $(e).attr("data-id");
+                }
+            });
+            LocMatHang(nhomId, $(this).val(), url.indexOf("MatHang") == -1);
+        }
+        else if (url.indexOf("NhapKho") > -1) {
+            //lọc phiếu nhập kho
+            LocPhieuNhapKho();
+        }
+    });
+
+    $('.dtTuNgay').change(function () {
+        //lọc phiếu nhập kho
+        if (url.indexOf("NhapKho") > -1) {
+            LocPhieuNhapKho();
+        }
+    });
+
+    $('.dtDenNgay').change(function () {
+        //lọc phiếu nhập kho
+        if (url.indexOf("NhapKho") > -1) {
+            LocPhieuNhapKho();
+        }
+    });
+
+    $('.btnRefresh').click(function () {
+        //lọc phiếu nhập kho
+        if (url.indexOf("NhapKho") > -1) {
+            LocPhieuNhapKho();
+        }
+    });
+
+    $('body').on("click", ".page-link", function () {
+        let data_url = $(this).attr("data-url");
+        if (url.indexOf("MatHang") > -1 || url.indexOf("NhapKho") > -1) {
+            loadDataPag(data_url, ".divMatHang");
+        }
     });
 });

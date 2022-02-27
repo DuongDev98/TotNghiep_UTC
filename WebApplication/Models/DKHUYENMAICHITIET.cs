@@ -15,10 +15,11 @@ namespace WebApplication.Models
     public partial class DKHUYENMAICHITIET
     {
         public string ID { get; set; }
-        public string DKHUYENMAI { get; set; }
+        public string DKHUYENMAIID { get; set; }
         public string DMATHANGID { get; set; }
     
-        public virtual DKHUYENMAI DKHUYENMAI1 { get; set; }
+        public virtual DKHUYENMAI DKHUYENMAI { get; set; }
         public virtual DMATHANG DMATHANG { get; set; }
+        public virtual DMATHANG DMATHANG1 { get; set; }
     }
 }

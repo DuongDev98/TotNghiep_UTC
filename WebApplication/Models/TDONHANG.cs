@@ -14,6 +14,13 @@ namespace WebApplication.Models
     
     public partial class TDONHANG
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TDONHANG()
+        {
+            this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
+            this.TDONHANGCHITIETs1 = new HashSet<TDONHANGCHITIET>();
+        }
+    
         public string ID { get; set; }
         public Nullable<int> LOAI { get; set; }
         public string NAME { get; set; }
@@ -33,7 +40,14 @@ namespace WebApplication.Models
         public string DIENTHOAI { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
+        public virtual DKHACHHANG DKHACHHANG1 { get; set; }
         public virtual DKHUYENMAI DKHUYENMAI { get; set; }
+        public virtual DKHUYENMAI DKHUYENMAI1 { get; set; }
         public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }
+        public virtual DNHACUNGCAP DNHACUNGCAP1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs1 { get; set; }
     }
 }

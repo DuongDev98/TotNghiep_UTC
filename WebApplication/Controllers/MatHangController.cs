@@ -14,28 +14,35 @@ namespace WebApplication.Controllers
     public class MatHangController : Controller
     {
         const string folder = "/Images/Upload/DMATHANG/";
-        const int maxPage = 20;
         DatabaseEntities db = new DatabaseEntities();
         public ActionResult Index()
         {
-            ViewBag.totalItem = db.DMATHANGs.ToList().Count;
             ViewBag.nhomHangs = db.DNHOMMATHANGs.OrderBy(x => x.CODE).ToList();
             return View();
         }
 
-        public ActionResult TBodyTable(int page, string nhomId, string s)
+        public ActionResult Table(int page, string nhomId, string s, bool itemCart)
         {
             List<DMATHANG> lst = layDanhSachMatHang(page, nhomId, s);
             ViewBag.currentPage = page;
+            ViewBag.itemCart = itemCart;
+            ViewBag.nhomId = nhomId;
+            ViewBag.s = s;
             return PartialView(lst);
         }
 
         private List<DMATHANG> layDanhSachMatHang(int page, string nhomId, string s)
         {
-            return db.DMATHANGs.Where(x =>
+            //lấy danh sách
+            IOrderedQueryable dataSet = db.DMATHANGs.Where(x =>
                 ((s != null && s.Length > 0 && (x.CODE.Contains(s) || x.NAME.Contains(s) || x.GIANHAP.ToString().Contains(s) || x.GIABAN.ToString().Contains(s))) || s == null || s.Length == 0)
                 && (nhomId == "" || nhomId == "TatCa" || x.DNHOMMATHANGID == nhomId)
-            ).OrderBy(x=>x.CODE).Skip((page - 1) * maxPage).Take(maxPage).ToList();
+            ).OrderBy(x => x.CODE);
+            //tính toán phân trang
+            IQueryable<DMATHANG> temp = dataSet as IQueryable<DMATHANG>;
+            ViewBag.totalItem = temp.ToList().Count;
+            ViewBag.numberOfPage = Math.Ceiling((double)ViewBag.totalItem / Contant.pageSize);
+            return temp.Skip((page - 1) * Contant.pageSize).Take(Contant.pageSize).ToList();
         }
 
         [HttpGet]
