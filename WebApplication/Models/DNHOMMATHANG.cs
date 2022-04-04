@@ -17,9 +17,7 @@ namespace WebApplication.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DNHOMMATHANG()
         {
-            this.DKHUYENMAIs = new HashSet<DKHUYENMAI>();
             this.DMATHANGs = new HashSet<DMATHANG>();
-            this.DMATHANGs1 = new HashSet<DMATHANG>();
         }
     
         public string ID { get; set; }
@@ -27,10 +25,6 @@ namespace WebApplication.Models
         public string NAME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DKHUYENMAI> DKHUYENMAIs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DMATHANG> DMATHANGs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DMATHANG> DMATHANGs1 { get; set; }
     }
 }

@@ -20,6 +20,5 @@ namespace WebApplication.Models
     
         public virtual DKHUYENMAI DKHUYENMAI { get; set; }
         public virtual DMATHANG DMATHANG { get; set; }
-        public virtual DMATHANG DMATHANG1 { get; set; }
     }
 }

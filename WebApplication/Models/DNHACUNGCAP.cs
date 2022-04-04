@@ -18,7 +18,6 @@ namespace WebApplication.Models
         public DNHACUNGCAP()
         {
             this.TDONHANGs = new HashSet<TDONHANG>();
-            this.TDONHANGs1 = new HashSet<TDONHANG>();
         }
     
         public string ID { get; set; }
@@ -29,7 +28,5 @@ namespace WebApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANG> TDONHANGs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TDONHANG> TDONHANGs1 { get; set; }
     }
 }
