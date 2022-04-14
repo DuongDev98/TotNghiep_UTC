@@ -37,10 +37,16 @@ namespace WebApplication.Models
         public string TENNGUOINHAN { get; set; }
         public string DIACHI { get; set; }
         public string DIENTHOAI { get; set; }
+        public string DTINHTHANHID { get; set; }
+        public string DQUANHUYENID { get; set; }
+        public string DPHUONGXAID { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DKHUYENMAI DKHUYENMAI { get; set; }
         public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }
+        public virtual DPHUONGXA DPHUONGXA { get; set; }
+        public virtual DQUANHUYEN DQUANHUYEN { get; set; }
+        public virtual DTINHTHANH DTINHTHANH { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
     }

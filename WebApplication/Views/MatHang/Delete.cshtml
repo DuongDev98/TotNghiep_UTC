@@ -1,0 +1,76 @@
+﻿@model WebApplication.Models.DMATHANG
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h4>Bạn muốn xóa mặt hàng đang chọn?</h4>
+    <hr />
+    @if (ViewBag.error != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.error</div>
+    }
+    <dl class="dl-horizontal">
+        <dt>
+            Mã hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODE)
+        </dd>
+
+        <dt>
+            Mặt hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            Giá nhập
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIANHAP)
+        </dd>
+
+        <dt>
+            Giá bán
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIABAN)
+        </dd>
+
+        <dt>
+            Nhóm hàng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNHOMMATHANG.CODE)
+        </dd>
+
+        <dt>
+            Thương hiệu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DTHUONGHIEU.NAME)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            @if (ViewBag.error == null)
+            {
+                <input type="submit" value="Delete" class="btn btn-danger" /><text>|</text>
+            }
+            @Html.ActionLink("Danh sách mặt hàng", "Index")
+        </div>
+    }
+</div>

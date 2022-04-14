@@ -28,12 +28,16 @@ namespace WebApplication.Models
         public Nullable<decimal> GIANHAP { get; set; }
         public Nullable<decimal> GIABAN { get; set; }
         public string DNHOMMATHANGID { get; set; }
+        public string DTHUONGHIEUID { get; set; }
+        public string MOTA { get; set; }
+        public Nullable<int> COIMEI { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANHSANPHAM> DANHSANPHAMs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DKHUYENMAICHITIET> DKHUYENMAICHITIETs { get; set; }
         public virtual DNHOMMATHANG DNHOMMATHANG { get; set; }
+        public virtual DTHUONGHIEU DTHUONGHIEU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
     }

@@ -138,6 +138,22 @@ function deleteNhomHang(id) {
     });
 }
 
+//Thương hiệu
+function showThuongHieu(id) {
+    $.get("/ThuongHieu/Item/" + id, function (data) {
+        ShowAddEditForm(id.length == 0 ? "Thêm mới thương hiệu" : "Chỉnh sửa thương hiệu", data, "/ThuongHieu/AddOrEdit/" + id);
+    });
+}
+
+function deleteThuongHieu(id) {
+    ShowYesNo("Lựa chọn", "Bạn muốn xóa nhóm mặt hàng đang chọn?", () => {
+        $.post("/ThuongHieu/Delete/" + id, function (data) {
+            if (data.length == 0) location.reload();
+            else alert(data);
+        });
+    });
+}
+
 //Nhà cung cấp
 function showNhaCungCap(id) {
     $.get("/NhaCungCap/Item/" + id, function (data) {
@@ -161,23 +177,23 @@ function showMatHang(id) {
     });
 }
 
-function QuanLyAnhMatHang(id, name) {
-    let html = '<form id="data" method="post" enctype="multipart/form-data"><div class="input-images"></div></form>';
-    ShowAddEditForm(name, html, "/MatHang/UploadAnh/" + id);
-    $.get("/MatHang/GetImage/" + id, function (dataStr) {
-        let preloaded = [];
-        if (dataStr != "[]") {
-            let dataArr = JSON.parse(dataStr);
-            for (let i = 0; i < dataArr.length; i++) {
-                let item = dataArr[i];
-                preloaded.push({ id: item.ID, src: item.LINK });
-            }
-        }
-        $('.input-images').imageUploader({
-            preloaded: preloaded
-        });
-    });
-}
+//function QuanLyAnhMatHang(id, name) {
+//    let html = '<form id="data" method="post" enctype="multipart/form-data"><div class="input-images"></div></form>';
+//    ShowAddEditForm(name, html, "/MatHang/UploadAnh/" + id);
+//    $.get("/MatHang/GetImage/" + id, function (dataStr) {
+//        let preloaded = [];
+//        if (dataStr != "[]") {
+//            let dataArr = JSON.parse(dataStr);
+//            for (let i = 0; i < dataArr.length; i++) {
+//                let item = dataArr[i];
+//                preloaded.push({ id: item.ID, src: item.LINK });
+//            }
+//        }
+//        $('.input-images').imageUploader({
+//            preloaded: preloaded
+//        });
+//    });
+//}
 
 function deleteMatHang(id) {
     ShowYesNo("Lựa chọn", "Bạn muốn xóa mặt hàng đang chọn?", () => {
@@ -197,8 +213,8 @@ function deleteNhapKho(id) {
     });
 }
 
-function LocMatHang(nhomId, search, itemCart) {
-    $.get("/MatHang/Table?page=1&nhomId=" + nhomId + "&s=" + search + "&itemCart=" + itemCart, function (data) {
+function LocMatHang(nhomId, thuongHieuId, search, itemCart) {
+    $.get("/MatHang/Table?page=1&nhomId=" + nhomId + "&thuongHieuId=" + thuongHieuId + "&s=" + search + "&itemCart=" + itemCart, function (data) {
         $('.divMatHang').empty();
         $('.divMatHang').append(data);
         setTableScroll();
@@ -227,7 +243,7 @@ function setTableScroll() {
     if (url.indexOf("MatHang") > -1) {
         heightSc -= $('.navbar').height() + $('.justify-content-end').height() + 100;
         $('.table-wrap').height(heightSc);
-        $('body').css("overflow", "hidden");
+        //$('body').css("overflow", "hidden");
         $('.divMatHang').find(".table-wrap").find("tr").each(function (i, e) {
             if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
         });
@@ -263,6 +279,7 @@ $(document).ready(function () {
     //thêm
     $('.btnAdd').click(function () {
         if (url.indexOf("NhomMatHang") > -1) showNhomHang("");
+        if (url.indexOf("ThuongHieu") > -1) showThuongHieu("");
         else if (url.indexOf("NhaCungCap") > -1) showNhaCungCap("");
         else if (url.indexOf("MatHang") > -1) showMatHang("");
     });
@@ -270,6 +287,7 @@ $(document).ready(function () {
     $('.btnEdit').click(function () {
         let id = $(this).closest("tr").attr("data-id");
         if (url.indexOf("NhomMatHang") > -1) showNhomHang(id);
+        if (url.indexOf("ThuongHieu") > -1) showThuongHieu(id);
         else if (url.indexOf("NhaCungCap") > -1) showNhaCungCap(id);
         else if (url.indexOf("MatHang") > -1) showMatHang(id);
     });
@@ -277,22 +295,23 @@ $(document).ready(function () {
     $('.btnDelete').click(function () {
         let id = $(this).closest("tr").attr("data-id");
         if (url.indexOf("NhomMatHang") > -1) deleteNhomHang(id);
+        if (url.indexOf("ThuongHieu") > -1) deleteThuongHieu(id);
         else if (url.indexOf("NhaCungCap") > -1) deleteNhaCungCap(id);
         else if (url.indexOf("MatHang") > -1) deleteMatHang(id);
         else if (url.indexOf("NhapKho") > -1) deleteNhapKho(id);
     });
 
     //Quản lý ảnh
-    $('.btnUplloadFile').click(function () {
-        let id = $(this).closest("tr").attr("data-id");
-        if (url.indexOf("MatHang") > -1) {
-            QuanLyAnhMatHang(id, $(this).closest("tr").find('td')[1].innerText);
-        }
-    });
+    //$('.btnUplloadFile').click(function () {
+    //    let id = $(this).closest("tr").attr("data-id");
+    //    if (url.indexOf("MatHang") > -1) {
+    //        QuanLyAnhMatHang(id, $(this).closest("tr").find('td')[1].innerText);
+    //    }
+    //});
 
     //lọc mặt hàng
     $('.tvMain').find("tbody").on("click", "tr", function () {
-        LocMatHang($(this).attr("data-id"), $('.ipSearch').val());
+        LocMatHang($(this).attr("data-id"), "", $('.ipSearch').val(), "");
     });
 
     $('.ipSearch').change(function () {
@@ -304,7 +323,7 @@ $(document).ready(function () {
                     nhomId = $(e).attr("data-id");
                 }
             });
-            LocMatHang(nhomId, $(this).val(), url.indexOf("MatHang") == -1);
+            LocMatHang(nhomId, "", $(this).val(), url.indexOf("MatHang") == -1);
         }
         else if (url.indexOf("NhapKho") > -1) {
             //lọc phiếu nhập kho
@@ -339,4 +358,126 @@ $(document).ready(function () {
             loadDataPag(data_url, ".divMatHang");
         }
     });
+
+    $(".divMatHang").on("click", "tr", function () {
+        if (url.indexOf("NhapKho") == -1) return;
+        let id = $(this).data("id");
+        let code = $(this).data("code");
+        let name = $(this).data("name");
+        let giaNhap = convertToInt($(this).data("gianhap"));
+        let coImei = $(this).data("coimei") == "30";
+        //Tìm xem trong chi tiết có không, có thì cộng thêm, không có thì
+        if (coImei) {
+            //Nhập form nhập imei
+            let title = "Nhập danh sách imei";
+            let html = "<textarea id='txtImei' rows='5' style='width: 100%'></textarea>";
+            $('#modal-dialog').empty();
+            $('#modal-dialog').append('<div class="modal-dialog" role="document">\n' +
+                '    <div class="modal-content">\n' +
+                '      <div class="modal-header">\n' +
+                '        <h5 class="modal-title">' + title + '</h5>\n' +
+                '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                '          <span aria-hidden="true">&times;</span>\n' +
+                '        </button>\n' +
+                '      </div>\n' +
+                '      <div class="modal-body">\n' +
+                '           <div class="alert alert-danger" role="alert" hidden="hidden"></div >' +
+                '         ' + html + '    ' +
+                '      </div>\n' +
+                '   <div class="modal-footer">' +
+                '       <button type="button" id="btnYes" class="btn btn-success">Chấp nhận</button>' +
+                '       <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>' +
+                '   </div>' +
+                '    </div>\n' +
+                '</div>');
+            $('#modal-dialog').modal('show');
+            $('#modal-dialog').on("click", "#btnYes", function () {
+                $('#modal-dialog').modal('hide');
+                let txt = $('#modal-dialog').find("#txtImei").val();
+                let lines = txt.split("\n");
+                lines.forEach((val, index) => {
+                    if (val.length > 0) addItemToNhapKho(id, code, name, giaNhap, coImei, val);
+                });
+            });
+        }
+        else {
+            //kiểm tra có tồn tại chưa, chưa thì thêm mới, không thì cộng số lượng
+            addItemToNhapKho(id, code, name, giaNhap, coImei, "");
+        }
+    });
+
+    function convertToInt(s) {
+        let val = 0;
+        if (s == null || s == undefined) return val;
+        s = s.replace(",", "");
+        val = parseInt(parseFloat(s).toFixed(0));
+        return val;
+    }
+
+    function addItemToNhapKho(id, code, name, gianhap, coImei, imei) {
+        let added = false;
+        if (!coImei) {
+            $('.tblChiTiet').find('tbody').find("tr").each((index, ele) => {
+                if (id == ele.dataset.id) {
+                    added = true;
+                    let val = convertToInt($(ele).find("td:eq(4)").find("input").val()) + 1;
+                    $(ele).find("td:eq(4)").find("input").val(val);
+                }
+            });
+        }
+        if (!added) {
+            $tr = $('<tr data-id="' + id + '">' +
+                '        <td>#</td>' +
+                '        <td><input type="text" value="' + id + '" name="" hidden="hidden"/>' + code+'</td>' +
+                '        <td>' + name+'</td>' +
+                '        <td><input type="number" value="' + gianhap + '" name="" readonly/></td>' +
+                '        <td><input type="number" value="1" name="" readonly/></td>' +
+                //'        <td>0</td>' +
+                //'        <td>0</td>' +
+                '        <td>' + 1 * gianhap + '</td>' +
+                '        <td>' + imei + '</td>' +
+                '        <td><div class="btn btn-danger">Xóa</div></td>' +
+                '    </tr>');
+            $('.tblChiTiet').find('tbody').append($tr);
+        }
+        CalculateRow();
+    }
+
+    $('.tblChiTiet').on("click", ".btn-danger", function () {
+        if (url.indexOf("NhapKho") > -1) {
+            $(this).closest("tr").remove();
+        }
+        CalculateRow();
+    });
+
+    $('#numTiLeGiam').change(function () {
+        CalculateRow();
+    });
+
+    function CalculateRow() {
+        let tienHang = 0;
+        let tileGiam = convertToInt($("#numTiLeGiam").val());
+        let tienGiamGia = 0;
+        let tongCong = 0;
+        //3 don gia, 4 so luong, 5 thanh tien
+        $('.tblChiTiet').find('tbody').find("tr").each(function (index, ele) {
+            let dongia = convertToInt($(ele).find("td:eq(3)").find("input").val());
+            let soluong = convertToInt($(ele).find("td:eq(4)").find("input").val());
+            let thanhtien = dongia * soluong;
+            tienHang += thanhtien;
+            $(ele).find("td:eq(5)").val(thanhtien);
+            //find field
+            $(ele).find("td:eq(0)").text(index);
+            $(ele).find("td:eq(1)").find("input:eq(0)").attr("name","TDONHANGCHITIETs[" + index + "].DMATHANGID");
+            $(ele).find("td:eq(3)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].DONGIA");
+            $(ele).find("td:eq(4)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].SOLUONG");
+            $(ele).find("td:eq(5)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].THANHTIEN");
+        });
+        tienGiamGia = tienHang * (tileGiam / 100);
+        tongCong = tienHang - tienGiamGia;
+        $("#numTienHang").val(tienHang);
+        $("#numTiLeGiam").val(tileGiam);
+        $("#numTienGiam").val(tienGiamGia);
+        $("#numTongCong").val(tongCong);
+    }
 });

@@ -10,7 +10,7 @@ namespace WebApplication.Controllers
 {
     public class NhapKhoController : Controller
     {
-        DatabaseEntities db = new DatabaseEntities();
+        DOANEntities db = new DOANEntities();
         // GET: NhapKho
         public ActionResult Index(int page, string s, string fDate, string tDate)
         {
@@ -71,6 +71,10 @@ namespace WebApplication.Controllers
                     dhRow.ID = Guid.NewGuid().ToString();
                     dhRow.NGAY = DateTime.Now;
                     dhRow.NAME = "Tự động";
+                    dhRow.TIENHANG = 0;
+                    dhRow.TILEGIAMGIA = 0;
+                    dhRow.TIENGIAMGIA = 0;
+                    dhRow.TONGCONG = 0;
                 }
                 ViewBag.NGAY = dateToString(dhRow.NGAY);
                 ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
@@ -83,34 +87,38 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrUpdate(string id, string json)
+        public ActionResult AddOrUpdate(TDONHANG dhRow)
         {
-            TDONHANG dhRow = db.TDONHANGs.Where(x => x.ID == id).FirstOrDefault();
-            string error = "";
-            try
+            ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
+            ViewBag.NGAY = dateToString(DateTime.Now);
+            if (ModelState.IsValid)
             {
-                //if (dhRow == null)
-                //{
-                //    dhRow = new TDONHANG();
-                //    dhRow.ID = Guid.NewGuid().ToString();
-                //    dhRow.NGAY = DateTime.Now;
-                //    dhRow.NAME = "Tự động";
-                //}
-                //ViewBag.NGAY = dateToString(dhRow.NGAY);
-                //ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
+                string error = "";
+                try
+                {
+                    if (dhRow.ID == null)
+                    {
+                        dhRow.ID = Guid.NewGuid().ToString();
+                        dhRow.NGAY = DateTime.Now;
+                        dhRow.NAME = GenCodeHD("NK", 1);
+                        dhRow.LOAI = 1;
+                    }
+                    ViewBag.NGAY = dateToString(dhRow.NGAY);
+                }
+                catch (Exception ex)
+                {
+                    error = ex.Message;
+                }
+                if (error.Length > 0) return View();
             }
-            catch (Exception ex)
-            {
-                error = ex.Message;
-            }
-            return Content(error);
+            return View("Index");
         }
 
         string GenCodeHD(string startStr, int loai)
         {
             string code = "", temp = "";
             //lấy số thứ tự
-            List<string> lst = db.Database.SqlQuery<string>("SELECT CODE FROM TDONHANG WHERE CODE LIKE '" + startStr + "%'").ToList();
+            List<string> lst = db.Database.SqlQuery<string>("SELECT NAME FROM TDONHANG WHERE NAME LIKE '" + startStr + "%'").ToList();
             int max = 0;
             foreach (string item in lst)
             {
@@ -128,7 +136,7 @@ namespace WebApplication.Controllers
             }
             temp += max.ToString();
             code += temp;
-            return code;
+            return startStr + code;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DOANModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+  <EntityContainerMapping StorageEntityContainer="DOANModelStoreContainer" CdmEntityContainer="DOANEntities">
     <EntitySetMapping Name="DANHSANPHAMs">
       <EntityTypeMapping TypeName="DOANModel.DANHSANPHAM">
         <MappingFragment StoreEntitySet="DANHSANPHAM">
@@ -14,6 +14,9 @@
     <EntitySetMapping Name="DKHACHHANGs">
       <EntityTypeMapping TypeName="DOANModel.DKHACHHANG">
         <MappingFragment StoreEntitySet="DKHACHHANG">
+          <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
@@ -87,6 +90,9 @@
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="DOANModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
+          <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -119,6 +125,36 @@
           <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
           <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
           <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DPHUONGXAs">
+      <EntityTypeMapping TypeName="DOANModel.DPHUONGXA">
+        <MappingFragment StoreEntitySet="DPHUONGXA">
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DQUANHUYENs">
+      <EntityTypeMapping TypeName="DOANModel.DQUANHUYEN">
+        <MappingFragment StoreEntitySet="DQUANHUYEN">
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTINHTHANHs">
+      <EntityTypeMapping TypeName="DOANModel.DTINHTHANH">
+        <MappingFragment StoreEntitySet="DTINHTHANH">
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

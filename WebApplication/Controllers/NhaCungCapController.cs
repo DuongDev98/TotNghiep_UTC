@@ -10,7 +10,7 @@ namespace WebApplication.Controllers
 {
     public class NhaCungCapController : Controller
     {
-        DatabaseEntities db = new DatabaseEntities();
+        DOANEntities db = new DOANEntities();
         public ActionResult Index()
         {
             List<DNHACUNGCAP> lst = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
@@ -34,21 +34,6 @@ namespace WebApplication.Controllers
             string error = "";
             try
             {
-                DNHACUNGCAP model = db.DNHACUNGCAPs.Where(x => x.ID == id).FirstOrDefault();
-                if (model == null)
-                {
-                    model = new DNHACUNGCAP();
-                    model.ID = Guid.NewGuid().ToString();
-                }
-                model.NAME = temp.NAME.Trim();
-                model.DIENTHOAI = temp.DIENTHOAI.Trim();
-                model.DIACHI = temp.DIACHI.Trim();
-                model.EMAIL = temp.EMAIL.Trim();
-                if (id == null) db.DNHACUNGCAPs.Add(model);
-                else
-                {
-                    db.Entry(model).State = EntityState.Modified;
-                }
                 //kiểm tra trống
                 if (temp.NAME == null || temp.NAME.Length == 0) error = "Tên nhà cung cấp không được trống!";
                 else if (temp.DIENTHOAI == null || temp.DIENTHOAI.Length == 0) error = "Điện thoại không được trống!";
@@ -60,7 +45,28 @@ namespace WebApplication.Controllers
                     error = "Tên nhà cung cấp đã tồn tại";
                 }
 
-                if (error.Length == 0) db.SaveChanges();
+                if (error.Length == 0)
+                {
+                    DNHACUNGCAP model = db.DNHACUNGCAPs.Where(x => x.ID == id).FirstOrDefault();
+                    if (model == null)
+                    {
+                        model = new DNHACUNGCAP();
+                    }
+                    model.NAME = temp.NAME == null ? "" : temp.NAME.Trim();
+                    model.DIENTHOAI = temp.DIENTHOAI == null ? "" : temp.DIENTHOAI.Trim();
+                    model.DIACHI = temp.DIACHI == null ? "" : temp.DIACHI.Trim();
+                    model.EMAIL = temp.EMAIL == null ? "" : temp.EMAIL.Trim();
+                    if (id == null)
+                    {
+                        model.ID = Guid.NewGuid().ToString();
+                        db.DNHACUNGCAPs.Add(model);
+                    }
+                    else
+                    {
+                        db.Entry(model).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

@@ -1,37 +1,69 @@
-﻿@model List<WebApplication.Models.DMATHANG>
+﻿@model IEnumerable<WebApplication.Models.DMATHANG>
+
 @{
-    ViewBag.Title = "Danh sách mặt hàng";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row justify-content-end">
-    <div class="form-group">
-        <input type="text" class="form-control ipSearch" placeholder="Tìm kiếm..." style="margin-right: 88px;">
-    </div>
-</div>
-<div class="row">
-    <div class="col-2">
-        <table class="table table-hover tvMain">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Nhóm hàng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-id="TatCa">
-                    <td>Tất cả</td>
-                </tr>
-                @foreach (var item in ViewBag.nhomHangs)
-                {
-                    <tr data-id="@item.ID">
-                        <td>@item.NAME</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-10 divMatHang">
-        @{
-            Html.RenderAction("Table", "MatHang", new { page = 1, nhomId = "", s = "", itemCart = false });
-        }
-    </div>
-</div>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Edit")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Mã hàng
+        </th>
+        <th>
+            Tên hàng
+        </th>
+        <th>
+            Có Imei
+        </th>
+        <th>
+            Giá nhập
+        </th>
+        <th>
+            Giá bán
+        </th>
+        <th>
+            Nhóm hàng
+        </th>
+        <th>
+            Thương hiệu
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NAME)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.COIMEI > 0 ? "Có" : "Không")*@
+            @{ if (item.COIMEI == null || item.COIMEI == 0) { <text>Không</text> } else { <text>Có</text> } }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GIANHAP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GIABAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DNHOMMATHANG.CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DTHUONGHIEU.NAME)
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

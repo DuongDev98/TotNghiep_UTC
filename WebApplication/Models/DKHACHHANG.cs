@@ -30,7 +30,13 @@ namespace WebApplication.Models
         public string FACEBOOKID { get; set; }
         public string GOOGLEID { get; set; }
         public string AVATAR { get; set; }
+        public string DTINHTHANHID { get; set; }
+        public string DQUANHUYENID { get; set; }
+        public string DPHUONGXAID { get; set; }
     
+        public virtual DPHUONGXA DPHUONGXA { get; set; }
+        public virtual DQUANHUYEN DQUANHUYEN { get; set; }
+        public virtual DTINHTHANH DTINHTHANH { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TDONHANG> TDONHANGs { get; set; }
     }

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
@@ -13,89 +13,98 @@ namespace WebApplication.Controllers
 {
     public class MatHangController : Controller
     {
-        const string folder = "/Images/Upload/DMATHANG/";
-        DatabaseEntities db = new DatabaseEntities();
+        private DOANEntities db = new DOANEntities();
+
+        // GET: MatHang
         public ActionResult Index()
         {
-            ViewBag.nhomHangs = db.DNHOMMATHANGs.OrderBy(x => x.CODE).ToList();
-            return View();
+            var dMATHANGs = db.DMATHANGs.Include(d => d.DNHOMMATHANG).Include(d => d.DTHUONGHIEU);
+            return View(dMATHANGs.ToList());
         }
 
-        public ActionResult Table(int page, string nhomId, string s, bool itemCart)
+        // GET: MatHang/Edit/5
+        public ActionResult Edit(string id)
         {
-            List<DMATHANG> lst = layDanhSachMatHang(page, nhomId, s);
-            ViewBag.currentPage = page;
-            ViewBag.itemCart = itemCart;
-            ViewBag.nhomId = nhomId;
-            ViewBag.s = s;
-            return PartialView(lst);
-        }
-
-        private List<DMATHANG> layDanhSachMatHang(int page, string nhomId, string s)
-        {
-            //lấy danh sách
-            IOrderedQueryable dataSet = db.DMATHANGs.Where(x =>
-                ((s != null && s.Length > 0 && (x.CODE.Contains(s) || x.NAME.Contains(s) || x.GIANHAP.ToString().Contains(s) || x.GIABAN.ToString().Contains(s))) || s == null || s.Length == 0)
-                && (nhomId == "" || nhomId == "TatCa" || x.DNHOMMATHANGID == nhomId)
-            ).OrderBy(x => x.CODE);
-            //tính toán phân trang
-            IQueryable<DMATHANG> temp = dataSet as IQueryable<DMATHANG>;
-            ViewBag.totalItem = temp.ToList().Count;
-            ViewBag.numberOfPage = Math.Ceiling((double)ViewBag.totalItem / Contant.pageSize);
-            return temp.Skip((page - 1) * Contant.pageSize).Take(Contant.pageSize).ToList();
-        }
-
-        [HttpGet]
-        public ActionResult Item(string id)
-        {
-            DMATHANG model = db.DMATHANGs.Where(x => x.ID == id).FirstOrDefault();
-            if (model == null)
+            DMATHANG dMATHANG = db.DMATHANGs.Find(id);
+            if (dMATHANG == null)
             {
-                model = new DMATHANG();
+                dMATHANG = new DMATHANG();
+                dMATHANG.CODE = "Tự động";
             }
-            ViewBag.nhomHangs = db.DNHOMMATHANGs.OrderBy(x=>x.CODE).ToList();
-            return PartialView(model);
+            ViewBag.imgs = GetDicAnhs(db, dMATHANG);
+            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "CODE", dMATHANG.DNHOMMATHANGID);
+            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
+            return View(dMATHANG);
         }
 
         [HttpPost]
-        public ActionResult AddOrEdit(string id, DMATHANG temp)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,CODE,NAME,GIANHAP,GIABAN,DNHOMMATHANGID,DTHUONGHIEUID,MOTA,COIMEI")] DMATHANG temp)
         {
             string error = "";
+            DMATHANG model = db.DMATHANGs.Where(x => x.ID == temp.ID).FirstOrDefault();
             try
             {
-                DMATHANG model = db.DMATHANGs.Where(x => x.ID == id).FirstOrDefault();
                 if (model == null)
                 {
-                    DNHOMMATHANG nhomHang = db.DNHOMMATHANGs.Where(x => x.ID == temp.DNHOMMATHANGID).FirstOrDefault();
                     model = new DMATHANG();
-                    model.ID = Guid.NewGuid().ToString();
-                    model.CODE = GenCode(nhomHang);
                 }
-                model.NAME = temp.NAME.Trim();
+                model.NAME = temp.NAME;
                 model.GIABAN = temp.GIABAN;
                 model.GIANHAP = temp.GIANHAP;
                 model.DNHOMMATHANGID = temp.DNHOMMATHANGID.Trim();
-                if (id == null) db.DMATHANGs.Add(model);
-                else
-                {
-                    db.Entry(model).State = EntityState.Modified;
-                }
+                model.DTHUONGHIEUID = temp.DTHUONGHIEUID.Trim();
+                model.MOTA = temp.MOTA;
+                model.COIMEI = temp.COIMEI == null ? 0 : temp.COIMEI;
                 //kiểm tra trống
                 if (temp.NAME == null || temp.NAME.Length == 0) error = "Tên mặt hàng không được trống!";
                 //không được trùng tên
-                bool contains = db.DMATHANGs.Where(x => x.NAME == temp.NAME).ToList().Count > 0;
+                bool contains = db.DMATHANGs.Where(x => x.NAME == temp.NAME && x.ID != temp.ID && temp.ID != null).ToList().Count > 0;
                 if (contains)
                 {
                     error = "Tên mặt hàng đã tồn tại đã tồn tại";
                 }
 
-                if (error.Length == 0) db.SaveChanges();
+                if (error.Length == 0)
+                {
+                    if (temp.ID == null)
+                    {
+                        DNHOMMATHANG nhomHang = db.DNHOMMATHANGs.Where(x => x.ID == temp.DNHOMMATHANGID).FirstOrDefault();
+                        model.ID = Guid.NewGuid().ToString();
+                        model.CODE = GenCode(nhomHang);
+                        db.DMATHANGs.Add(model);
+                    }
+                    else
+                    {
+                        db.Entry(model).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                    //Lưu ảnh
+                    List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
+                    files.AddRange(Request.Files.GetMultiple("images[]"));
+                    uploadAnhMatHang(Request.Params.GetValues("preloaded[]"), files, model.ID);
+                    return RedirectToAction("Index");
+                }
             }
             catch (Exception ex)
             {
                 error = ex.Message;
             }
-            return Content(error);
+            if (error.Length > 0) ViewBag.error = error;
+            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "CODE", model.DNHOMMATHANGID);
+            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", model.DTHUONGHIEUID);
+            return View(model);
+        }
+
+        public static Dictionary<string, string> GetDicAnhs(DOANEntities db, DMATHANG mhRow)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            List<DANHSANPHAM> lstAnhs = db.DANHSANPHAMs.Where(x => x.DMATHANGID == mhRow.ID).ToList();
+            foreach (DANHSANPHAM anh in lstAnhs)
+            {
+                dic.Add(anh.ID, "/Images/Upload/DMATHANG/" + anh.LINK);
+            }
+            return dic;
         }
 
         private void uploadAnhMatHang(string[] olds, List<HttpPostedFileBase> files, string DMATHANGID)
@@ -169,58 +178,73 @@ namespace WebApplication.Controllers
             return code;
         }
 
-        [HttpGet]
-        public ActionResult GetImage(string id)
-        {
-            List<DANHSANPHAM> lstAnh = db.DANHSANPHAMs.Where(x => x.DMATHANGID == id).OrderBy(x=>x.STT).ToList();
-            List<JObject> lst = new List<JObject>();
-            foreach (DANHSANPHAM item in lstAnh)
-            {
-                JObject itNew = new JObject();
-                itNew["ID"] = item.ID;
-                itNew["LINK"] = folder + item.LINK;
-                lst.Add(itNew);
-            }
-            return Content(JsonConvert.SerializeObject(lst));
-        }
-
-        public ActionResult UploadAnh(string id)
-        {
-            List<HttpPostedFileBase> files = new List<HttpPostedFileBase>();
-            files.AddRange(Request.Files.GetMultiple("images[]"));
-            uploadAnhMatHang(Request.Params.GetValues("preloaded[]"), files, id);
-            //
-            ViewBag.totalItem = db.DMATHANGs.ToList().Count;
-            ViewBag.nhomHangs = db.DNHOMMATHANGs.OrderBy(x => x.CODE).ToList();
-            return View("Index");
-        }
-
-        [HttpPost]
+        // GET: MatHang/Delete/5
         public ActionResult Delete(string id)
         {
-            string error = "";
-            try
+            if (id == null)
             {
-                DMATHANG entry = db.DMATHANGs.Where(x => x.ID == id).FirstOrDefault();
-                if (entry == null) error = "Mặt hàng không tồn tại trong hệ thống!";
-                else
-                {
-                    db.DMATHANGs.Remove(entry);
-                    //xóa ảnh
-                    List<DANHSANPHAM> lstRemove = db.DANHSANPHAMs.ToList();
-                    foreach (DANHSANPHAM item in lstRemove)
-                    {
-                        FileUtils.Delete(Server, "DMATHANG", item.LINK);
-                        db.DANHSANPHAMs.Remove(item);
-                    }
-                    db.SaveChanges();
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch (Exception ex)
+            DMATHANG dMATHANG = db.DMATHANGs.Find(id);
+            if (dMATHANG == null)
             {
-                error = ex.Message;
+                return HttpNotFound();
             }
-            return Content(error);
+            if (dMATHANG.TDONHANGCHITIETs.Count > 0) ViewBag.error = "Mặt hàng đã phát sinh đơn hàng, không thể xóa";
+            return View(dMATHANG);
+        }
+
+        // POST: MatHang/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            DMATHANG dMATHANG = db.DMATHANGs.Find(id);
+            db.DMATHANGs.Remove(dMATHANG);
+            //xóa ảnh
+            List<DANHSANPHAM> lstRemove = db.DANHSANPHAMs.ToList();
+            foreach (DANHSANPHAM item in lstRemove)
+            {
+                FileUtils.Delete(Server, "DMATHANG", item.LINK);
+                db.DANHSANPHAMs.Remove(item);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        public ActionResult Table(int page, string nhomId, string thuongHieuId, string s, bool itemCart)
+        {
+            List<DMATHANG> lst = layDanhSachMatHang(page, nhomId, thuongHieuId, s);
+            ViewBag.currentPage = page;
+            ViewBag.itemCart = itemCart;
+            ViewBag.nhomId = nhomId;
+            ViewBag.thuongHieuId = thuongHieuId;
+            ViewBag.s = s;
+            return PartialView(lst);
+        }
+
+        private List<DMATHANG> layDanhSachMatHang(int page, string nhomId, string thuongHieuId, string s)
+        {
+            //lấy danh sách
+            IOrderedQueryable dataSet = db.DMATHANGs.Where(x =>
+                ((s != null && s.Length > 0 && (x.CODE.Contains(s) || x.NAME.Contains(s) || x.GIANHAP.ToString().Contains(s) || x.GIABAN.ToString().Contains(s))) || s == null || s.Length == 0)
+                && (nhomId == "" || nhomId == "TatCa" || x.DNHOMMATHANGID == nhomId)
+                && (thuongHieuId == "" || thuongHieuId == "TatCa" || x.DTHUONGHIEUID == thuongHieuId)
+            ).OrderBy(x => x.CODE);
+            //tính toán phân trang
+            IQueryable<DMATHANG> temp = dataSet as IQueryable<DMATHANG>;
+            ViewBag.totalItem = temp.ToList().Count;
+            ViewBag.numberOfPage = Math.Ceiling((double)ViewBag.totalItem / Contant.pageSize);
+            return temp.Skip((page - 1) * Contant.pageSize).Take(Contant.pageSize).ToList();
         }
     }
 }
