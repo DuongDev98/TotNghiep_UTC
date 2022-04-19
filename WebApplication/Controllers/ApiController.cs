@@ -29,6 +29,7 @@ namespace WebApplication.Controllers
                     {
                         switch (attr.cmdtype)
                         {
+                            case "ping": kq.data = null; break;
                             case "login": kq.data = login(attr.param, ref error); break;
                             case "register": kq.data = register(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
