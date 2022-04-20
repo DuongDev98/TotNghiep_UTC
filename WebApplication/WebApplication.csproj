@@ -199,6 +199,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ConvertTo.cs" />
     <Compile Include="Utils\FileUtils.cs" />
   </ItemGroup>
   <ItemGroup>

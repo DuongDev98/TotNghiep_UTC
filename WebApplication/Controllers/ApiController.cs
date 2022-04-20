@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
+using WebApplication.Utils;
 
 namespace WebApplication.Controllers
 {
@@ -32,6 +33,10 @@ namespace WebApplication.Controllers
                             case "ping": kq.data = null; break;
                             case "login": kq.data = login(attr.param, ref error); break;
                             case "register": kq.data = register(attr.param, ref error); break;
+                            case "getUserInfo": kq.data = getUserInfo(attr.param, ref error); break;
+                            case "dsThuongHieu": kq.data = layDanhSachThuongHieu(attr.param, ref error); break;
+                            case "dsNhom": kq.data = layDanhSachNhom(attr.param, ref error); break;
+                            case "timKiemMatHang": kq.data = timKiemMatHang(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -46,12 +51,35 @@ namespace WebApplication.Controllers
             return Content(JsonConvert.SerializeObject(kq));
         }
 
+        private JObject timKiemMatHang(JObject param, ref string error)
+        {
+            string s = ConvertTo.String(param["s"]);
+            string DNHOMMATHANGID = ConvertTo.String(param["DNHOMMATHANGID"]);
+            string DTHUONGHIEUID = ConvertTo.String(param["DTHUONGHIEUID"]);
+            IQueryable<DMATHANG> lst = db.DMATHANGs.Where(x=>x.NAME.Contains(s) || s == "");
+            lst = lst.Where(x => x.DNHOMMATHANGID == DNHOMMATHANGID || DNHOMMATHANGID == "");
+            lst = lst.Where(x => x.DTHUONGHIEUID == DTHUONGHIEUID || DTHUONGHIEUID == "");
+            return JObject.FromObject(lst.ToList());
+        }
+
+        private JObject layDanhSachNhom(JObject param, ref string error)
+        {
+            List<DNHOMMATHANG> lst = db.DNHOMMATHANGs.OrderBy(x => x.NAME).ToList();
+            return JObject.FromObject(lst);
+        }
+
+        private JObject layDanhSachThuongHieu(JObject param, ref string error)
+        {
+            List<DTHUONGHIEU> lst = db.DTHUONGHIEUs.OrderBy(x => x.NAME).ToList();
+            return JObject.FromObject(lst);
+        }
+
         private JObject register(JObject param, ref string error)
         {
             JObject data = null;
-            string hovaten = param["hovaten"].ToString();
-            string taikhoan = param["taikhoan"].ToString();
-            string matkhau = param["matkhau"].ToString();
+            string hovaten = ConvertTo.String(param["hovaten"]);
+            string taikhoan = ConvertTo.String(param["taikhoan"]);
+            string matkhau = ConvertTo.String(param["matkhau"]);
             //kiểm tra trùng tài khoản
             DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.TAIKHOAN == taikhoan).FirstOrDefault();
             if (khRow != null)
@@ -73,11 +101,34 @@ namespace WebApplication.Controllers
             return data;
         }
 
+        private JObject getUserInfo(JObject param, ref string error)
+        {
+            JObject data = null;
+            string DKHACHHANGID = ConvertTo.String(param["ID"]);
+
+            DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.ID == DKHACHHANGID).FirstOrDefault();
+            if (khRow == null)
+            {
+                error = "Thông tin đăng nhập không đúng";
+            }
+            else
+            {
+                khRow.TDONHANGs = null;
+                if (ConvertTo.String(khRow.AVATAR).Length == 0)
+                {
+                    khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
+                }
+                data = JObject.FromObject(khRow);
+            }
+
+            return data;
+        }
+
         private JObject login(JObject param, ref string error)
         {
             JObject data = null;
-            string username = param["taikhoan"].ToString();
-            string password = param["matkhau"].ToString();
+            string username = ConvertTo.String(param["taikhoan"]);
+            string password = ConvertTo.String(param["matkhau"]);
 
             DKHACHHANG khRow = db.DKHACHHANGs.Where(x=>x.MATKHAU == password && (x.TAIKHOAN == username || x.EMAIL == username || x.DIENTHOAI == username)).FirstOrDefault();
             if (khRow == null)
@@ -86,6 +137,11 @@ namespace WebApplication.Controllers
             }
             else
             {
+                khRow.TDONHANGs = null;
+                if (ConvertTo.String(khRow.AVATAR).Length == 0)
+                {
+                    khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
+                }
                 data = JObject.FromObject(khRow);
             }
 
