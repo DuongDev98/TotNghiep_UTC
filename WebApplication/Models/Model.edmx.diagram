@@ -37,6 +37,7 @@
         <AssociationConnector Association="DOANModel.FK_TDONHANG_DQUANHUYEN" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_TDONHANG_DTINHTHANH" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_TDONHANGCHITIET_TDONHANG" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DOANModel.DTINTUC" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

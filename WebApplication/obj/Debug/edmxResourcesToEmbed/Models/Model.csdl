@@ -511,5 +511,15 @@
       <End Role="TDONHANG" EntitySet="TDONHANGs" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
     </AssociationSet>
+    <EntitySet Name="DTINTUCs" EntityType="DOANModel.DTINTUC" />
   </EntityContainer>
+  <EntityType Name="DTINTUC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+    <Property Name="TIMECREATED" Type="DateTime" Precision="3" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NOIDUNG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

@@ -159,8 +159,8 @@ E:\UTC\TotNghiep_UTC\WebApplication\bin\System.Web.WebPages.Razor.xml
 E:\UTC\TotNghiep_UTC\WebApplication\bin\Newtonsoft.Json.xml
 E:\UTC\TotNghiep_UTC\WebApplication\bin\Antlr3.Runtime.pdb
 E:\UTC\TotNghiep_UTC\WebApplication\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.csproj.AssemblyReference.cache
 E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.csproj.CoreCompileInputs.cache
 E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.csproj.CopyComplete
 E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.dll
 E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.pdb
+E:\UTC\TotNghiep_UTC\WebApplication\obj\Debug\WebApplication.csproj.AssemblyReference.cache

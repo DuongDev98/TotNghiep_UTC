@@ -38,5 +38,6 @@ namespace WebApplication.Models
         public virtual DbSet<DTINHTHANH> DTINHTHANHs { get; set; }
         public virtual DbSet<TDONHANG> TDONHANGs { get; set; }
         public virtual DbSet<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
+        public virtual DbSet<DTINTUC> DTINTUCs { get; set; }
     }
 }

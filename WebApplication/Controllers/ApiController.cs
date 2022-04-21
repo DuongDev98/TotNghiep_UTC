@@ -37,6 +37,10 @@ namespace WebApplication.Controllers
                             case "dsThuongHieu": kq.data = layDanhSachThuongHieu(attr.param, ref error); break;
                             case "dsNhom": kq.data = layDanhSachNhom(attr.param, ref error); break;
                             case "timKiemMatHang": kq.data = timKiemMatHang(attr.param, ref error); break;
+                            case "dsTinTuc": kq.data = layDanhSachTinTuc(attr.param, ref error); break;
+                            case "dsTinhThanh": kq.data = layDanhSachTinhThanh(attr.param, ref error); break;
+                            case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
+                            case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -49,6 +53,43 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject layDanhSachPhuongXa(JObject param, ref string error)
+        {
+            throw new NotImplementedException();
+        }
+
+        private JObject layDanhSachQuanHuyen(JObject param, ref string error)
+        {
+            throw new NotImplementedException();
+        }
+
+        private JObject layDanhSachTinhThanh(JObject param, ref string error)
+        {
+            List<DTINHTHANH> lst = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
+            foreach (DTINHTHANH item in lst)
+            {
+                item.DKHACHHANGs = null;
+            }
+            JArray arr = JArray.FromObject(lst);
+            JObject kq = new JObject();
+            kq["arr"] = arr;
+            return kq;
+        }
+
+        private JObject layDanhSachTinTuc(JObject param, ref string error)
+        {
+            List<DTINTUC> lst = db.DTINTUCs.OrderByDescending(x => x.TIMECREATED).ToList();
+            JArray arr = JArray.FromObject(lst);
+            foreach (JObject it in arr)
+            {
+                it["TIMECREATED"] = ConvertTo.Date(it["TIMECREATED"]).ToString("HH:mm dd/MM/yyyy");
+                it["NOIDUNG"] = HttpUtility.HtmlDecode(ConvertTo.String(it["NOIDUNG"]));
+            }
+            JObject item = new JObject();
+            item["arr"] = arr;
+            return item;
         }
 
         private JObject timKiemMatHang(JObject param, ref string error)

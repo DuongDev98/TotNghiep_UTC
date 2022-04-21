@@ -1,0 +1,11 @@
+﻿@model WebApplication.Models.DTINTUC
+@{
+    ViewBag.Title = "Details";
+    Layout = "";
+}
+<div class="row col-12" style="padding: 10px;">
+    <h2>
+        @Model.TITLE
+    </h2>
+    @Html.Raw(HttpUtility.HtmlDecode(Model.NOIDUNG))
+</div>

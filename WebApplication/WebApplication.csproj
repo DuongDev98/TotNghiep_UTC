@@ -134,6 +134,7 @@
     <Compile Include="Controllers\NhaCungCapController.cs" />
     <Compile Include="Controllers\NhapKhoController.cs" />
     <Compile Include="Controllers\ThuongHieuController.cs" />
+    <Compile Include="Controllers\TinTucController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Controllers\NhomMatHangController.cs" />
     <Compile Include="Global.asax.cs">
@@ -170,6 +171,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTINHTHANH.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DTINTUC.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.Context.cs">
@@ -722,6 +726,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Views\TinTuc\Delete.cshtml" />
+    <Content Include="Views\TinTuc\Edit.cshtml" />
+    <Content Include="Views\TinTuc\Index.cshtml" />
+    <Content Include="Views\TinTuc\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

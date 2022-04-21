@@ -120,6 +120,15 @@
           <Property Name="CODE" Type="varchar" MaxLength="255" />
           <Property Name="NAME" Type="varchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="DTINTUC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="TIMECREATED" Type="datetime" />
+          <Property Name="TITLE" Type="nvarchar(max)" />
+          <Property Name="NOIDUNG" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="TDONHANG">
           <Key>
             <PropertyRef Name="ID" />
@@ -400,6 +409,7 @@
           <EntitySet Name="DQUANHUYEN" EntityType="Self.DQUANHUYEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DTHUONGHIEU" EntityType="Self.DTHUONGHIEU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DTINHTHANH" EntityType="Self.DTINHTHANH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DTINTUC" EntityType="Self.DTINTUC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DKHACHHANG_DPHUONGXA" Association="Self.FK_DKHACHHANG_DPHUONGXA">
@@ -994,7 +1004,17 @@
             <End Role="TDONHANG" EntitySet="TDONHANGs" />
             <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
           </AssociationSet>
+          <EntitySet Name="DTINTUCs" EntityType="DOANModel.DTINTUC" />
         </EntityContainer>
+        <EntityType Name="DTINTUC">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="TIMECREATED" Type="DateTime" Precision="3" />
+          <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NOIDUNG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1166,6 +1186,16 @@
                 <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
                 <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
                 <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DTINTUCs">
+            <EntityTypeMapping TypeName="DOANModel.DTINTUC">
+              <MappingFragment StoreEntitySet="DTINTUC">
+                <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

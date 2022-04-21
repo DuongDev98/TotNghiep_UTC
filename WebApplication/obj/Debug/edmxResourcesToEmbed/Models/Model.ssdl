@@ -115,6 +115,15 @@
     <Property Name="CODE" Type="varchar" MaxLength="255" />
     <Property Name="NAME" Type="varchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="DTINTUC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="TIMECREATED" Type="datetime" />
+    <Property Name="TITLE" Type="nvarchar(max)" />
+    <Property Name="NOIDUNG" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="TDONHANG">
     <Key>
       <PropertyRef Name="ID" />
@@ -395,6 +404,7 @@
     <EntitySet Name="DQUANHUYEN" EntityType="Self.DQUANHUYEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTHUONGHIEU" EntityType="Self.DTHUONGHIEU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DTINHTHANH" EntityType="Self.DTINHTHANH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DTINTUC" EntityType="Self.DTINTUC" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_DKHACHHANG_DPHUONGXA" Association="Self.FK_DKHACHHANG_DPHUONGXA">
