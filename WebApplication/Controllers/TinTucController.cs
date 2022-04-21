@@ -26,20 +26,6 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DTINTUC dTINTUC = db.DTINTUCs.Find(id);
-            if (dTINTUC == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dTINTUC);
-        }
-
         // GET: TinTuc/Edit/5
         public ActionResult Edit(string id)
         {
