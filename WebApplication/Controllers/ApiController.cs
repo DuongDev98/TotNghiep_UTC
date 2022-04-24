@@ -41,6 +41,7 @@ namespace WebApplication.Controllers
                             case "dsTinhThanh": kq.data = layDanhSachTinhThanh(attr.param, ref error); break;
                             case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
+                            case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -55,14 +56,85 @@ namespace WebApplication.Controllers
             return Content(JsonConvert.SerializeObject(kq));
         }
 
+        private JObject capNhatThongTin(JObject param, ref string error)
+        {
+            string id = ConvertTo.String(param["id"]);
+            string name = ConvertTo.String(param["name"]);
+            string dienthoai = ConvertTo.String(param["dienthoai"]);
+            string email = ConvertTo.String(param["email"]);
+            string tinhthanhid = ConvertTo.String(param["tinhthanhid"]);
+            string quanhuyenid = ConvertTo.String(param["quanhuyenid"]);
+            string phuongxaid = ConvertTo.String(param["phuongxaid"]);
+            string diachi = ConvertTo.String(param["diachi"]);
+            //kiểm tra trùng điện thoại
+            DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.ID != id && x.EMAIL == email).FirstOrDefault();
+            if (khRow != null) error = "Email trùng với 1 khách hàng khác";
+            //kiểm tra trùng email
+            if (error.Length == 0)
+            {
+                khRow = db.DKHACHHANGs.Where(x => x.ID != id && x.DIENTHOAI == dienthoai).FirstOrDefault();
+                if (khRow != null) error = "Điện thoại trùng với 1 khách hàng khác";
+            }
+
+            if (error.Length > 0)
+            {
+                error += ", không thể cập nhật dữ liệu";
+                return null;
+            }
+
+            khRow = db.DKHACHHANGs.Where(x => x.ID == id).FirstOrDefault();
+            if (khRow == null)
+            {
+                error = "Có lỗi trong quá trình cập nhật thông tin";
+            }
+            else
+            {
+                khRow.NAME = name;
+                khRow.DIENTHOAI = dienthoai;
+                khRow.DIACHI = diachi;
+                khRow.EMAIL = email;
+                khRow.DTINHTHANHID = tinhthanhid;
+                khRow.DQUANHUYENID = quanhuyenid;
+                khRow.DPHUONGXAID = phuongxaid;
+                db.Entry(khRow);
+                db.SaveChanges();
+            }
+            return null;
+        }
+
         private JObject layDanhSachPhuongXa(JObject param, ref string error)
         {
-            throw new NotImplementedException();
+            string DQUANHUYENID = ConvertTo.String(param["ID"]);
+            List<DPHUONGXA> lst = db.DPHUONGXAs.Where(x=>x.DQUANHUYENID == DQUANHUYENID).OrderBy(x => x.NAME).ToList();
+            foreach (DPHUONGXA item in lst)
+            {
+                item.DKHACHHANGs.Clear();
+                item.TDONHANGs.Clear();
+                while (item.DQUANHUYEN != null) item.DQUANHUYEN = null;
+            }
+            JArray arr = JArray.FromObject(lst);
+            foreach (JObject item in arr) item["key"] = item["ID"];
+            JObject kq = new JObject();
+            kq["arr"] = arr;
+            return kq;
         }
 
         private JObject layDanhSachQuanHuyen(JObject param, ref string error)
         {
-            throw new NotImplementedException();
+            string DTINHTHANHID = ConvertTo.String(param["ID"]);
+            List<DQUANHUYEN> lst = db.DQUANHUYENs.Where(x => x.DTINHTHANHID == DTINHTHANHID).OrderBy(x => x.NAME).ToList();
+            foreach (DQUANHUYEN item in lst)
+            {
+                item.DKHACHHANGs.Clear();
+                item.DPHUONGXAs.Clear();
+                item.TDONHANGs.Clear();
+                while (item.DTINHTHANH != null) item.DTINHTHANH = null;
+            }
+            JArray arr = JArray.FromObject(lst);
+            foreach (JObject item in arr) item["key"] = item["ID"];
+            JObject kq = new JObject();
+            kq["arr"] = arr;
+            return kq;
         }
 
         private JObject layDanhSachTinhThanh(JObject param, ref string error)
@@ -70,9 +142,12 @@ namespace WebApplication.Controllers
             List<DTINHTHANH> lst = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
             foreach (DTINHTHANH item in lst)
             {
-                item.DKHACHHANGs = null;
+                item.DKHACHHANGs.Clear();
+                item.DQUANHUYENs.Clear();
+                item.TDONHANGs.Clear();
             }
             JArray arr = JArray.FromObject(lst);
+            foreach (JObject item in arr) item["key"] = item["ID"];
             JObject kq = new JObject();
             kq["arr"] = arr;
             return kq;
@@ -100,18 +175,26 @@ namespace WebApplication.Controllers
             IQueryable<DMATHANG> lst = db.DMATHANGs.Where(x=>x.NAME.Contains(s) || s == "");
             lst = lst.Where(x => x.DNHOMMATHANGID == DNHOMMATHANGID || DNHOMMATHANGID == "");
             lst = lst.Where(x => x.DTHUONGHIEUID == DTHUONGHIEUID || DTHUONGHIEUID == "");
+            foreach (DMATHANG it in lst)
+            {
+                it.DANHSANPHAMs.Clear();
+                it.DKHUYENMAICHITIETs.Clear();
+                it.TDONHANGCHITIETs.Clear();
+            }
             return JObject.FromObject(lst.ToList());
         }
 
         private JObject layDanhSachNhom(JObject param, ref string error)
         {
             List<DNHOMMATHANG> lst = db.DNHOMMATHANGs.OrderBy(x => x.NAME).ToList();
+            foreach (DNHOMMATHANG it in lst) it.DMATHANGs.Clear();
             return JObject.FromObject(lst);
         }
 
         private JObject layDanhSachThuongHieu(JObject param, ref string error)
         {
             List<DTHUONGHIEU> lst = db.DTHUONGHIEUs.OrderBy(x => x.NAME).ToList();
+            foreach (DTHUONGHIEU it in lst) it.DMATHANGs.Clear();
             return JObject.FromObject(lst);
         }
 
@@ -154,14 +237,15 @@ namespace WebApplication.Controllers
             }
             else
             {
-                khRow.TDONHANGs = null;
                 if (ConvertTo.String(khRow.AVATAR).Length == 0)
                 {
                     khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
                 }
+                while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
+                while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
+                while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
                 data = JObject.FromObject(khRow);
             }
-
             return data;
         }
 
@@ -178,11 +262,14 @@ namespace WebApplication.Controllers
             }
             else
             {
-                khRow.TDONHANGs = null;
+                khRow.TDONHANGs.Clear();
                 if (ConvertTo.String(khRow.AVATAR).Length == 0)
                 {
                     khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
                 }
+                while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
+                while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
+                while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
                 data = JObject.FromObject(khRow);
             }
 

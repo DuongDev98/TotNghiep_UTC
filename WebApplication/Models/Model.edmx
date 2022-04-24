@@ -93,8 +93,8 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
           <Property Name="CODE" Type="varchar" MaxLength="255" />
-          <Property Name="NAME" Type="varchar" MaxLength="255" />
           <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DQUANHUYEN">
           <Key>
@@ -102,8 +102,8 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
           <Property Name="CODE" Type="varchar" MaxLength="255" />
-          <Property Name="NAME" Type="varchar" MaxLength="255" />
           <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DTHUONGHIEU">
           <Key>
@@ -118,7 +118,7 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
           <Property Name="CODE" Type="varchar" MaxLength="255" />
-          <Property Name="NAME" Type="varchar" MaxLength="255" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DTINTUC">
           <Key>
@@ -598,7 +598,7 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DQUANHUYENID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DKHACHHANGs" Relationship="Self.FK_DKHACHHANG_DPHUONGXA" FromRole="DPHUONGXA" ToRole="DKHACHHANG" />
           <NavigationProperty Name="DQUANHUYEN" Relationship="Self.FK_DPHUONGXA_DQUANHUYEN" FromRole="DPHUONGXA" ToRole="DQUANHUYEN" />
@@ -610,7 +610,7 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DTINHTHANHID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DKHACHHANGs" Relationship="Self.FK_DKHACHHANG_DQUANHUYEN" FromRole="DQUANHUYEN" ToRole="DKHACHHANG" />
           <NavigationProperty Name="DPHUONGXAs" Relationship="Self.FK_DPHUONGXA_DQUANHUYEN" FromRole="DQUANHUYEN" ToRole="DPHUONGXA" />
@@ -631,7 +631,7 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CODE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DKHACHHANGs" Relationship="Self.FK_DKHACHHANG_DTINHTHANH" FromRole="DTINHTHANH" ToRole="DKHACHHANG" />
           <NavigationProperty Name="DQUANHUYENs" Relationship="Self.FK_DQUANHUYEN_DTINHTHANH" FromRole="DTINHTHANH" ToRole="DQUANHUYEN" />
           <NavigationProperty Name="TDONHANGs" Relationship="Self.FK_TDONHANG_DTINHTHANH" FromRole="DTINHTHANH" ToRole="TDONHANG" />

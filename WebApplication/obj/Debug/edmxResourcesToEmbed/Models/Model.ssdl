@@ -88,8 +88,8 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="CODE" Type="varchar" MaxLength="255" />
-    <Property Name="NAME" Type="varchar" MaxLength="255" />
     <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="DQUANHUYEN">
     <Key>
@@ -97,8 +97,8 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="CODE" Type="varchar" MaxLength="255" />
-    <Property Name="NAME" Type="varchar" MaxLength="255" />
     <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="DTHUONGHIEU">
     <Key>
@@ -113,7 +113,7 @@
     </Key>
     <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
     <Property Name="CODE" Type="varchar" MaxLength="255" />
-    <Property Name="NAME" Type="varchar" MaxLength="255" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="DTINTUC">
     <Key>
