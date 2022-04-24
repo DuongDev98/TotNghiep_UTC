@@ -42,6 +42,7 @@ namespace WebApplication.Controllers
                             case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
+                            case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -54,6 +55,43 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject uploadAvatar(JObject param, ref string error)
+        {
+            JObject kq = new JObject();
+            //upload avatar
+            JArray assets = JArray.FromObject(param["assets"]);
+            if (assets.Count > 0)
+            {
+                //lấy ra file đầu tiên
+                JObject file = JObject.FromObject(assets[0]);
+                string base64 = ConvertTo.String(file["base64"]);
+                //upload anh
+                string DKHACHHANGID = ConvertTo.String(param["khachhangid"]);
+                DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.ID == DKHACHHANGID).FirstOrDefault();
+                if (khRow == null)
+                {
+                    error = "Có lỗi trong quá trình cập nhật ảnh đại diện";
+                }
+                else
+                {
+                    //Xóa ảnh cũ trước
+                    string temp = khRow.AVATAR;
+                    if (temp != null && temp.Length > 0) FileUtils.Delete(Server, "DKHACHHANG", temp);
+                    //cập nhật ảnh mới
+                    temp = FileUtils.Upload(Server, "DKHACHHANG", base64);
+                    khRow.AVATAR = temp;
+                    db.Entry(khRow);
+                    db.SaveChanges();
+                    kq["img"] = "/Images/Upload/DKHACHHANG/" + temp;
+                }
+            }
+            else
+            {
+                error = "Không có ảnh nào được chọn";
+            }
+            return kq;
         }
 
         private JObject capNhatThongTin(JObject param, ref string error)

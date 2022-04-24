@@ -8,6 +8,26 @@ namespace WebApplication.Utils
 {
     public class FileUtils
     {
+        public static string Upload(HttpServerUtilityBase server, string folder, string base64)
+        {
+            string tempFolder = Path.Combine(server.MapPath("~/Images/Upload/" + folder));
+            if (!Directory.Exists(tempFolder))
+            {
+                Directory.CreateDirectory(tempFolder);
+            }
+
+            string fileName = Guid.NewGuid().ToString() + ".jpg";
+
+            string path = Path.Combine(server.MapPath("~/Images/Upload/" + folder + "/" + fileName));
+
+            if (File.Exists(path)) File.Delete(path);
+
+            byte[] byteArr = Convert.FromBase64String(base64);
+            File.WriteAllBytes(path, byteArr);
+
+            return fileName;
+        }
+
         public static string Upload(HttpServerUtilityBase server, string folder, HttpPostedFileBase file)
         {
             string tempFolder = Path.Combine(server.MapPath("~/Images/Upload/" + folder));
