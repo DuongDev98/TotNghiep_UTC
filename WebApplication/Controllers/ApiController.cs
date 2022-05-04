@@ -224,16 +224,55 @@ namespace WebApplication.Controllers
 
         private JObject layDanhSachNhom(JObject param, ref string error)
         {
+            JObject kq = new JObject();
+            JArray lstNhoms = new JArray();
             List<DNHOMMATHANG> lst = db.DNHOMMATHANGs.OrderBy(x => x.NAME).ToList();
-            foreach (DNHOMMATHANG it in lst) it.DMATHANGs.Clear();
-            return JObject.FromObject(lst);
+            foreach (DNHOMMATHANG it in lst)
+            {
+                it.DMATHANGs.Clear();
+                JObject o = JObject.FromObject(it);
+                JArray arr = new JArray();
+                //lấy danh sách mặt hàng, mỗi nhóm lấy 5 sản phẩm
+                List<DMATHANG> lstMatHang = db.DMATHANGs.Where(x => x.DNHOMMATHANGID == it.ID).Take(4).ToList();
+                foreach (DMATHANG mhRow in lstMatHang)
+                {
+                    string avatar = "";
+                    if (mhRow.DANHSANPHAMs != null)
+                    {
+                        DANHSANPHAM anh = mhRow.DANHSANPHAMs.FirstOrDefault();
+                        if (anh != null)
+                        {
+                            avatar = anh.LINK;
+                        }
+                    }
+                    if (avatar.Length == 0)
+                    {
+                        avatar = "noavatar.jpg";
+                    }
+
+                    while (mhRow.DANHSANPHAMs != null) mhRow.DANHSANPHAMs = null;
+                    while (mhRow.DKHUYENMAICHITIETs != null) mhRow.DKHUYENMAICHITIETs = null;
+                    while (mhRow.TDONHANGCHITIETs != null) mhRow.TDONHANGCHITIETs = null;
+                    while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
+                    while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
+                    JObject oMatHang = JObject.FromObject(mhRow);
+                    oMatHang["AVATAR"] = "/Images/Upload/DMATHANG/" + avatar;
+                    arr.Add(oMatHang);
+                }
+                o["DMATHANGs"] = arr;
+                lstNhoms.Add(o);
+            }
+            kq["arr"] = lstNhoms;
+            return kq;
         }
 
         private JObject layDanhSachThuongHieu(JObject param, ref string error)
         {
             List<DTHUONGHIEU> lst = db.DTHUONGHIEUs.OrderBy(x => x.NAME).ToList();
             foreach (DTHUONGHIEU it in lst) it.DMATHANGs.Clear();
-            return JObject.FromObject(lst);
+            JObject arr = new JObject();
+            arr["arr"] = JArray.FromObject(lst);
+            return arr;
         }
 
         private JObject register(JObject param, ref string error)
@@ -275,10 +314,10 @@ namespace WebApplication.Controllers
             }
             else
             {
-                if (ConvertTo.String(khRow.AVATAR).Length == 0)
-                {
-                    khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
-                }
+                string img = "/Images/Upload/DKHACHHANG/";
+                if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
+                else khRow.AVATAR = img + khRow.AVATAR;
+
                 while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
                 while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
                 while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
@@ -301,10 +340,10 @@ namespace WebApplication.Controllers
             else
             {
                 khRow.TDONHANGs.Clear();
-                if (ConvertTo.String(khRow.AVATAR).Length == 0)
-                {
-                    khRow.AVATAR = "/Images/Upload/DKHACHHANG/noavatar.jpg";
-                }
+                string img = "/Images/Upload/DKHACHHANG/";
+                if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
+                else khRow.AVATAR = img + khRow.AVATAR;
+
                 while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
                 while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
                 while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;

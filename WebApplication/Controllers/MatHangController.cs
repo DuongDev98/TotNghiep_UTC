@@ -32,7 +32,7 @@ namespace WebApplication.Controllers
                 dMATHANG.CODE = "Tự động";
             }
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
-            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "CODE", dMATHANG.DNHOMMATHANGID);
+            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID);
             ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
             return View(dMATHANG);
         }
@@ -91,7 +91,7 @@ namespace WebApplication.Controllers
                 error = ex.Message;
             }
             if (error.Length > 0) ViewBag.error = error;
-            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "CODE", model.DNHOMMATHANGID);
+            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", model.DNHOMMATHANGID);
             ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", model.DTHUONGHIEUID);
             return View(model);
         }
@@ -111,7 +111,7 @@ namespace WebApplication.Controllers
         {
             //xóa hết ảnh cũ nếu không còn, thêm ảnh mới và đánh số thứ tự
             int i = 1;
-            List<DANHSANPHAM> lstRemove = db.DANHSANPHAMs.ToList();
+            List<DANHSANPHAM> lstRemove = db.DANHSANPHAMs.Where(x=>x.DMATHANGID == DMATHANGID).ToList();
             foreach (DANHSANPHAM item in lstRemove)
             {
                 bool delete = false;
