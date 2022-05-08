@@ -43,6 +43,7 @@ namespace WebApplication.Controllers
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
+                            case "ThongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -55,6 +56,37 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject thongTinMatHang(JObject param, ref string error)
+        {
+            JObject kq = new JObject();
+            string DMATHANGID = ConvertTo.String(param["ID"]);
+            DMATHANG mhRow = db.DMATHANGs.Find(DMATHANGID);
+            mhRow.MOTA = HttpUtility.HtmlDecode(mhRow.MOTA);
+            string imgUrl = "/Images/Upload/DMATHANG/";
+            if (mhRow.DANHSANPHAMs != null)
+            {
+                foreach (DANHSANPHAM temp  in mhRow.DANHSANPHAMs)
+                {
+                    temp.LINK = imgUrl + temp.LINK;
+                    while (temp.DMATHANG != null) temp.DMATHANG = null;
+                }
+            }
+            else
+            {
+                //thêm ảnh mặc định
+                DANHSANPHAM temp = new DANHSANPHAM();
+                temp.LINK = imgUrl + "/noavatar.jpg";
+                List<DANHSANPHAM> lst = new List<DANHSANPHAM>() { temp };
+                mhRow.DANHSANPHAMs = lst;
+            }
+            mhRow.DKHUYENMAICHITIETs.Clear();
+            mhRow.TDONHANGCHITIETs.Clear();
+            while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
+            while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
+            kq = JObject.FromObject(mhRow);
+            return kq;
         }
 
         private JObject uploadAvatar(JObject param, ref string error)
@@ -208,18 +240,41 @@ namespace WebApplication.Controllers
         private JObject timKiemMatHang(JObject param, ref string error)
         {
             string s = ConvertTo.String(param["s"]);
-            string DNHOMMATHANGID = ConvertTo.String(param["DNHOMMATHANGID"]);
-            string DTHUONGHIEUID = ConvertTo.String(param["DTHUONGHIEUID"]);
+            string DNHOMMATHANGID = ConvertTo.String(param["nhomId"]);
+            string DTHUONGHIEUID = ConvertTo.String(param["thuongHieuId"]);
+
+            JArray arr = new JArray();
             IQueryable<DMATHANG> lst = db.DMATHANGs.Where(x=>x.NAME.Contains(s) || s == "");
             lst = lst.Where(x => x.DNHOMMATHANGID == DNHOMMATHANGID || DNHOMMATHANGID == "");
             lst = lst.Where(x => x.DTHUONGHIEUID == DTHUONGHIEUID || DTHUONGHIEUID == "");
             foreach (DMATHANG it in lst)
             {
+                string avatar = "";
+                if (it.DANHSANPHAMs != null)
+                {
+                    DANHSANPHAM anh = it.DANHSANPHAMs.FirstOrDefault();
+                    if (anh != null)
+                    {
+                        avatar = anh.LINK;
+                    }
+                }
+                if (avatar.Length == 0)
+                {
+                    avatar = "noavatar.jpg";
+                }
                 it.DANHSANPHAMs.Clear();
                 it.DKHUYENMAICHITIETs.Clear();
                 it.TDONHANGCHITIETs.Clear();
+                while (it.DNHOMMATHANG != null) it.DNHOMMATHANG = null;
+                while (it.DTHUONGHIEU != null) it.DTHUONGHIEU = null;
+
+                JObject oMatHang = JObject.FromObject(it);
+                oMatHang["AVATAR"] = "/Images/Upload/DMATHANG/" + avatar;
+                arr.Add(oMatHang);
             }
-            return JObject.FromObject(lst.ToList());
+            JObject item = new JObject();
+            item["arr"] = arr;
+            return item;
         }
 
         private JObject layDanhSachNhom(JObject param, ref string error)
