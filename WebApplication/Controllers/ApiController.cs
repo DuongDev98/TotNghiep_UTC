@@ -14,7 +14,6 @@ namespace WebApplication.Controllers
     public class ApiController : Controller
     {
         private DOANEntities db = new DOANEntities();
-
         public ActionResult v1()
         {
             string error = "";
@@ -43,7 +42,8 @@ namespace WebApplication.Controllers
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
-                            case "ThongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
+                            case "thongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
+                            case "thucHienThanhToan": kq.data = thucHienThanhToan(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -56,6 +56,47 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject thucHienThanhToan(JObject param, ref string error)
+        {
+            TDONHANG dhRow = new TDONHANG();
+            dhRow.ID = Guid.NewGuid().ToString();
+            dhRow.LOAI = 0;
+            dhRow.DKHACHHANGID = ConvertTo.String(param["DKHACHHANGID"]);
+            dhRow.TENNGUOINHAN = ConvertTo.String(param["TENNGUOINHAN"]);
+            dhRow.DIENTHOAI = ConvertTo.String(param["DIENTHOAI"]);
+            dhRow.DIACHI = ConvertTo.String(param["DIACHI"]);
+            dhRow.GHICHU = ConvertTo.String(param["GHICHU"]);
+            dhRow.DTINHTHANHID = ConvertTo.String(param["DTINHTHANHID"]);
+            dhRow.DQUANHUYENID = ConvertTo.String(param["DQUANHUYENID"]);
+            dhRow.DPHUONGXAID = ConvertTo.String(param["DPHUONGXAID"]);
+            dhRow.TRANGTHAI = 0;
+            dhRow.TIENHANG = 0;
+
+            //tính toán
+            List<TDONHANGCHITIET> chitiets = new List<TDONHANGCHITIET>();
+            JArray arrChiTiet = JArray.FromObject(param["TDONHANGCHITIETs"]);
+            foreach (JObject o in arrChiTiet)
+            {
+                TDONHANGCHITIET chiTietRow = new TDONHANGCHITIET();
+                chiTietRow.ID = Guid.NewGuid().ToString();
+                chiTietRow.DMATHANGID = ConvertTo.String(o["DMATHANGID"]);
+                chiTietRow.DONGIA = ConvertTo.Decimal(o["DONGIA"]);
+                chiTietRow.SOLUONG = ConvertTo.Decimal(o["SOLUONG"]);
+                chiTietRow.TDONHANGID = dhRow.ID;
+                chiTietRow.THANHTIEN = chiTietRow.SOLUONG * chiTietRow.DONGIA;
+                dhRow.TIENHANG += chiTietRow.THANHTIEN;
+                chitiets.Add(chiTietRow);
+            }
+            dhRow.TONGCONG = dhRow.TIENHANG;
+            //luu hoa don
+            db.TDONHANGs.Add(dhRow);
+            db.SaveChanges();
+            //luu chi tiet
+            db.TDONHANGCHITIETs.AddRange(chitiets);
+            db.SaveChanges();
+            return null;
         }
 
         private JObject thongTinMatHang(JObject param, ref string error)
