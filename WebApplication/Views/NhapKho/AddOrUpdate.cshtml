@@ -71,17 +71,20 @@
                     </thead>
                     <tbody>
                         @{ int i = 1; }
-                        @*@foreach (var item in Model)
+                        @foreach (var item in Model.TDONHANGCHITIETs)
                         {
                             <tr data-id="@item.ID">
                                 <th scope="row">@i</th>
-                                <td>@item.CODE</td>
-                                <td>@item.NAME</td>
-                                <td>@Convert.ToDouble(item.GIANHAP).ToString("n0")</td>
-                                <td><div class="btn btn-danger btnDelete">Xóa</div></td>
+                                <td>@item.DMATHANG.CODE</td>
+                                <td>@item.DMATHANG.NAME</td>
+                                <td>@Convert.ToDouble(item.DONGIA).ToString("n0")</td>
+                                <td>@Convert.ToDouble(item.SOLUONG).ToString("n0")</td>
+                                <td>@Convert.ToDouble(item.THANHTIEN).ToString("n0")</td>
+                                <td>@item.IMEI</td>
+                                <td></td>
                             </tr>
                             i++;
-                        }*@
+                        }
                     </tbody>
                 </table>
             </div>

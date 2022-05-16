@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
+using WebApplication.Utils;
 
 namespace WebApplication.Controllers
 {
@@ -17,11 +18,13 @@ namespace WebApplication.Controllers
             DateTime fromDate = fDate != null && fDate.Length > 0 ? Convert.ToDateTime(fDate) : DateTime.Now;
             DateTime toDate = tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now;
             //lấy danh sách
-            IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>
-                ((s != null && s.Length > 0 && x.NAME.Contains(s)) || s == null || s.Length == 0)
-                && (x.NGAY >= fromDate && x.NGAY <= toDate)
-                && x.LOAI == 1
-            ).OrderBy(x => x.NAME);
+            //IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>
+            //    ((s != null && s.Length > 0 && x.NAME.Contains(s)) || s == null || s.Length == 0)
+            //    && (x.NGAY >= fromDate && x.NGAY <= toDate)
+            //    && x.LOAI == 1
+            //).OrderBy(x => x.NAME);
+
+            IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>x.LOAI == 1).OrderBy(x => x.NAME);
 
             //tính toán phân trang
             IQueryable<TDONHANG> temp = dataSet as IQueryable<TDONHANG>;
@@ -87,7 +90,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrUpdate(TDONHANG dhRow)
+        public ActionResult AddOrUpdate(TDONHANG temp)
         {
             ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
             ViewBag.NGAY = dateToString(DateTime.Now);
@@ -96,22 +99,76 @@ namespace WebApplication.Controllers
                 string error = "";
                 try
                 {
-                    if (dhRow.ID == null)
+                    string ID = "";
+                    TDONHANG dhRow;
+                    if (temp.ID == null)
                     {
-                        dhRow.ID = Guid.NewGuid().ToString();
+                        ID = Guid.NewGuid().ToString();
+                        dhRow = new TDONHANG();
                         dhRow.NGAY = DateTime.Now;
                         dhRow.NAME = GenCodeHD("NK", 1);
                         dhRow.LOAI = 1;
                     }
+                    else
+                    {
+                        ID = temp.ID;
+                        dhRow = db.TDONHANGs.Find(temp.ID);
+                        //xóa hết chi tiết thêm lại từ đầu
+                        db.TDONHANGCHITIETs.RemoveRange(dhRow.TDONHANGCHITIETs);
+                    }
+
+                    decimal tienHang = 0;
+                    //them chi tiet
+                    foreach (TDONHANGCHITIET ctRow in temp.TDONHANGCHITIETs)
+                    {
+                        ctRow.THANHTIEN = ConvertTo.Decimal(ctRow.DONGIA) * ConvertTo.Decimal(ctRow.SOLUONG);
+                        tienHang += ConvertTo.Decimal(ctRow.THANHTIEN);
+                    }
+
+                    dhRow.TILEGIAMGIA = temp.TILEGIAMGIA;
+                    dhRow.TIENHANG = tienHang;
+                    dhRow.TIENGIAMGIA = temp.TILEGIAMGIA == 0 ? 0 : ConvertTo.Decimal(temp.TIENHANG) * ConvertTo.Decimal(temp.TILEGIAMGIA) / 100;
+                    dhRow.TONGCONG = dhRow.TIENHANG - ConvertTo.Decimal(dhRow.TIENGIAMGIA);
+                    dhRow.DNHACUNGCAPID = temp.DNHACUNGCAPID;
+
+                    if (temp.ID == null)
+                    {
+                        dhRow.ID = ID;
+                        db.TDONHANGs.Add(dhRow);
+                    }
+                    else
+                    {
+                        db.Entry(dhRow).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+
+                    foreach (TDONHANGCHITIET tempRow in temp.TDONHANGCHITIETs)
+                    {
+                        TDONHANGCHITIET ctRow = new TDONHANGCHITIET();
+                        ctRow.ID = Guid.NewGuid().ToString();
+                        ctRow.TDONHANGID = ID;
+                        ctRow.DMATHANGID = tempRow.DMATHANGID;
+                        ctRow.DONGIA = tempRow.DONGIA;
+                        ctRow.SOLUONG = tempRow.SOLUONG;
+                        ctRow.THANHTIEN = tempRow.THANHTIEN;
+                        ctRow.IMEI = tempRow.IMEI;
+                        db.TDONHANGCHITIETs.Add(ctRow);
+                    }
+                    db.SaveChanges();
+
+                    //new { page = 1, s = "", fDate = "", tDate = "" }
+                    return RedirectToAction("Index", new { page = 1, s = "", fDate = "", tDate = "" });
+
+                    //luu thanh tien
                     ViewBag.NGAY = dateToString(dhRow.NGAY);
                 }
                 catch (Exception ex)
                 {
                     error = ex.Message;
                 }
-                if (error.Length > 0) return View();
+                //if (error.Length > 0) return View();
             }
-            return View("Index");
+            return RedirectToAction("Index", new { page = 1, s = "", fDate = "", tDate = "" });
         }
 
         string GenCodeHD(string startStr, int loai)
@@ -123,7 +180,7 @@ namespace WebApplication.Controllers
             foreach (string item in lst)
             {
                 int value = 0;
-                //temp = item.Replace(nhomHang.CODE, "");
+                temp = item.Replace(startStr, "");
                 value = Convert.ToInt32(temp);
                 max = value > max ? value : max;
             }

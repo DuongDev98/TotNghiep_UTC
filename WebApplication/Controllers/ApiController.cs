@@ -62,6 +62,7 @@ namespace WebApplication.Controllers
         {
             TDONHANG dhRow = new TDONHANG();
             dhRow.ID = Guid.NewGuid().ToString();
+            dhRow.NAME = HoaDonController.GenCode(db, "HD");
             dhRow.LOAI = 0;
             dhRow.DKHACHHANGID = ConvertTo.String(param["DKHACHHANGID"]);
             dhRow.TENNGUOINHAN = ConvertTo.String(param["TENNGUOINHAN"]);
@@ -410,6 +411,7 @@ namespace WebApplication.Controllers
             }
             else
             {
+                khRow.TDONHANGs.Clear();
                 string img = "/Images/Upload/DKHACHHANG/";
                 if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
                 else khRow.AVATAR = img + khRow.AVATAR;

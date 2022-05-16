@@ -1,0 +1,168 @@
+﻿@model WebApplication.Models.TDONHANG
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Hóa đơn</h4>
+    <hr />
+    <div class="row">
+        <div class="col-3">
+            <dl class="dl-horizontal">
+                <dt>
+                    Ngày
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NGAY)
+                </dd>
+
+                <dt>
+                    Số HĐ
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NAME)
+                </dd>
+
+                <dt>
+                    Tiền hàng
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TIENHANG)
+                </dd>
+
+                <dt>
+                    Khách hàng
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DKHACHHANG.NAME)
+                </dd>
+
+                <dt>
+                    Tỉ lệ giảm
+                </dt>
+
+                <dd>
+                    @{ WebApplication.Utils.ConvertTo.Int(Model.TILEGIAMGIA); }
+                </dd>
+
+                <dt>
+                    Tiền giảm giá
+                </dt>
+
+                <dd>
+                    @{ WebApplication.Utils.ConvertTo.Int(Model.TIENGIAMGIA); }
+                </dd>
+
+                <dt>
+                    Tổng cộng
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TONGCONG)
+                </dd>
+
+                @*<dt>
+            @Html.DisplayNameFor(model => model.TIENTHANHTOAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TIENTHANHTOAN)
+        </dd>*@
+
+                <dt>
+                    Trạng thái
+                </dt>
+
+                <dd>
+                    @{
+                        switch (Model.TRANGTHAI)
+                        {
+                            case 0: <p>Chờ xử lý</p>; break;
+                            case 1: <p>Đã hủy</p>; break;
+                            case 2: <p>Đang giao hàng</p>; break;
+                            case 3: <p>Đã nhận hàng</p>; break;
+                            case 4: <p>Đã thanh toán</p>; break;
+                        }
+                    }
+                </dd>
+
+                <dt>
+                    Ghi chú
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GHICHU)
+                </dd>
+
+                <dt>
+                    Người nhận
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TENNGUOINHAN)
+                </dd>
+
+                <dt>
+                    Điện thoại nhận
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DIENTHOAI)
+                </dd>
+
+                <dt>
+                    Tỉnh/thành
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DTINHTHANH.NAME)
+                </dd>
+
+                <dt>
+                    Quận/Huyện
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DQUANHUYEN.NAME)
+                </dd>
+
+                <dt>
+                    Phường/Xã
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DPHUONGXA.NAME)
+                </dd>
+
+                <dt>
+                    Địa chỉ nhận
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DIACHI)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-9">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Mã hàng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
