@@ -66,6 +66,37 @@ namespace WebApplication.Controllers
             return code;
         }
 
+        public ActionResult CapNhatImei(string id, string imei)
+        {
+            try
+            {
+                TDONHANGCHITIET ctRow = db.TDONHANGCHITIETs.Find(id);
+                ctRow.IMEI = imei;
+                db.Entry(ctRow);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+            return Content("");
+        }
+        public ActionResult CapNhatTrangThai(string id, string trangThai)
+        {
+            try
+            {
+                TDONHANG dhRow = db.TDONHANGs.Find(id);
+                dhRow.TRANGTHAI = int.Parse(trangThai);
+                db.Entry(dhRow);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+            return Content("");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

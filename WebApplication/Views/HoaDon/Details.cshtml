@@ -6,7 +6,10 @@
 }
 
 <div>
-    <h4>Hóa đơn</h4>
+    <div class="row">
+        <h4>Hóa đơn</h4>
+        <div class="btn btn-warning btnDoiTrangThai" style="margin-left: auto; margin-right: 15px;" data-id="@Model.ID">Đổi trạng thái</div>
+    </div>
     <hr />
     <div class="row">
         <div class="col-3">
@@ -153,11 +156,39 @@
             <table class="table table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">#</th>
+                        @*<th scope="col">#</th>*@
                         <th scope="col">Mã hàng</th>
+                        <th scope="col">Mặt hàng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Thành tiền</th>
+                        <th scope="col">Imei/Seri</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        foreach (WebApplication.Models.TDONHANGCHITIET ctRow in Model.TDONHANGCHITIETs)
+                        {
+                            <tr>
+                                <td>@ctRow.DMATHANG.CODE</td>
+                                <td>@ctRow.DMATHANG.NAME</td>
+                                <td>@ctRow.DONGIA</td>
+                                <td>@ctRow.SOLUONG</td>
+                                <td>@ctRow.THANHTIEN</td>
+                                <td>@ctRow.IMEI</td>
+                                <td>
+                                @{
+                                    int coImei = ctRow.DMATHANG.COIMEI ?? 0;
+                                    if (coImei > 0)
+                                    {
+                                        <div id="btnNhapImei" data-id="@ctRow.ID" class="btn btn-info">Nhập Imei/Seri</div>
+                                    }
+                                }
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>

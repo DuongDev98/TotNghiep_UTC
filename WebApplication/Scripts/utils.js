@@ -75,6 +75,33 @@ function ShowAddEditForm(title, html, urlSubmit) {
             //upload ảnh mặt hàng
             $('#modal-dialog').find("form").submit();
         }
+        else if (urlSubmit.indexOf("HoaDon/CapNhatImei") > -1)
+        {
+            let formData = null;
+            let imei = $('#modal-dialog').find(".ipImei").val();
+            $.post(urlSubmit + '?imei=' + imei, formData, (success) => {
+                if (success.length == 0) {
+                    $('#modal-dialog').find(".alert-danger").attr("hidden", "hidden");
+                    location.reload();
+                } else {
+                    $('#modal-dialog').find(".alert-danger").removeAttr("hidden");
+                    $('#modal-dialog').find(".alert-danger").text(success);
+                }
+            });
+        }
+        else if (urlSubmit.indexOf("HoaDon/CapNhatTrangThai") > -1) {
+            let formData = null;
+            let trangThai = $('#modal-dialog').find(".ipTrangThai").val();
+            $.post(urlSubmit + '?trangThai=' + trangThai, formData, (success) => {
+                if (success.length == 0) {
+                    $('#modal-dialog').find(".alert-danger").attr("hidden", "hidden");
+                    location.reload();
+                } else {
+                    $('#modal-dialog').find(".alert-danger").removeAttr("hidden");
+                    $('#modal-dialog').find(".alert-danger").text(success);
+                }
+            });
+        }
         else {
             //upload thông tin
             let formData = $('#modal-dialog').find("form").serializeArray();
@@ -480,4 +507,22 @@ $(document).ready(function () {
         $("#numTienGiam").val(tienGiamGia);
         $("#numTongCong").val(tongCong);
     }
+
+    $('tbody').on("click", '#btnNhapImei', function () {
+        let dataId = $(this).attr("data-id");
+        let html = '<div><input class="form-control ipImei" type="text" value="" name="IMEI"/></div>';
+        ShowAddEditForm("Nhập Imei bán hàng", html, "/HoaDon/CapNhatImei/" + dataId);
+    });
+
+    $('.row').on("click", '.btnDoiTrangThai', function () {
+        let dataId = $(this).attr("data-id");
+        let html = '<select class="custom-select ipTrangThai">' +
+                        '<option value="0">Chờ xử lý</option>' +
+                        '<option value="1">Đã hủy</option>' +
+                        '<option value="2">Đang giao hàng</option>' +
+                        '<option value="3">Đã nhận hàng</option>'+
+                        '<option value="4">Đã thanh toán</option>'+
+                  '</select>';
+        ShowAddEditForm("Chọn trạng thái", html, "/HoaDon/CapNhatTrangThai/" + dataId);
+    });
 });
