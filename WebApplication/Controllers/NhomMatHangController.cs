@@ -38,7 +38,7 @@ namespace WebApplication.Controllers
                 if (temp.CODE == null || temp.CODE.Length == 0) error = "Mã nhóm hàng không được trống!";
                 else if (temp.NAME == null || temp.NAME.Length == 0) error = "Tên nhóm hàng không được trống!";
                 //kiểm tra không được chứa mã nhóm khác
-                bool contains = db.DNHOMMATHANGs.Where(x => x.CODE.Contains(temp.CODE) || temp.CODE.Contains(x.CODE)).ToList().Count > 0;
+                bool contains = db.DNHOMMATHANGs.Where(x => (x.CODE.Contains(temp.CODE) || temp.CODE.Contains(x.CODE)) && x.ID != temp.ID).ToList().Count > 0;
                 if (contains)
                 {
                     error = "Mã nhóm mặt hàng không được chứa nhóm mặt hàng khác";

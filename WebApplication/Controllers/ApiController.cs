@@ -40,6 +40,7 @@ namespace WebApplication.Controllers
                             case "dsTinhThanh": kq.data = layDanhSachTinhThanh(attr.param, ref error); break;
                             case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
+                            //case "duLieuDiaDiem": kq.data = layDuLieuDiaDiem(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
                             case "thongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
@@ -109,7 +110,7 @@ namespace WebApplication.Controllers
             string imgUrl = "/Images/Upload/DMATHANG/";
             if (mhRow.DANHSANPHAMs != null)
             {
-                foreach (DANHSANPHAM temp  in mhRow.DANHSANPHAMs)
+                foreach (DANHSANPHAM temp in mhRow.DANHSANPHAMs)
                 {
                     temp.LINK = imgUrl + temp.LINK;
                     while (temp.DMATHANG != null) temp.DMATHANG = null;
@@ -217,15 +218,17 @@ namespace WebApplication.Controllers
         private JObject layDanhSachPhuongXa(JObject param, ref string error)
         {
             string DQUANHUYENID = ConvertTo.String(param["ID"]);
-            List<DPHUONGXA> lst = db.DPHUONGXAs.Where(x=>x.DQUANHUYENID == DQUANHUYENID).OrderBy(x => x.NAME).ToList();
+            JArray arr = new JArray();
+            List<DPHUONGXA> lst = db.DPHUONGXAs.Where(x => x.DQUANHUYENID == DQUANHUYENID).OrderBy(x => x.NAME).ToList();
             foreach (DPHUONGXA item in lst)
             {
-                item.DKHACHHANGs.Clear();
-                item.TDONHANGs.Clear();
-                while (item.DQUANHUYEN != null) item.DQUANHUYEN = null;
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                o["DQUANHUYENID"] = item.DQUANHUYENID;
+                arr.Add(o);
             }
-            JArray arr = JArray.FromObject(lst);
-            foreach (JObject item in arr) item["key"] = item["ID"];
             JObject kq = new JObject();
             kq["arr"] = arr;
             return kq;
@@ -234,16 +237,17 @@ namespace WebApplication.Controllers
         private JObject layDanhSachQuanHuyen(JObject param, ref string error)
         {
             string DTINHTHANHID = ConvertTo.String(param["ID"]);
+            JArray arr = new JArray();
             List<DQUANHUYEN> lst = db.DQUANHUYENs.Where(x => x.DTINHTHANHID == DTINHTHANHID).OrderBy(x => x.NAME).ToList();
             foreach (DQUANHUYEN item in lst)
             {
-                item.DKHACHHANGs.Clear();
-                item.DPHUONGXAs.Clear();
-                item.TDONHANGs.Clear();
-                while (item.DTINHTHANH != null) item.DTINHTHANH = null;
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                o["DTINHTHANHID"] = item.DTINHTHANHID;
+                arr.Add(o);
             }
-            JArray arr = JArray.FromObject(lst);
-            foreach (JObject item in arr) item["key"] = item["ID"];
             JObject kq = new JObject();
             kq["arr"] = arr;
             return kq;
@@ -251,18 +255,78 @@ namespace WebApplication.Controllers
 
         private JObject layDanhSachTinhThanh(JObject param, ref string error)
         {
+            JArray arr = new JArray();
             List<DTINHTHANH> lst = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
             foreach (DTINHTHANH item in lst)
             {
-                item.DKHACHHANGs.Clear();
-                item.DQUANHUYENs.Clear();
-                item.TDONHANGs.Clear();
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                arr.Add(o);
             }
-            JArray arr = JArray.FromObject(lst);
-            foreach (JObject item in arr) item["key"] = item["ID"];
             JObject kq = new JObject();
             kq["arr"] = arr;
             return kq;
+        }
+
+        public static void exportDuLieuDiaDiem(DOANEntities db)
+        {
+            JObject kq = new JObject();
+            JArray arrTinhThanh = new JArray();
+            JArray arrQuanHuyen = new JArray();
+            JArray arrPhuongXa = new JArray();
+            //dữ liệu tỉnh thành
+            List<DTINHTHANH> lstTinhThanh = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
+            foreach (DTINHTHANH item in lstTinhThanh)
+            {
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                arrTinhThanh.Add(o);
+            }
+            //JArray arrTinhThanh = JArray.FromObject(lstTinhThanh);
+            //dữ liệu quận huyện
+            List<DQUANHUYEN> lstQuanHuyen = db.DQUANHUYENs.OrderBy(x => x.NAME).ToList();
+            foreach (DQUANHUYEN item in lstQuanHuyen)
+            {
+                //item.DKHACHHANGs.Clear();
+                //item.DPHUONGXAs.Clear();
+                //item.TDONHANGs.Clear();
+                //while (item.DTINHTHANH != null) item.DTINHTHANH = null;
+
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                o["DTINHTHANHID"] = item.DTINHTHANHID;
+                arrQuanHuyen.Add(o);
+            }
+            //JArray arrQuanHuyen = JArray.FromObject(lstQuanHuyen);
+            //dữ liệu phường xã
+            List<DPHUONGXA> lstPhuongXa = db.DPHUONGXAs.OrderBy(x => x.NAME).ToList();
+            foreach (DPHUONGXA item in lstPhuongXa)
+            {
+                //item.DKHACHHANGs.Clear();
+                //item.TDONHANGs.Clear();
+                //while (item.DQUANHUYEN != null) item.DQUANHUYEN = null;
+
+                JObject o = new JObject();
+                o["ID"] = item.ID;
+                o["CODE"] = item.CODE;
+                o["NAME"] = item.NAME;
+                o["DQUANHUYENID"] = item.DQUANHUYENID;
+                arrPhuongXa.Add(o);
+            }
+            //JArray arrPhuongXa = JArray.FromObject(lstPhuongXa);
+
+            StreamWriter streamWriter = new StreamWriter(@"E:\dulieutinhthanh.json");
+            streamWriter.WriteLine(JsonConvert.SerializeObject(arrTinhThanh));
+            streamWriter = new StreamWriter(@"E:\dulieuquanhuyen.json");
+            streamWriter.WriteLine(JsonConvert.SerializeObject(arrQuanHuyen));
+            streamWriter = new StreamWriter(@"E:\dulieuphuongxa.json");
+            streamWriter.WriteLine(JsonConvert.SerializeObject(arrPhuongXa));
         }
 
         private JObject layDanhSachTinTuc(JObject param, ref string error)

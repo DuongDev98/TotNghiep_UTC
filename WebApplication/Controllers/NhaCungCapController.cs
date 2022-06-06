@@ -39,7 +39,7 @@ namespace WebApplication.Controllers
                 else if (temp.DIENTHOAI == null || temp.DIENTHOAI.Length == 0) error = "Điện thoại không được trống!";
                 else if (temp.DIACHI == null || temp.DIACHI.Length == 0) error = "Địa chỉ không được trống!";
                 //không được trùng tên
-                bool contains = db.DNHACUNGCAPs.Where(x => x.NAME == temp.NAME).ToList().Count > 0;
+                bool contains = db.DNHACUNGCAPs.Where(x => (x.NAME == temp.NAME) && x.ID != id).ToList().Count > 0;
                 if (contains)
                 {
                     error = "Tên nhà cung cấp đã tồn tại";

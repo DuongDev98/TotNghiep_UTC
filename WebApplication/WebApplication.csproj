@@ -204,8 +204,20 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ReportViewer\BcHangBanTheoNgay.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ConvertTo.cs" />
     <Compile Include="Utils\FileUtils.cs" />
+    <Compile Include="Views\Report\BaoCaoHangBanTheoNgay.ascx.cs">
+      <DependentUpon>BaoCaoHangBanTheoNgay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Report\BaoCaoHangBanTheoNgay.ascx.designer.cs">
+      <DependentUpon>BaoCaoHangBanTheoNgay.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
@@ -651,6 +663,7 @@
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\utils.js" />
+    <Content Include="Views\Report\BaoCaoHangBanTheoNgay.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -672,7 +685,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Images\DKHACHHANG\" />
     <Folder Include="Images\DMATHANG\" />
-    <Folder Include="Views\Api\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -732,6 +744,17 @@
     <Content Include="Views\TinTuc\Index.cshtml" />
     <Content Include="Views\HoaDon\Details.cshtml" />
     <Content Include="Views\HoaDon\Index.cshtml" />
+    <Content Include="ReportViewer\BcHangBanTheoNgay.xsc">
+      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
+    </Content>
+    <None Include="ReportViewer\BcHangBanTheoNgay.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BcHangBanTheoNgay.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="ReportViewer\BcHangBanTheoNgay.xss">
+      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

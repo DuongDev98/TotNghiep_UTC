@@ -10,6 +10,7 @@ namespace WebApplication.Controllers
     {
         public ActionResult Index()
         {
+            //ApiController.exportDuLieuDiaDiem(new Models.DOANEntities());
             return View();
         }
     }

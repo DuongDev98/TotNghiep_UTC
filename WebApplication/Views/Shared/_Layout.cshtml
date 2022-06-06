@@ -37,7 +37,7 @@
                             <li class="dropdown-item">@Html.ActionLink("Danh mục thương hiệu", "Index", "ThuongHieu")</li>
                             <li class="dropdown-item">@Html.ActionLink("Danh mục mặt hàng", "Index", "MatHang")</li>
                             <li class="dropdown-item">@Html.ActionLink("Danh mục khách hàng", "Index", "TrangChu")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Chương trình khuyến mại", "Index", "TrangChu")</li>
+                            @*<li class="dropdown-item">@Html.ActionLink("Chương trình khuyến mại", "Index", "TrangChu")</li>*@
                             <li class="dropdown-item">@Html.ActionLink("Quản lý đơn hàng", "Index", "HoaDon")</li>
                         </ul>
                     </li>
@@ -52,21 +52,23 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    @*<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Công nợ
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li class="dropdown-item">@Html.ActionLink("Công nợ nhà cung cấp", "Index", "TrangChu")</li>
                         </ul>
-                    </li>
+                    </li>*@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Báo cáo
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item">@Html.ActionLink("Báo cáo công nợ nhà cung cấp", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Báo cáo mặt hàng bán theo ngày", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Báo cáo mặt hàng nhập theo ngày", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Báo cáo hàng bán chạy", "Index", "TrangChu")</li>
                         </ul>
                     </li>
                 </ul>
