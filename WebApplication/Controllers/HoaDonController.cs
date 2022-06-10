@@ -13,7 +13,6 @@ namespace WebApplication.Controllers
     public class HoaDonController : Controller
     {
         private DOANEntities db = new DOANEntities();
-
         public ActionResult Index()
         {
             var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DKHUYENMAI).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH);

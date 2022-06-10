@@ -40,11 +40,12 @@ namespace WebApplication.Controllers
                             case "dsTinhThanh": kq.data = layDanhSachTinhThanh(attr.param, ref error); break;
                             case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
                             case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
-                            //case "duLieuDiaDiem": kq.data = layDuLieuDiaDiem(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
                             case "thongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
                             case "thucHienThanhToan": kq.data = thucHienThanhToan(attr.param, ref error); break;
+                            case "soLuongDon": kq.data = laySoLuongDon(attr.param, ref error); break;
+                            case "danhSachDonHang": kq.data = danhSachDonHang(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -59,11 +60,73 @@ namespace WebApplication.Controllers
             return Content(JsonConvert.SerializeObject(kq));
         }
 
+        private JObject danhSachDonHang(JObject param, ref string error)
+        {
+            string temp = ConvertTo.String(param["TRANGTHAI"]);
+            string DKHACHHANGID = ConvertTo.String(param["DKHACHHANGID"]);
+            IQueryable<TDONHANG> iQueryable = db.TDONHANGs.Where(x => x.DKHACHHANGID == DKHACHHANGID);
+            if (temp.Length > 0)
+            {
+                int trangThai = ConvertTo.Int(temp);
+                iQueryable = iQueryable.Where(x => x.TRANGTHAI == trangThai);
+            }
+            JArray arr = new JArray();
+            List<TDONHANG> lstItems = iQueryable.ToList();
+            foreach (TDONHANG item in lstItems)
+            {
+                JObject donHang = new JObject();
+                donHang["NGAY"] = (item.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+                donHang["NAME"] = item.NAME;
+                donHang["TONGCONG"] = item.TONGCONG;
+                donHang["TRANGTHAI"] = GetNameTrangThai(item.TRANGTHAI ?? 0);
+                JArray arrChiTiet = new JArray();
+                foreach (TDONHANGCHITIET chitiet in item.TDONHANGCHITIETs)
+                {
+                    JObject ct = new JObject();
+                    ct["CODE"] = chitiet.DMATHANG.CODE;
+                    ct["NAME"] = chitiet.DMATHANG.NAME;
+                    ct["DONGIA"] = chitiet.DONGIA;
+                    ct["SOLUONG"] = chitiet.SOLUONG;
+                    ct["THANHTIEN"] = chitiet.THANHTIEN;
+                    arrChiTiet.Add(ct);
+                }
+                donHang["CHITIET"] = arrChiTiet;
+                arr.Add(donHang);
+            }
+            JObject kq = new JObject();
+            kq["arr"] = arr;
+            return kq;
+        }
+
+        private string GetNameTrangThai(int tRANGTHAI)
+        {
+            switch (tRANGTHAI)
+            {
+                case 1: return "Đã hủy";
+                case 2: return "Đang giao hàng";
+                case 3: return "Đã nhận hàng";
+                case 4: return "Đã thanh toán";
+                default: return "Chờ xử lý";
+            }
+        }
+
+        private JObject laySoLuongDon(JObject param, ref string error)
+        {
+            string DKHACHHANGID = ConvertTo.String(param["ID"]);
+            int slChoXyLy = db.TDONHANGs.Where(x => x.DKHACHHANGID == DKHACHHANGID && x.TRANGTHAI == 0).ToList().Count;
+            int slDangGiao = db.TDONHANGs.Where(x => x.DKHACHHANGID == DKHACHHANGID && x.TRANGTHAI == 2).ToList().Count;
+            JObject item = new JObject();
+            item["slChoXyLy"] = slChoXyLy;
+            item["slDangGiao"] = slDangGiao;
+            return item;
+        }
+
         private JObject thucHienThanhToan(JObject param, ref string error)
         {
             TDONHANG dhRow = new TDONHANG();
             dhRow.ID = Guid.NewGuid().ToString();
             dhRow.NAME = HoaDonController.GenCode(db, "HD");
+            dhRow.NGAY = DateTime.Now.Date;
             dhRow.LOAI = 0;
             dhRow.DKHACHHANGID = ConvertTo.String(param["DKHACHHANGID"]);
             dhRow.TENNGUOINHAN = ConvertTo.String(param["TENNGUOINHAN"]);
@@ -286,16 +349,10 @@ namespace WebApplication.Controllers
                 o["NAME"] = item.NAME;
                 arrTinhThanh.Add(o);
             }
-            //JArray arrTinhThanh = JArray.FromObject(lstTinhThanh);
             //dữ liệu quận huyện
             List<DQUANHUYEN> lstQuanHuyen = db.DQUANHUYENs.OrderBy(x => x.NAME).ToList();
             foreach (DQUANHUYEN item in lstQuanHuyen)
             {
-                //item.DKHACHHANGs.Clear();
-                //item.DPHUONGXAs.Clear();
-                //item.TDONHANGs.Clear();
-                //while (item.DTINHTHANH != null) item.DTINHTHANH = null;
-
                 JObject o = new JObject();
                 o["ID"] = item.ID;
                 o["CODE"] = item.CODE;
@@ -303,15 +360,10 @@ namespace WebApplication.Controllers
                 o["DTINHTHANHID"] = item.DTINHTHANHID;
                 arrQuanHuyen.Add(o);
             }
-            //JArray arrQuanHuyen = JArray.FromObject(lstQuanHuyen);
             //dữ liệu phường xã
             List<DPHUONGXA> lstPhuongXa = db.DPHUONGXAs.OrderBy(x => x.NAME).ToList();
             foreach (DPHUONGXA item in lstPhuongXa)
             {
-                //item.DKHACHHANGs.Clear();
-                //item.TDONHANGs.Clear();
-                //while (item.DQUANHUYEN != null) item.DQUANHUYEN = null;
-
                 JObject o = new JObject();
                 o["ID"] = item.ID;
                 o["CODE"] = item.CODE;
@@ -319,8 +371,6 @@ namespace WebApplication.Controllers
                 o["DQUANHUYENID"] = item.DQUANHUYENID;
                 arrPhuongXa.Add(o);
             }
-            //JArray arrPhuongXa = JArray.FromObject(lstPhuongXa);
-
             StreamWriter streamWriter = new StreamWriter(@"E:\dulieutinhthanh.json");
             streamWriter.WriteLine(JsonConvert.SerializeObject(arrTinhThanh));
             streamWriter = new StreamWriter(@"E:\dulieuquanhuyen.json");
