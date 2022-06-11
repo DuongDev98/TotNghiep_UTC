@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
@@ -46,6 +48,7 @@ namespace WebApplication.Controllers
                             case "thucHienThanhToan": kq.data = thucHienThanhToan(attr.param, ref error); break;
                             case "soLuongDon": kq.data = laySoLuongDon(attr.param, ref error); break;
                             case "danhSachDonHang": kq.data = danhSachDonHang(attr.param, ref error); break;
+                            case "guiEmailXacNhan": kq.data = guiEmailXacNhan(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -58,6 +61,46 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject guiEmailXacNhan(JObject param, ref string error)
+        {
+            string code = ConvertTo.String(param["CODE"]);
+            string email = ConvertTo.String(param["EMAIL"]);
+            string noiDung = "Mã xác nhận của bạn là: " + code;
+            try {
+                SendEmail(email, noiDung);
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            JObject kq = new JObject();
+            return kq;
+        }
+
+        void SendEmail(string email, string noiDung)
+        {
+            string To = email;
+            string From = "duongdev98@gmail.com";
+            string GoogleAppPassword = "qdirmnqeoxdmzdzk";
+            string Subject = "Mã xác nhận";
+            string Body = "<p>"+noiDung+"</p>";
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(From, GoogleAppPassword),
+                EnableSsl = true,
+            };
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(From),
+                Subject = Subject,
+                Body = Body,
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(To);
+            smtpClient.Send(mailMessage);
         }
 
         private JObject danhSachDonHang(JObject param, ref string error)
@@ -136,6 +179,7 @@ namespace WebApplication.Controllers
             dhRow.DTINHTHANHID = ConvertTo.String(param["DTINHTHANHID"]);
             dhRow.DQUANHUYENID = ConvertTo.String(param["DQUANHUYENID"]);
             dhRow.DPHUONGXAID = ConvertTo.String(param["DPHUONGXAID"]);
+            dhRow.COD = ConvertTo.Int(param["COD"]);
             dhRow.TRANGTHAI = 0;
             dhRow.TIENHANG = 0;
 

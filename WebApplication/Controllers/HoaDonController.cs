@@ -44,7 +44,7 @@ namespace WebApplication.Controllers
         {
             string code = start, temp = "";
             //lấy số thứ tự
-            List<string> lst = db.Database.SqlQuery<string>("SELECT CODE FROM DMATHANG WHERE CODE LIKE '" + start + "%'").ToList();
+            List<string> lst = db.Database.SqlQuery<string>("SELECT NAME FROM TDONHANG WHERE NAME LIKE '" + start + "%' ORDER BY NAME DESC").Take(1).ToList();
             int max = 0;
             foreach (string item in lst)
             {

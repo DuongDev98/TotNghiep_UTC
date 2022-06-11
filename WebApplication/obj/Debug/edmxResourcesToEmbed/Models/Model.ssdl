@@ -148,6 +148,7 @@
     <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
     <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
     <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
+    <Property Name="COD" Type="int" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

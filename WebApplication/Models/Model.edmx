@@ -153,6 +153,7 @@
           <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
           <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
           <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
+          <Property Name="COD" Type="int" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -667,6 +668,7 @@
           <NavigationProperty Name="DQUANHUYEN" Relationship="Self.FK_TDONHANG_DQUANHUYEN" FromRole="TDONHANG" ToRole="DQUANHUYEN" />
           <NavigationProperty Name="DTINHTHANH" Relationship="Self.FK_TDONHANG_DTINHTHANH" FromRole="TDONHANG" ToRole="DTINHTHANH" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK_TDONHANGCHITIET_TDONHANG" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
+          <Property Name="COD" Type="Int32" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -1150,6 +1152,7 @@
           <EntitySetMapping Name="TDONHANGs">
             <EntityTypeMapping TypeName="DOANModel.TDONHANG">
               <MappingFragment StoreEntitySet="TDONHANG">
+                <ScalarProperty Name="COD" ColumnName="COD" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LOAI" ColumnName="LOAI" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
