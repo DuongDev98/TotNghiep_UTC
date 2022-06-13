@@ -49,6 +49,7 @@ namespace WebApplication.Controllers
                             case "soLuongDon": kq.data = laySoLuongDon(attr.param, ref error); break;
                             case "danhSachDonHang": kq.data = danhSachDonHang(attr.param, ref error); break;
                             case "guiEmailXacNhan": kq.data = guiEmailXacNhan(attr.param, ref error); break;
+                            case "getUserWithFb": kq.data = getUserWithFb(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -61,6 +62,33 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject getUserWithFb(JObject param, ref string error)
+        {
+            string fbId = ConvertTo.String(param["fbId"]);
+            string name = ConvertTo.String(param["name"]);
+            DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.FACEBOOKID == fbId).FirstOrDefault();
+            if (khRow == null)
+            {
+                khRow = new DKHACHHANG();
+                khRow.ID = Guid.NewGuid().ToString();
+                khRow.NAME = fbId;
+                khRow.FACEBOOKID = fbId;
+                db.DKHACHHANGs.Add(khRow);
+                db.SaveChanges();
+            }
+            else
+            {
+                if (khRow.NAME != name && name.Length > 0)
+                {
+                    khRow.NAME = name;
+                    db.Entry(khRow);
+                    db.SaveChanges();
+                }
+            }
+            JObject data = GetPostUserInfo(khRow, ref error);
+            return data;
         }
 
         private JObject guiEmailXacNhan(JObject param, ref string error)
@@ -589,6 +617,14 @@ namespace WebApplication.Controllers
             string password = ConvertTo.String(param["matkhau"]);
 
             DKHACHHANG khRow = db.DKHACHHANGs.Where(x=>x.MATKHAU == password && (x.TAIKHOAN == username || x.EMAIL == username || x.DIENTHOAI == username)).FirstOrDefault();
+            data = GetPostUserInfo(khRow, ref error);
+
+            return data;
+        }
+
+        private JObject GetPostUserInfo(DKHACHHANG khRow, ref string error)
+        {
+            JObject data = new JObject();
             if (khRow == null)
             {
                 error = "Thông tin đăng nhập không đúng";
@@ -605,7 +641,6 @@ namespace WebApplication.Controllers
                 while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
                 data = JObject.FromObject(khRow);
             }
-
             return data;
         }
     }
