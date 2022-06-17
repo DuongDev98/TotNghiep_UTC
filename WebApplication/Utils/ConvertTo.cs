@@ -16,7 +16,7 @@ namespace WebApplication.Utils
         {
             if (o == null) return 0;
             int kq;
-            if (int.TryParse(o.ToString(), out kq))
+            if (int.TryParse(o.ToString().Replace(".00", ""), out kq))
             {
                 return kq;
             }
@@ -51,6 +51,11 @@ namespace WebApplication.Utils
                 return kq;
             }
             return new DateTime(1, 0, 0);
+        }
+        public static string dateToString(DateTime? tmp)
+        {
+            DateTime time = Convert.ToDateTime(tmp);
+            return time.Year + "-" + (time.Month.ToString().Length == 1 ? "0" : "") + time.Month + "-" + (time.Day.ToString().Length == 1 ? "0" : "") + time.Day;
         }
     }
 }

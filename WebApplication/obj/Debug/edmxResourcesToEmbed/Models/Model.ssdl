@@ -41,14 +41,7 @@
     <Property Name="DNHOMMATHANGID" Type="varchar" MaxLength="36" />
     <Property Name="PHANTRAMGIAMGIA" Type="decimal" Precision="18" Scale="2" />
     <Property Name="TONGBILL" Type="decimal" Precision="18" Scale="2" />
-  </EntityType>
-  <EntityType Name="DKHUYENMAICHITIET">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
-    <Property Name="DKHUYENMAIID" Type="varchar" MaxLength="36" />
-    <Property Name="DMATHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="DTHUONGHIEUID" Type="varchar" MaxLength="36" />
   </EntityType>
   <EntityType Name="DMATHANG">
     <Key>
@@ -165,6 +158,18 @@
     <Property Name="TDONHANGID" Type="varchar" MaxLength="36" />
     <Property Name="IMEI" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="TTHUCHI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nchar" MaxLength="10" />
+    <Property Name="DNHACUNGCAPID" Type="varchar" MaxLength="36" />
+    <Property Name="LOAI" Type="int" />
+    <Property Name="THU" Type="int" />
+    <Property Name="CHI" Type="int" />
+    <Property Name="NGAY" Type="date" />
+  </EntityType>
   <Association Name="FK_DKHACHHANG_DPHUONGXA">
     <End Role="DPHUONGXA" Type="Self.DPHUONGXA" Multiplicity="0..1" />
     <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
@@ -198,30 +203,6 @@
       </Principal>
       <Dependent Role="DKHACHHANG">
         <PropertyRef Name="DTINHTHANHID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DKHUYENMAICHITIET_DKHUYENMAI">
-    <End Role="DKHUYENMAI" Type="Self.DKHUYENMAI" Multiplicity="0..1" />
-    <End Role="DKHUYENMAICHITIET" Type="Self.DKHUYENMAICHITIET" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DKHUYENMAI">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DKHUYENMAICHITIET">
-        <PropertyRef Name="DKHUYENMAIID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DKHUYENMAICHITIET_DMATHANG">
-    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
-    <End Role="DKHUYENMAICHITIET" Type="Self.DKHUYENMAICHITIET" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DMATHANG">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DKHUYENMAICHITIET">
-        <PropertyRef Name="DMATHANGID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -294,18 +275,6 @@
       </Principal>
       <Dependent Role="TDONHANG">
         <PropertyRef Name="DKHACHHANGID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TDONHANG_DKHUYENMAI">
-    <End Role="DKHUYENMAI" Type="Self.DKHUYENMAI" Multiplicity="0..1" />
-    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DKHUYENMAI">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TDONHANG">
-        <PropertyRef Name="DKHUYENMAIID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -397,7 +366,6 @@
     <EntitySet Name="DANHSANPHAM" EntityType="Self.DANHSANPHAM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DKHACHHANG" EntityType="Self.DKHACHHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DKHUYENMAI" EntityType="Self.DKHUYENMAI" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="DKHUYENMAICHITIET" EntityType="Self.DKHUYENMAICHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DMATHANG" EntityType="Self.DMATHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DNHACUNGCAP" EntityType="Self.DNHACUNGCAP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DNHOMMATHANG" EntityType="Self.DNHOMMATHANG" Schema="dbo" store:Type="Tables" />
@@ -408,6 +376,7 @@
     <EntitySet Name="DTINTUC" EntityType="Self.DTINTUC" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TTHUCHI" EntityType="Self.TTHUCHI" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_DKHACHHANG_DPHUONGXA" Association="Self.FK_DKHACHHANG_DPHUONGXA">
       <End Role="DPHUONGXA" EntitySet="DPHUONGXA" />
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
@@ -419,14 +388,6 @@
     <AssociationSet Name="FK_DKHACHHANG_DTINHTHANH" Association="Self.FK_DKHACHHANG_DTINHTHANH">
       <End Role="DTINHTHANH" EntitySet="DTINHTHANH" />
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DKHUYENMAICHITIET_DKHUYENMAI" Association="Self.FK_DKHUYENMAICHITIET_DKHUYENMAI">
-      <End Role="DKHUYENMAI" EntitySet="DKHUYENMAI" />
-      <End Role="DKHUYENMAICHITIET" EntitySet="DKHUYENMAICHITIET" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DKHUYENMAICHITIET_DMATHANG" Association="Self.FK_DKHUYENMAICHITIET_DMATHANG">
-      <End Role="DMATHANG" EntitySet="DMATHANG" />
-      <End Role="DKHUYENMAICHITIET" EntitySet="DKHUYENMAICHITIET" />
     </AssociationSet>
     <AssociationSet Name="FK_DMATHANG_DANHSANPHAM" Association="Self.FK_DMATHANG_DANHSANPHAM">
       <End Role="DMATHANG" EntitySet="DMATHANG" />
@@ -450,10 +411,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_TDONHANG_DKHACHHANG" Association="Self.FK_TDONHANG_DKHACHHANG">
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
-      <End Role="TDONHANG" EntitySet="TDONHANG" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TDONHANG_DKHUYENMAI" Association="Self.FK_TDONHANG_DKHUYENMAI">
-      <End Role="DKHUYENMAI" EntitySet="DKHUYENMAI" />
       <End Role="TDONHANG" EntitySet="TDONHANG" />
     </AssociationSet>
     <AssociationSet Name="FK_TDONHANG_DNHACUNGCAP" Association="Self.FK_TDONHANG_DNHACUNGCAP">

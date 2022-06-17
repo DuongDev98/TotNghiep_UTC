@@ -55,12 +55,6 @@ namespace WebApplication.Controllers
             return Content(error);
         }
 
-        string dateToString(DateTime? tmp)
-        {
-            DateTime time = Convert.ToDateTime(tmp);
-            return time.Year + "-" + (time.Month.ToString().Length == 1 ? "0" : "") + time.Month + "-" + (time.Day.ToString().Length == 1 ? "0" : "") + time.Day;
-        }
-
         [HttpGet]
         public ActionResult AddOrUpdate(string id)
         {
@@ -71,7 +65,6 @@ namespace WebApplication.Controllers
                 if (dhRow == null)
                 {
                     dhRow = new TDONHANG();
-                    dhRow.ID = Guid.NewGuid().ToString();
                     dhRow.NGAY = DateTime.Now;
                     dhRow.NAME = "Tự động";
                     dhRow.TIENHANG = 0;
@@ -79,7 +72,7 @@ namespace WebApplication.Controllers
                     dhRow.TIENGIAMGIA = 0;
                     dhRow.TONGCONG = 0;
                 }
-                ViewBag.NGAY = dateToString(dhRow.NGAY);
+                ViewBag.NGAY = ConvertTo.dateToString(dhRow.NGAY);
                 ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
             }
             catch (Exception ex)
@@ -93,7 +86,6 @@ namespace WebApplication.Controllers
         public ActionResult AddOrUpdate(TDONHANG temp)
         {
             ViewBag.nhaCcs = db.DNHACUNGCAPs.OrderBy(x => x.NAME).ToList();
-            ViewBag.NGAY = dateToString(DateTime.Now);
             if (ModelState.IsValid)
             {
                 string error = "";
@@ -116,7 +108,6 @@ namespace WebApplication.Controllers
                         //xóa hết chi tiết thêm lại từ đầu
                         db.TDONHANGCHITIETs.RemoveRange(dhRow.TDONHANGCHITIETs);
                     }
-
                     decimal tienHang = 0;
                     //them chi tiet
                     foreach (TDONHANGCHITIET ctRow in temp.TDONHANGCHITIETs)
@@ -127,7 +118,7 @@ namespace WebApplication.Controllers
 
                     dhRow.TILEGIAMGIA = temp.TILEGIAMGIA;
                     dhRow.TIENHANG = tienHang;
-                    dhRow.TIENGIAMGIA = temp.TILEGIAMGIA == 0 ? 0 : ConvertTo.Decimal(temp.TIENHANG) * ConvertTo.Decimal(temp.TILEGIAMGIA) / 100;
+                    dhRow.TIENGIAMGIA = temp.TILEGIAMGIA == 0 ? 0 : ConvertTo.Decimal(dhRow.TIENHANG) * ConvertTo.Decimal(dhRow.TILEGIAMGIA) / 100;
                     dhRow.TONGCONG = dhRow.TIENHANG - ConvertTo.Decimal(dhRow.TIENGIAMGIA);
                     dhRow.DNHACUNGCAPID = temp.DNHACUNGCAPID;
 
@@ -160,7 +151,7 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Index", new { page = 1, s = "", fDate = "", tDate = "" });
 
                     //luu thanh tien
-                    ViewBag.NGAY = dateToString(dhRow.NGAY);
+                    ViewBag.NGAY = ConvertTo.dateToString(dhRow.NGAY);
                 }
                 catch (Exception ex)
                 {

@@ -15,14 +15,14 @@ namespace WebApplication.Controllers
         DOANEntities db = new DOANEntities();
         public ActionResult Index()
         {
-            List<DTHUONGHIEU> lst = db.DTHUONGHIEUs.OrderBy(x => x.NAME).ToList();
+            List<DTHUONGHIEU> lst = db.DTHUONGHIEUx.OrderBy(x => x.NAME).ToList();
             return View(lst);
         }
 
         [HttpGet]
         public ActionResult Item(string id)
         {
-            DTHUONGHIEU model = db.DTHUONGHIEUs.Where(x => x.ID == id).FirstOrDefault();
+            DTHUONGHIEU model = db.DTHUONGHIEUx.Where(x => x.ID == id).FirstOrDefault();
             if (model == null)
             {
                 model = new DTHUONGHIEU();
@@ -41,7 +41,7 @@ namespace WebApplication.Controllers
 
                 if (error.Length == 0)
                 {
-                    DTHUONGHIEU model = db.DTHUONGHIEUs.Where(x => x.ID == id).FirstOrDefault();
+                    DTHUONGHIEU model = db.DTHUONGHIEUx.Where(x => x.ID == id).FirstOrDefault();
                     if (model == null)
                     {
                         model = new DTHUONGHIEU();
@@ -50,7 +50,7 @@ namespace WebApplication.Controllers
                     if (id == null)
                     {
                         model.ID = Guid.NewGuid().ToString();
-                        db.DTHUONGHIEUs.Add(model);
+                        db.DTHUONGHIEUx.Add(model);
                     }
                     else
                     {
@@ -72,7 +72,7 @@ namespace WebApplication.Controllers
             string error = "";
             try
             {
-                DTHUONGHIEU entry = db.DTHUONGHIEUs.Where(x => x.ID == id).FirstOrDefault();
+                DTHUONGHIEU entry = db.DTHUONGHIEUx.Where(x => x.ID == id).FirstOrDefault();
                 if (entry == null) error = "Thương hiệu không tồn tại trong hệ thống!";
                 else
                 {
@@ -82,7 +82,7 @@ namespace WebApplication.Controllers
                     }
                     else
                     {
-                        db.DTHUONGHIEUs.Remove(entry);
+                        db.DTHUONGHIEUx.Remove(entry);
                         db.SaveChanges();
                     }
                 }

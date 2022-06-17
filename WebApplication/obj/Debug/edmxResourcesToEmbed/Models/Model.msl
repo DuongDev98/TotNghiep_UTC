@@ -43,23 +43,13 @@
           <ScalarProperty Name="DNHOMMATHANGID" ColumnName="DNHOMMATHANGID" />
           <ScalarProperty Name="PHANTRAMGIAMGIA" ColumnName="PHANTRAMGIAMGIA" />
           <ScalarProperty Name="TONGBILL" ColumnName="TONGBILL" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DKHUYENMAICHITIETs">
-      <EntityTypeMapping TypeName="DOANModel.DKHUYENMAICHITIET">
-        <MappingFragment StoreEntitySet="DKHUYENMAICHITIET">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
-          <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
+          <ScalarProperty Name="DTHUONGHIEUID" ColumnName="DTHUONGHIEUID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DMATHANGs">
       <EntityTypeMapping TypeName="DOANModel.DMATHANG">
         <MappingFragment StoreEntitySet="DMATHANG">
-          <ScalarProperty Name="COIMEI" ColumnName="COIMEI" />
-          <ScalarProperty Name="MOTA" ColumnName="MOTA" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -67,6 +57,8 @@
           <ScalarProperty Name="GIABAN" ColumnName="GIABAN" />
           <ScalarProperty Name="DNHOMMATHANGID" ColumnName="DNHOMMATHANGID" />
           <ScalarProperty Name="DTHUONGHIEUID" ColumnName="DTHUONGHIEUID" />
+          <ScalarProperty Name="MOTA" ColumnName="MOTA" />
+          <ScalarProperty Name="COIMEI" ColumnName="COIMEI" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -95,8 +87,8 @@
         <MappingFragment StoreEntitySet="DPHUONGXA">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -105,12 +97,12 @@
         <MappingFragment StoreEntitySet="DQUANHUYEN">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CODE" ColumnName="CODE" />
-          <ScalarProperty Name="NAME" ColumnName="NAME" />
           <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DTHUONGHIEUs">
+    <EntitySetMapping Name="DTHUONGHIEUx">
       <EntityTypeMapping TypeName="DOANModel.DTHUONGHIEU">
         <MappingFragment StoreEntitySet="DTHUONGHIEU">
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -127,10 +119,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DTINTUCs">
+      <EntityTypeMapping TypeName="DOANModel.DTINTUC">
+        <MappingFragment StoreEntitySet="DTINTUC">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="DOANModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
-          <ScalarProperty Name="COD" ColumnName="COD" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -151,6 +152,7 @@
           <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
           <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
           <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
+          <ScalarProperty Name="COD" ColumnName="COD" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -170,13 +172,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DTINTUCs">
-      <EntityTypeMapping TypeName="DOANModel.DTINTUC">
-        <MappingFragment StoreEntitySet="DTINTUC">
-          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
-          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
-          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+    <EntitySetMapping Name="TTHUCHIs">
+      <EntityTypeMapping TypeName="DOANModel.TTHUCHI">
+        <MappingFragment StoreEntitySet="TTHUCHI">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DNHACUNGCAPID" ColumnName="DNHACUNGCAPID" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="THU" ColumnName="THU" />
+          <ScalarProperty Name="CHI" ColumnName="CHI" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

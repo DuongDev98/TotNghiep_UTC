@@ -43,7 +43,6 @@ namespace WebApplication.Models
         public Nullable<int> COD { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
-        public virtual DKHUYENMAI DKHUYENMAI { get; set; }
         public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }
         public virtual DPHUONGXA DPHUONGXA { get; set; }
         public virtual DQUANHUYEN DQUANHUYEN { get; set; }

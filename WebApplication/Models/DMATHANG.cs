@@ -18,7 +18,6 @@ namespace WebApplication.Models
         public DMATHANG()
         {
             this.DANHSANPHAMs = new HashSet<DANHSANPHAM>();
-            this.DKHUYENMAICHITIETs = new HashSet<DKHUYENMAICHITIET>();
             this.TDONHANGCHITIETs = new HashSet<TDONHANGCHITIET>();
         }
     
@@ -34,8 +33,6 @@ namespace WebApplication.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DANHSANPHAM> DANHSANPHAMs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DKHUYENMAICHITIET> DKHUYENMAICHITIETs { get; set; }
         public virtual DNHOMMATHANG DNHOMMATHANG { get; set; }
         public virtual DTHUONGHIEU DTHUONGHIEU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

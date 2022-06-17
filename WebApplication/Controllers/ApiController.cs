@@ -259,7 +259,6 @@ namespace WebApplication.Controllers
                 List<DANHSANPHAM> lst = new List<DANHSANPHAM>() { temp };
                 mhRow.DANHSANPHAMs = lst;
             }
-            mhRow.DKHUYENMAICHITIETs.Clear();
             mhRow.TDONHANGCHITIETs.Clear();
             while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
             while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
@@ -491,7 +490,6 @@ namespace WebApplication.Controllers
                     avatar = "noavatar.jpg";
                 }
                 it.DANHSANPHAMs.Clear();
-                it.DKHUYENMAICHITIETs.Clear();
                 it.TDONHANGCHITIETs.Clear();
                 while (it.DNHOMMATHANG != null) it.DNHOMMATHANG = null;
                 while (it.DTHUONGHIEU != null) it.DTHUONGHIEU = null;
@@ -534,7 +532,6 @@ namespace WebApplication.Controllers
                     }
 
                     while (mhRow.DANHSANPHAMs != null) mhRow.DANHSANPHAMs = null;
-                    while (mhRow.DKHUYENMAICHITIETs != null) mhRow.DKHUYENMAICHITIETs = null;
                     while (mhRow.TDONHANGCHITIETs != null) mhRow.TDONHANGCHITIETs = null;
                     while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
                     while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
@@ -551,7 +548,7 @@ namespace WebApplication.Controllers
 
         private JObject layDanhSachThuongHieu(JObject param, ref string error)
         {
-            List<DTHUONGHIEU> lst = db.DTHUONGHIEUs.OrderBy(x => x.NAME).ToList();
+            List<DTHUONGHIEU> lst = db.DTHUONGHIEUx.OrderBy(x => x.NAME).ToList();
             foreach (DTHUONGHIEU it in lst) it.DMATHANGs.Clear();
             JObject arr = new JObject();
             arr["arr"] = JArray.FromObject(lst);

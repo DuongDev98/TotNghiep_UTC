@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
+using WebApplication.Utils;
 
 namespace WebApplication.Controllers
 {
@@ -94,6 +96,19 @@ namespace WebApplication.Controllers
                 error = ex.Message;
             }
             return Content(error);
+        }
+
+        public ActionResult CongNo()
+        {
+            string query = @"SELECT ID, NAME, DIENTHOAI, DIACHI, EMAIL,
+            (
+	            COALESCE((SELECT SUM(COALESCE(TIENTHANHTOAN, 0) - COALESCE(TONGCONG, 0)) FROM TDONHANG WHERE DNHACUNGCAPID = DNHACUNGCAP.ID), 0)
+	            +
+	            COALESCE((SELECT SUM(COALESCE(CHI, 0) - COALESCE(THU, 0)) FROM TTHUCHI WHERE DNHACUNGCAPID = DNHACUNGCAP.ID), 0)
+            ) AS CONGNO
+            FROM DNHACUNGCAP";
+            DataTable dt = DatabaseUtils.GetTable(query);
+            return View(dt);
         }
     }
 }

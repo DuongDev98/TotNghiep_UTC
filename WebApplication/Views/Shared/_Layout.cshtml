@@ -39,6 +39,7 @@
                             <li class="dropdown-item">@Html.ActionLink("Danh mục khách hàng", "Index", "TrangChu")</li>
                             @*<li class="dropdown-item">@Html.ActionLink("Chương trình khuyến mại", "Index", "TrangChu")</li>*@
                             <li class="dropdown-item">@Html.ActionLink("Quản lý đơn hàng", "Index", "HoaDon")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Tra cứu Imei/Seri", "TraCuu", "Kho")</li>
                         </ul>
                     </li>
 
@@ -49,17 +50,19 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li class="dropdown-item">@Html.ActionLink("Danh mục nhà cung cấp", "Index", "NhaCungCap")</li>
                             <li class="dropdown-item">@Html.ActionLink("Nhập kho", "Index", "NhapKho", new { page = 1, s = "", fDate = "", tDate = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Tồn kho", "Index", "Kho")</li>
                         </ul>
                     </li>
 
-                    @*<li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Công nợ
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item">@Html.ActionLink("Công nợ nhà cung cấp", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Công nợ nhà cung cấp", "CongNo", "NhaCungCap")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách phiếu chi", "Index", "ThuChi")</li>
                         </ul>
-                    </li>*@
+                    </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

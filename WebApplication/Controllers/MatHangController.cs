@@ -33,7 +33,7 @@ namespace WebApplication.Controllers
             }
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
             ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID);
-            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
+            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
             return View(dMATHANG);
         }
 
@@ -92,7 +92,7 @@ namespace WebApplication.Controllers
             }
             if (error.Length > 0) ViewBag.error = error;
             ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", model.DNHOMMATHANGID);
-            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUs, "ID", "NAME", model.DTHUONGHIEUID);
+            ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", model.DTHUONGHIEUID);
             return View(model);
         }
 

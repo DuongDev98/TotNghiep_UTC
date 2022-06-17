@@ -28,16 +28,16 @@ namespace WebApplication.Models
         public virtual DbSet<DANHSANPHAM> DANHSANPHAMs { get; set; }
         public virtual DbSet<DKHACHHANG> DKHACHHANGs { get; set; }
         public virtual DbSet<DKHUYENMAI> DKHUYENMAIs { get; set; }
-        public virtual DbSet<DKHUYENMAICHITIET> DKHUYENMAICHITIETs { get; set; }
         public virtual DbSet<DMATHANG> DMATHANGs { get; set; }
         public virtual DbSet<DNHACUNGCAP> DNHACUNGCAPs { get; set; }
         public virtual DbSet<DNHOMMATHANG> DNHOMMATHANGs { get; set; }
         public virtual DbSet<DPHUONGXA> DPHUONGXAs { get; set; }
         public virtual DbSet<DQUANHUYEN> DQUANHUYENs { get; set; }
-        public virtual DbSet<DTHUONGHIEU> DTHUONGHIEUs { get; set; }
+        public virtual DbSet<DTHUONGHIEU> DTHUONGHIEUx { get; set; }
         public virtual DbSet<DTINHTHANH> DTINHTHANHs { get; set; }
+        public virtual DbSet<DTINTUC> DTINTUCs { get; set; }
         public virtual DbSet<TDONHANG> TDONHANGs { get; set; }
         public virtual DbSet<TDONHANGCHITIET> TDONHANGCHITIETs { get; set; }
-        public virtual DbSet<DTINTUC> DTINTUCs { get; set; }
+        public virtual DbSet<TTHUCHI> TTHUCHIs { get; set; }
     }
 }

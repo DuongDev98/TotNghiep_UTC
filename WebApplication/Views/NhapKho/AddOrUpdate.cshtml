@@ -95,7 +95,7 @@
                     <label class="col-2">Tiền hàng</label>
                     <input id="numTienHang" type="number" class="form-control col-3" value="@Model.TIENHANG" readonly="readonly" />
                     <label class="col-2">Tỉ lệ giảm</label>
-                    <input id="numTiLeGiam" type="number" class="form-control col-1" value="@Model.TILEGIAMGIA" />
+                    <input id="numTiLeGiam" name="TILEGIAMGIA" type="number" class="form-control col-1" value="@Model.TILEGIAMGIA" @{ if (Model.ID != null && Model.ID.Length > 0) { <text> readonly="readonly"</text> } }/>
                     <label class="col-2">Tiền giảm</label>
                     <input id="numTienGiam" type="number" class="form-control col-2" value="@Model.TIENGIAMGIA" readonly="readonly" />
                 </div>
