@@ -15,16 +15,16 @@ namespace WebApplication.Controllers
         // GET: NhapKho
         public ActionResult Index(int page, string s, string fDate, string tDate)
         {
-            DateTime fromDate = fDate != null && fDate.Length > 0 ? Convert.ToDateTime(fDate) : DateTime.Now;
-            DateTime toDate = tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now;
+            DateTime fromDate = (fDate != null && fDate.Length > 0 ? Convert.ToDateTime(fDate) : DateTime.Now).Date;
+            DateTime toDate = (tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now).Date;
             //lấy danh sách
-            //IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>
-            //    ((s != null && s.Length > 0 && x.NAME.Contains(s)) || s == null || s.Length == 0)
-            //    && (x.NGAY >= fromDate && x.NGAY <= toDate)
-            //    && x.LOAI == 1
-            //).OrderBy(x => x.NAME);
+            IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>
+                ((s != null && s.Length > 0 && x.NAME.Contains(s)) || s == null || s.Length == 0)
+                && (x.NGAY >= fromDate && x.NGAY <= toDate)
+                && x.LOAI == 1
+            ).OrderBy(x => x.NAME);
 
-            IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>x.LOAI == 1).OrderBy(x => x.NAME);
+            //IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>x.LOAI == 1).OrderBy(x => x.NAME);
 
             //tính toán phân trang
             IQueryable<TDONHANG> temp = dataSet as IQueryable<TDONHANG>;
@@ -65,7 +65,7 @@ namespace WebApplication.Controllers
                 if (dhRow == null)
                 {
                     dhRow = new TDONHANG();
-                    dhRow.NGAY = DateTime.Now;
+                    dhRow.NGAY = DateTime.Now.Date;
                     dhRow.NAME = "Tự động";
                     dhRow.TIENHANG = 0;
                     dhRow.TILEGIAMGIA = 0;

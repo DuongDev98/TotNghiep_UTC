@@ -66,12 +66,12 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Báo cáo
+                            Thống kê
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item">@Html.ActionLink("Báo cáo mặt hàng bán theo ngày", "Index", "TrangChu")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Báo cáo mặt hàng nhập theo ngày", "Index", "TrangChu")</li>
-                            <li class="dropdown-item">@Html.ActionLink("Báo cáo hàng bán chạy", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Chi tiết công nợ nhà cung cấp", "ChiTietCongNoNhaCungCap", "ThongKe", new { DNHACUNGCAPID = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách mặt hàng nhập theo ngày", "DanhSachMatHangNhapTheoNgay", "ThongKe", new { fDate = "", tDate = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách mặt hàng đặt theo ngày", "DanhSachMatHangDatTheoNgay", "ThongKe", new { fDate = "", tDate = "" }, null)</li>
                         </ul>
                     </li>
                 </ul>

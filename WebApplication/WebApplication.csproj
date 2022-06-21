@@ -136,6 +136,7 @@
     <Compile Include="Controllers\MatHangController.cs" />
     <Compile Include="Controllers\NhaCungCapController.cs" />
     <Compile Include="Controllers\NhapKhoController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\ThuChiController.cs" />
     <Compile Include="Controllers\ThuongHieuController.cs" />
     <Compile Include="Controllers\TinTucController.cs" />
@@ -215,13 +216,6 @@
     <Compile Include="Utils\ConvertTo.cs" />
     <Compile Include="Utils\DatabaseUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
-    <Compile Include="Views\Report\BaoCaoHangBanTheoNgay.ascx.cs">
-      <DependentUpon>BaoCaoHangBanTheoNgay.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Report\BaoCaoHangBanTheoNgay.ascx.designer.cs">
-      <DependentUpon>BaoCaoHangBanTheoNgay.ascx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
@@ -667,7 +661,6 @@
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\utils.js" />
-    <Content Include="Views\Report\BaoCaoHangBanTheoNgay.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -764,6 +757,9 @@
     <Content Include="Views\NhaCungCap\CongNo.cshtml" />
     <Content Include="Views\ThuChi\Index.cshtml" />
     <Content Include="Views\ThuChi\AddOrEdit.cshtml" />
+    <Content Include="Views\ThongKe\ChiTietCongNoNhaCungCap.cshtml" />
+    <Content Include="Views\ThongKe\DanhSachMatHangNhapTheoNgay.cshtml" />
+    <Content Include="Views\ThongKe\DanhSachMatHangDatTheoNgay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
