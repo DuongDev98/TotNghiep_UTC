@@ -12,8 +12,8 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-3">
-            <dl class="dl-horizontal">
+        <div class="col-2">
+            <dl>
                 <dt>
                     Ngày
                 </dt>
@@ -21,63 +21,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.NGAY)
                 </dd>
-
-                <dt>
-                    Số HĐ
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.NAME)
-                </dd>
-
-                <dt>
-                    Tiền hàng
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.TIENHANG)
-                </dd>
-
-                <dt>
-                    Khách hàng
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.DKHACHHANG.NAME)
-                </dd>
-
-                <dt>
-                    Tỉ lệ giảm
-                </dt>
-
-                <dd>
-                    @{ WebApplication.Utils.ConvertTo.Int(Model.TILEGIAMGIA); }
-                </dd>
-
-                <dt>
-                    Tiền giảm giá
-                </dt>
-
-                <dd>
-                    @{ WebApplication.Utils.ConvertTo.Int(Model.TIENGIAMGIA); }
-                </dd>
-
-                <dt>
-                    Tổng cộng
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.TONGCONG)
-                </dd>
-
-                @*<dt>
-            @Html.DisplayNameFor(model => model.TIENTHANHTOAN)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TIENTHANHTOAN)
-        </dd>*@
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Trạng thái
                 </dt>
@@ -94,7 +41,10 @@
                         }
                     }
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Ghi chú
                 </dt>
@@ -102,7 +52,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.GHICHU)
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Người nhận
                 </dt>
@@ -110,7 +63,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.TENNGUOINHAN)
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Điện thoại nhận
                 </dt>
@@ -118,7 +74,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.DIENTHOAI)
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Tỉnh/thành
                 </dt>
@@ -126,7 +85,13 @@
                 <dd>
                     @Html.DisplayFor(model => model.DTINHTHANH.NAME)
                 </dd>
+            </dl>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-2">
+            <dl>
                 <dt>
                     Quận/Huyện
                 </dt>
@@ -134,7 +99,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.DQUANHUYEN.NAME)
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Phường/Xã
                 </dt>
@@ -142,7 +110,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.DPHUONGXA.NAME)
                 </dd>
-
+            </dl>
+        </div>
+        <div class="col-2">
+            <dl>
                 <dt>
                     Địa chỉ nhận
                 </dt>
@@ -152,32 +123,34 @@
                 </dd>
             </dl>
         </div>
-        <div class="col-9">
-            <table class="table table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        @*<th scope="col">#</th>*@
-                        <th scope="col">Mã hàng</th>
-                        <th scope="col">Mặt hàng</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Thành tiền</th>
-                        <th scope="col">Imei/Seri</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (WebApplication.Models.TDONHANGCHITIET ctRow in Model.TDONHANGCHITIETs)
-                        {
-                            <tr>
-                                <td>@ctRow.DMATHANG.CODE</td>
-                                <td>@ctRow.DMATHANG.NAME</td>
-                                <td>@ctRow.DONGIA</td>
-                                <td>@ctRow.SOLUONG</td>
-                                <td>@ctRow.THANHTIEN</td>
-                                <td>@ctRow.IMEI</td>
-                                <td>
+    </div>
+
+    <div class="row p-3">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    @*<th scope="col">#</th>*@
+                    <th scope="col">Mã hàng</th>
+                    <th scope="col">Mặt hàng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col">Imei/Seri</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (WebApplication.Models.TDONHANGCHITIET ctRow in Model.TDONHANGCHITIETs)
+                    {
+                        <tr>
+                            <td>@ctRow.DMATHANG.CODE</td>
+                            <td>@ctRow.DMATHANG.NAME</td>
+                            <td>@ctRow.DONGIA</td>
+                            <td>@ctRow.SOLUONG</td>
+                            <td>@ctRow.THANHTIEN</td>
+                            <td>@ctRow.IMEI</td>
+                            <td>
                                 @{
                                     int coImei = ctRow.DMATHANG.COIMEI ?? 0;
                                     if (coImei > 0)
@@ -185,13 +158,12 @@
                                         <div id="btnNhapImei" data-id="@ctRow.ID" class="btn btn-info">Nhập Imei/Seri</div>
                                     }
                                 }
-                                </td>
-                            </tr>
-                        }
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 <p>
