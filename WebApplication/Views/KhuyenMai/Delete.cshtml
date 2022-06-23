@@ -1,0 +1,105 @@
+﻿@model WebApplication.Models.DKHUYENMAI
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DKHUYENMAI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TUGIO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TUGIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DENGIO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DENGIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TUNGAY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TUNGAY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DENNGAY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DENNGAY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOAI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNHOMMATHANGID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNHOMMATHANGID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHANTRAMGIAMGIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHANTRAMGIAMGIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TONGBILL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TONGBILL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DTHUONGHIEUID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DTHUONGHIEUID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Danh sách khuyến mại", "Index")
+        </div>
+    }
+</div>
