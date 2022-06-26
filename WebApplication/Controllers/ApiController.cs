@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -50,6 +51,7 @@ namespace WebApplication.Controllers
                             case "danhSachDonHang": kq.data = danhSachDonHang(attr.param, ref error); break;
                             case "guiEmailXacNhan": kq.data = guiEmailXacNhan(attr.param, ref error); break;
                             case "getUserWithFb": kq.data = getUserWithFb(attr.param, ref error); break;
+                            case "layKhuyenMai": kq.data = layKhuyenMai(attr.param, ref error); break;
                             default: error = "cmdtype không hợp lệ"; break;
                         }
                     }
@@ -62,6 +64,27 @@ namespace WebApplication.Controllers
             kq.isSuccess = error.Length == 0;
             kq.message = error;
             return Content(JsonConvert.SerializeObject(kq));
+        }
+
+        private JObject layKhuyenMai(JObject param, ref string error)
+        {
+            DateTime today = DateTime.Now;
+            JObject kq = new JObject();
+            string query = @"SELECT PHANTRAMGIAMGIA, TONGBILL FROM DKHUYENMAI
+WHERE CAST(GETDATE() AS TIME) BETWEEN CAST(TUGIO AS TIME) AND CAST(DENGIO AS TIME)
+AND CAST(GETDATE() AS DATE) BETWEEN CAST(TUNGAY AS DATE) AND CAST(DENNGAY AS DATE)
+ORDER BY TONGBILL ASC";
+            DataTable dt = DatabaseUtils.GetTable(query, null);
+            JArray arr = new JArray();
+            foreach (DataRow row in dt.Rows)
+            {
+                JObject o = new JObject();
+                o["TONGBILL"] = ConvertTo.Decimal(row["TONGBILL"]);
+                o["PHANTRAMGIAMGIA"] = ConvertTo.Decimal(row["PHANTRAMGIAMGIA"]);
+                arr.Add(o);
+            }
+            kq["arr"] = JArray.FromObject(arr);
+            return kq;
         }
 
         private JObject getUserWithFb(JObject param, ref string error)
@@ -207,7 +230,8 @@ namespace WebApplication.Controllers
             dhRow.DTINHTHANHID = ConvertTo.String(param["DTINHTHANHID"]);
             dhRow.DQUANHUYENID = ConvertTo.String(param["DQUANHUYENID"]);
             dhRow.DPHUONGXAID = ConvertTo.String(param["DPHUONGXAID"]);
-            dhRow.COD = ConvertTo.Int(param["COD"]);
+            //dhRow.COD = ConvertTo.Int(param["COD"]);
+            dhRow.TILEGIAMGIA = ConvertTo.Int(param["TILEGIAMGIA"]);
             dhRow.TRANGTHAI = 0;
             dhRow.TIENHANG = 0;
 
@@ -226,7 +250,8 @@ namespace WebApplication.Controllers
                 dhRow.TIENHANG += chiTietRow.THANHTIEN;
                 chitiets.Add(chiTietRow);
             }
-            dhRow.TONGCONG = dhRow.TIENHANG;
+            dhRow.TIENGIAMGIA = dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TIENHANG * dhRow.TILEGIAMGIA / 100);
+            dhRow.TONGCONG = dhRow.TIENHANG - dhRow.TIENGIAMGIA;
             //luu hoa don
             db.TDONHANGs.Add(dhRow);
             db.SaveChanges();
