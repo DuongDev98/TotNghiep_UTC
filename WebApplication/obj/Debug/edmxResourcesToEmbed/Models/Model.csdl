@@ -164,13 +164,13 @@
     <Property Name="DTINHTHANHID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
     <Property Name="DQUANHUYENID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
     <Property Name="DPHUONGXAID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
-    <Property Name="COD" Type="Int32" />
     <NavigationProperty Name="DKHACHHANG" Relationship="Self.FK_TDONHANG_DKHACHHANG" FromRole="TDONHANG" ToRole="DKHACHHANG" />
     <NavigationProperty Name="DNHACUNGCAP" Relationship="Self.FK_TDONHANG_DNHACUNGCAP" FromRole="TDONHANG" ToRole="DNHACUNGCAP" />
     <NavigationProperty Name="DPHUONGXA" Relationship="Self.FK_TDONHANG_DPHUONGXA" FromRole="TDONHANG" ToRole="DPHUONGXA" />
     <NavigationProperty Name="DQUANHUYEN" Relationship="Self.FK_TDONHANG_DQUANHUYEN" FromRole="TDONHANG" ToRole="DQUANHUYEN" />
     <NavigationProperty Name="DTINHTHANH" Relationship="Self.FK_TDONHANG_DTINHTHANH" FromRole="TDONHANG" ToRole="DTINHTHANH" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK_TDONHANGCHITIET_TDONHANG" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
+    <Property Name="HINHTHUCTHANHTOAN" Type="Int32" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

@@ -146,7 +146,7 @@
           <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
           <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
           <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
-          <Property Name="COD" Type="int" />
+          <Property Name="HINHTHUCTHANHTOAN" Type="int" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -615,13 +615,13 @@
           <Property Name="DTINHTHANHID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <Property Name="DQUANHUYENID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
           <Property Name="DPHUONGXAID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
-          <Property Name="COD" Type="Int32" />
           <NavigationProperty Name="DKHACHHANG" Relationship="Self.FK_TDONHANG_DKHACHHANG" FromRole="TDONHANG" ToRole="DKHACHHANG" />
           <NavigationProperty Name="DNHACUNGCAP" Relationship="Self.FK_TDONHANG_DNHACUNGCAP" FromRole="TDONHANG" ToRole="DNHACUNGCAP" />
           <NavigationProperty Name="DPHUONGXA" Relationship="Self.FK_TDONHANG_DPHUONGXA" FromRole="TDONHANG" ToRole="DPHUONGXA" />
           <NavigationProperty Name="DQUANHUYEN" Relationship="Self.FK_TDONHANG_DQUANHUYEN" FromRole="TDONHANG" ToRole="DQUANHUYEN" />
           <NavigationProperty Name="DTINHTHANH" Relationship="Self.FK_TDONHANG_DTINHTHANH" FromRole="TDONHANG" ToRole="DTINHTHANH" />
           <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK_TDONHANGCHITIET_TDONHANG" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
+          <Property Name="HINHTHUCTHANHTOAN" Type="Int32" />
         </EntityType>
         <EntityType Name="TDONHANGCHITIET">
           <Key>
@@ -1062,6 +1062,7 @@
           <EntitySetMapping Name="TDONHANGs">
             <EntityTypeMapping TypeName="DOANModel.TDONHANG">
               <MappingFragment StoreEntitySet="TDONHANG">
+                <ScalarProperty Name="HINHTHUCTHANHTOAN" ColumnName="HINHTHUCTHANHTOAN" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LOAI" ColumnName="LOAI" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -1082,7 +1083,6 @@
                 <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
                 <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
                 <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
-                <ScalarProperty Name="COD" ColumnName="COD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

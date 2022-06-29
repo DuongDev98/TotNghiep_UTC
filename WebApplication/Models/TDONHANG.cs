@@ -40,7 +40,7 @@ namespace WebApplication.Models
         public string DTINHTHANHID { get; set; }
         public string DQUANHUYENID { get; set; }
         public string DPHUONGXAID { get; set; }
-        public Nullable<int> COD { get; set; }
+        public Nullable<int> HINHTHUCTHANHTOAN { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }

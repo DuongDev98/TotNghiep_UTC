@@ -132,6 +132,7 @@
     <EntitySetMapping Name="TDONHANGs">
       <EntityTypeMapping TypeName="DOANModel.TDONHANG">
         <MappingFragment StoreEntitySet="TDONHANG">
+          <ScalarProperty Name="HINHTHUCTHANHTOAN" ColumnName="HINHTHUCTHANHTOAN" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -152,7 +153,6 @@
           <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
           <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
           <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
-          <ScalarProperty Name="COD" ColumnName="COD" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
