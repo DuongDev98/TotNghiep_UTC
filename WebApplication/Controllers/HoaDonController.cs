@@ -15,7 +15,8 @@ namespace WebApplication.Controllers
         private DOANEntities db = new DOANEntities();
         public ActionResult Index()
         {
-            var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH);
+            var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH).
+                OrderByDescending(t=>t.NGAY).OrderByDescending(t => t.NAME);
             foreach (var t in tDONHANGs)
             {
                 t.TIENHANG = t.TIENHANG ?? 0;

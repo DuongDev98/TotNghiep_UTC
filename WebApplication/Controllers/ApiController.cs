@@ -40,9 +40,7 @@ namespace WebApplication.Controllers
                             case "dsNhom": kq.data = layDanhSachNhom(attr.param, ref error); break;
                             case "timKiemMatHang": kq.data = timKiemMatHang(attr.param, ref error); break;
                             case "dsTinTuc": kq.data = layDanhSachTinTuc(attr.param, ref error); break;
-                            case "dsTinhThanh": kq.data = layDanhSachTinhThanh(attr.param, ref error); break;
-                            case "dsQuanHuyen": kq.data = layDanhSachQuanHuyen(attr.param, ref error); break;
-                            case "dsPhuongXa": kq.data = layDanhSachPhuongXa(attr.param, ref error); break;
+                            case "chonDiaDiem": kq.data = chonDiaDiem(attr.param, ref error); break;
                             case "capNhatThongTin": kq.data = capNhatThongTin(attr.param, ref error); break;
                             case "uploadavatar": kq.data = uploadAvatar(attr.param, ref error); break;
                             case "thongTinMatHang": kq.data = thongTinMatHang(attr.param, ref error); break;
@@ -230,7 +228,7 @@ ORDER BY TONGBILL ASC";
             dhRow.DTINHTHANHID = ConvertTo.String(param["DTINHTHANHID"]);
             dhRow.DQUANHUYENID = ConvertTo.String(param["DQUANHUYENID"]);
             dhRow.DPHUONGXAID = ConvertTo.String(param["DPHUONGXAID"]);
-            //dhRow.COD = ConvertTo.Int(param["COD"]);
+            dhRow.HINHTHUCTHANHTOAN = ConvertTo.Int(param["HINHTHUCTHANHTOAN"]);
             dhRow.TILEGIAMGIA = ConvertTo.Int(param["TILEGIAMGIA"]);
             dhRow.TRANGTHAI = 0;
             dhRow.TIENHANG = 0;
@@ -373,62 +371,54 @@ ORDER BY TONGBILL ASC";
             }
             return null;
         }
-
-        private JObject layDanhSachPhuongXa(JObject param, ref string error)
+        private JObject chonDiaDiem(JObject param, ref string error)
         {
-            string DQUANHUYENID = ConvertTo.String(param["ID"]);
+            //0 tinh thanh, 1 quan huyen, 2 phuong xa
+            int loai = ConvertTo.Int(param["LOAI"]);
             JArray arr = new JArray();
-            List<DPHUONGXA> lst = db.DPHUONGXAs.Where(x => x.DQUANHUYENID == DQUANHUYENID).OrderBy(x => x.NAME).ToList();
-            foreach (DPHUONGXA item in lst)
+            switch (loai)
             {
-                JObject o = new JObject();
-                o["ID"] = item.ID;
-                o["CODE"] = item.CODE;
-                o["NAME"] = item.NAME;
-                o["DQUANHUYENID"] = item.DQUANHUYENID;
-                arr.Add(o);
+                case 0: {
+                        List<DTINHTHANH> lst = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
+                        foreach (DTINHTHANH item in lst)
+                        {
+                            JObject o = new JObject();
+                            o["ID"] = item.ID;
+                            o["CODE"] = item.CODE;
+                            o["NAME"] = item.NAME;
+                            arr.Add(o);
+                        }
+                    } break;
+                case 1: {
+                        string DTINHTHANHID = ConvertTo.String(param["ID"]);
+                        List<DQUANHUYEN> lst = db.DQUANHUYENs.Where(x=>x.DTINHTHANHID == DTINHTHANHID).OrderBy(x => x.NAME).ToList();
+                        foreach (DQUANHUYEN item in lst)
+                        {
+                            JObject o = new JObject();
+                            o["ID"] = item.ID;
+                            o["CODE"] = item.CODE;
+                            o["NAME"] = item.NAME;
+                            arr.Add(o);
+                        }
+                    } break;
+                case 2: {
+                        string DQUANHUYENID = ConvertTo.String(param["ID"]);
+                        List<DPHUONGXA> lst = db.DPHUONGXAs.Where(x => x.DQUANHUYENID == DQUANHUYENID).OrderBy(x => x.NAME).ToList();
+                        foreach (DPHUONGXA item in lst)
+                        {
+                            JObject o = new JObject();
+                            o["ID"] = item.ID;
+                            o["CODE"] = item.CODE;
+                            o["NAME"] = item.NAME;
+                            arr.Add(o);
+                        }
+                    } break;
             }
+
             JObject kq = new JObject();
             kq["arr"] = arr;
             return kq;
         }
-
-        private JObject layDanhSachQuanHuyen(JObject param, ref string error)
-        {
-            string DTINHTHANHID = ConvertTo.String(param["ID"]);
-            JArray arr = new JArray();
-            List<DQUANHUYEN> lst = db.DQUANHUYENs.Where(x => x.DTINHTHANHID == DTINHTHANHID).OrderBy(x => x.NAME).ToList();
-            foreach (DQUANHUYEN item in lst)
-            {
-                JObject o = new JObject();
-                o["ID"] = item.ID;
-                o["CODE"] = item.CODE;
-                o["NAME"] = item.NAME;
-                o["DTINHTHANHID"] = item.DTINHTHANHID;
-                arr.Add(o);
-            }
-            JObject kq = new JObject();
-            kq["arr"] = arr;
-            return kq;
-        }
-
-        private JObject layDanhSachTinhThanh(JObject param, ref string error)
-        {
-            JArray arr = new JArray();
-            List<DTINHTHANH> lst = db.DTINHTHANHs.OrderBy(x => x.NAME).ToList();
-            foreach (DTINHTHANH item in lst)
-            {
-                JObject o = new JObject();
-                o["ID"] = item.ID;
-                o["CODE"] = item.CODE;
-                o["NAME"] = item.NAME;
-                arr.Add(o);
-            }
-            JObject kq = new JObject();
-            kq["arr"] = arr;
-            return kq;
-        }
-
         public static void exportDuLieuDiaDiem(DOANEntities db)
         {
             JObject kq = new JObject();
@@ -613,22 +603,7 @@ ORDER BY TONGBILL ASC";
             string DKHACHHANGID = ConvertTo.String(param["ID"]);
 
             DKHACHHANG khRow = db.DKHACHHANGs.Where(x => x.ID == DKHACHHANGID).FirstOrDefault();
-            if (khRow == null)
-            {
-                error = "Thông tin đăng nhập không đúng";
-            }
-            else
-            {
-                khRow.TDONHANGs.Clear();
-                string img = "/Images/Upload/DKHACHHANG/";
-                if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
-                else khRow.AVATAR = img + khRow.AVATAR;
-
-                while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
-                while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
-                while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
-                data = JObject.FromObject(khRow);
-            }
+            data = GetPostUserInfo(khRow, ref error);
             return data;
         }
 
@@ -658,10 +633,18 @@ ORDER BY TONGBILL ASC";
                 if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
                 else khRow.AVATAR = img + khRow.AVATAR;
 
+                string DTINHTHANH_NAME = khRow.DTINHTHANH.NAME;
+                string DQUANHUYEN_NAME = khRow.DQUANHUYEN.NAME;
+                string DPHUONGXA_NAME = khRow.DPHUONGXA.NAME;
+
                 while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
                 while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;
                 while (khRow.DPHUONGXA != null) khRow.DPHUONGXA = null;
+
                 data = JObject.FromObject(khRow);
+                data["DTINHTHANH_NAME"] = DTINHTHANH_NAME;
+                data["DQUANHUYEN_NAME"] = DQUANHUYEN_NAME;
+                data["DPHUONGXA_NAME"] = DPHUONGXA_NAME;
             }
             return data;
         }

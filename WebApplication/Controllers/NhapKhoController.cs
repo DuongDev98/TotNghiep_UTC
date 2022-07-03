@@ -24,8 +24,6 @@ namespace WebApplication.Controllers
                 && x.LOAI == 1
             ).OrderBy(x => x.NAME);
 
-            //IOrderedQueryable dataSet = db.TDONHANGs.Where(x =>x.LOAI == 1).OrderBy(x => x.NAME);
-
             //tính toán phân trang
             IQueryable<TDONHANG> temp = dataSet as IQueryable<TDONHANG>;
             ViewBag.totalItem = temp.ToList().Count;
@@ -97,7 +95,7 @@ namespace WebApplication.Controllers
                     {
                         ID = Guid.NewGuid().ToString();
                         dhRow = new TDONHANG();
-                        dhRow.NGAY = DateTime.Now;
+                        dhRow.NGAY = temp.NGAY;
                         dhRow.NAME = GenCodeHD("NK", 1);
                         dhRow.LOAI = 1;
                     }

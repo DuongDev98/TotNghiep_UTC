@@ -37,7 +37,10 @@
 @foreach (var item in Model) {
 <tr>
     <td>
-        @Html.DisplayFor(modelItem => item.NGAY)
+        @{
+            string time = (item.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+        }
+        @time
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.NAME)

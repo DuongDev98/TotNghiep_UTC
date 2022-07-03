@@ -247,3 +247,5 @@ E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.csproj.CoreCompile
 E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.csproj.CopyComplete
 E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.dll
 E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.pdb
+E:\UTC\UTC_WebService\WebApplication\bin\PayPal.dll
+E:\UTC\UTC_WebService\WebApplication\bin\PayPal.xml
