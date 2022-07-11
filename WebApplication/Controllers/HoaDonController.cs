@@ -13,7 +13,7 @@ namespace WebApplication.Controllers
     public class HoaDonController : Controller
     {
         private DOANEntities db = new DOANEntities();
-        public ActionResult Index()
+        public ActionResult Index(int trangThai)
         {
             var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH).
                 OrderByDescending(t=>t.NGAY).OrderByDescending(t => t.NAME);
@@ -68,18 +68,42 @@ namespace WebApplication.Controllers
 
         public ActionResult CapNhatImei(string id, string imei)
         {
+            string error = "";
             try
             {
-                TDONHANGCHITIET ctRow = db.TDONHANGCHITIETs.Find(id);
-                ctRow.IMEI = imei;
-                db.Entry(ctRow);
-                db.SaveChanges();
+                if (imei == null || imei.Length == 0)
+                {
+                    error = "Imei không được trống";
+                }
+                else
+                {
+                    TDONHANGCHITIET ctRow = db.TDONHANGCHITIETs.Find(id);
+                    var rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANG.LOAI == 0 && ctRow.DMATHANGID == x.DMATHANGID && x.IMEI == imei).ToList();
+                    if (rs.Count == 0)
+                    {
+                        rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANG.LOAI == 1 && ctRow.DMATHANGID == x.DMATHANGID && x.IMEI == imei).ToList();
+                        if (rs.Count == 0)
+                        {
+                            error = "Sản phẩm có imei không tồn tại trong kho";
+                        }
+                        else
+                        {
+                            ctRow.IMEI = imei;
+                            db.Entry(ctRow);
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        error = "Sản phẩm có imei đã được bán trước đó";
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                error = ex.Message;
             }
-            return Content("");
+            return Content(error);
         }
         public ActionResult CapNhatTrangThai(string id, string trangThai)
         {

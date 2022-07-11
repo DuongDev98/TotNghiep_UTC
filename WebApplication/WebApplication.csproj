@@ -213,11 +213,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ReportViewer\BcHangBanTheoNgay.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Utils\ConvertTo.cs" />
     <Compile Include="Utils\DatabaseUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -746,17 +741,6 @@
     <Content Include="Views\TinTuc\Index.cshtml" />
     <Content Include="Views\HoaDon\Details.cshtml" />
     <Content Include="Views\HoaDon\Index.cshtml" />
-    <Content Include="ReportViewer\BcHangBanTheoNgay.xsc">
-      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
-    </Content>
-    <None Include="ReportViewer\BcHangBanTheoNgay.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>BcHangBanTheoNgay.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="ReportViewer\BcHangBanTheoNgay.xss">
-      <DependentUpon>BcHangBanTheoNgay.xsd</DependentUpon>
-    </Content>
     <Content Include="Views\Kho\Index.cshtml" />
     <Content Include="Views\Kho\TraCuu.cshtml" />
     <Content Include="Views\NhaCungCap\CongNo.cshtml" />
@@ -769,6 +753,7 @@
     <Content Include="Views\KhuyenMai\Edit.cshtml" />
     <Content Include="Views\KhuyenMai\Index.cshtml" />
     <Content Include="Views\Paypal\Index.cshtml" />
+    <Content Include="Views\ThongKe\LoiNhuanTheoNgay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -113,8 +113,7 @@ namespace WebApplication.Controllers
                         ctRow.THANHTIEN = ConvertTo.Decimal(ctRow.DONGIA) * ConvertTo.Decimal(ctRow.SOLUONG);
                         tienHang += ConvertTo.Decimal(ctRow.THANHTIEN);
                     }
-
-                    dhRow.TILEGIAMGIA = temp.TILEGIAMGIA;
+                    dhRow.TILEGIAMGIA = temp.TILEGIAMGIA??0;
                     dhRow.TIENHANG = tienHang;
                     dhRow.TIENGIAMGIA = temp.TILEGIAMGIA == 0 ? 0 : ConvertTo.Decimal(dhRow.TIENHANG) * ConvertTo.Decimal(dhRow.TILEGIAMGIA) / 100;
                     dhRow.TONGCONG = dhRow.TIENHANG - ConvertTo.Decimal(dhRow.TIENGIAMGIA);
@@ -141,6 +140,11 @@ namespace WebApplication.Controllers
                         ctRow.SOLUONG = tempRow.SOLUONG;
                         ctRow.THANHTIEN = tempRow.THANHTIEN;
                         ctRow.IMEI = tempRow.IMEI;
+
+                        //đơn giá báo cáo
+                        ctRow.DONGIABAOCAO = ctRow.DONGIA - (dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TILEGIAMGIA * dhRow.TILEGIAMGIA / 100));
+                        ctRow.THANHTIENBAOCAO = ctRow.DONGIABAOCAO * ctRow.SOLUONG;
+
                         db.TDONHANGCHITIETs.Add(ctRow);
                     }
                     db.SaveChanges();
@@ -149,7 +153,7 @@ namespace WebApplication.Controllers
                     return RedirectToAction("Index", new { page = 1, s = "", fDate = "", tDate = "" });
 
                     //luu thanh tien
-                    ViewBag.NGAY = ConvertTo.dateToString(dhRow.NGAY);
+                    //ViewBag.NGAY = ConvertTo.dateToString(dhRow.NGAY);
                 }
                 catch (Exception ex)
                 {
@@ -183,6 +187,39 @@ namespace WebApplication.Controllers
             temp += max.ToString();
             code += temp;
             return startStr + code;
+        }
+
+        //Kiểm tra trung Imei khi tạo phiếu nhập kho
+        [HttpPost]
+        public ActionResult KiemTraTrungImeiNhapKho(string TDONHANGID, List<string> attrs)
+        {
+            string kq = "";
+            try
+            {
+                foreach (string imei in attrs)
+                {
+                    if (imei != null && imei.Length > 0)
+                    {
+                        var rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANGID != TDONHANGID && x.TDONHANG.LOAI == 1
+                        && x.IMEI == imei).ToList();
+                        if (rs.Count > 0)
+                        {
+                            if (kq.Length > 0) kq += ",";
+                            kq += imei;
+                        }
+                    }
+                }
+
+                if (kq.Length > 0)
+                {
+                    kq = "Imei: " + kq + " đã tồn tại trong hệ thống";
+                }
+            }
+            catch (Exception ex)
+            {
+                kq = ex.Message;
+            }
+            return Content(kq);
         }
     }
 }

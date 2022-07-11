@@ -1,0 +1,61 @@
+﻿@model List<WebApplication.Models.TDONHANGCHITIET>
+@{
+    ViewBag.Title = "TraCuu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="" method="post">
+    <div class="row">
+        <div class="form-group col-6">
+            <input type="text" name="imei" class="form-control" id="exampleInputEmail1" placeholder="Nhập Imei/Seri sản phẩm của khách hàng" value="@ViewBag.imei">
+        </div>
+        <button type="submit" class="btn btn-info col-1" style="height: 36px;">Tìm kiếm</button>
+    </div>
+</form>
+
+<div class="row p-3">
+    @{
+        if (Model != null)
+        {
+            if (Model.Count == 0)
+            {
+                <div class="alert alert-warning w-100" role="alert">
+                    Không tìm thấy dữ liệu Imei/Seri trong hệ thống
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ngày mua</th>
+                            <th scope="col">Số HĐ</th>
+                            <th scope="col">Khách hàng</th>
+                            <th scope="col">Giá bán</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null && Model.Count > 0)
+                            {
+                                int i = 1;
+                                foreach (WebApplication.Models.TDONHANGCHITIET row in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@i</th>
+                                        <td>@(row.TDONHANG.NGAY ?? DateTime.Now)</td>
+                                        <td>@row.TDONHANG.NAME</td>
+                                        <td>@row.TDONHANG.DKHACHHANG.NAME</td>
+                                        <td>@row.DONGIA</td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    }
+</div>

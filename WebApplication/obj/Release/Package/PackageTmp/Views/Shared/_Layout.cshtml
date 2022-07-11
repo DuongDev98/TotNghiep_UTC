@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/image-uploader.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            @Html.ActionLink("Quản trị hệ thống", "Index", "TrangChu", null, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tin tức
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Quản lý tin tức", "Index", "TinTuc")</li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Bán hàng
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Danh mục nhóm hàng", "Index", "NhomMatHang")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh mục thương hiệu", "Index", "ThuongHieu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh mục mặt hàng", "Index", "MatHang")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh mục khách hàng", "Index", "TrangChu")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Chương trình khuyến mại", "Index", "KhuyenMai")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Quản lý đơn hàng", "Index", "HoaDon")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Tra cứu Imei/Seri", "TraCuu", "Kho")</li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kho hàng
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Danh mục nhà cung cấp", "Index", "NhaCungCap")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Nhập kho", "Index", "NhapKho", new { page = 1, s = "", fDate = "", tDate = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Tồn kho", "Index", "Kho")</li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Công nợ
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Công nợ nhà cung cấp", "CongNo", "NhaCungCap")</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách phiếu chi", "Index", "ThuChi")</li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Thống kê
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item">@Html.ActionLink("Chi tiết công nợ nhà cung cấp", "ChiTietCongNoNhaCungCap", "ThongKe", new { DNHACUNGCAPID = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách mặt hàng nhập theo ngày", "DanhSachMatHangNhapTheoNgay", "ThongKe", new { fDate = "", tDate = "" }, null)</li>
+                            <li class="dropdown-item">@Html.ActionLink("Danh sách mặt hàng đặt theo ngày", "DanhSachMatHangDatTheoNgay", "ThongKe", new { fDate = "", tDate = "" }, null)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br />
+        @RenderBody()
+    </div>
+    <div class="modal fade" id="modal-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+</body>
+</html>

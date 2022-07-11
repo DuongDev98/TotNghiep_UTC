@@ -1,0 +1,94 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.container-fluid {
+    margin-top: -46px;
+}
+
+.col-btn-125 {
+    width: 125px;
+}
+
+.col-btn-50 {
+    width: 50px;
+}
+
+tbody {
+    overflow-y: auto;
+}
+
+table tr {
+    cursor: pointer;
+}
+
+.btn > a {
+    color: white !important;
+    text-decoration: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+li > .active {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+table thead {
+    position: sticky;
+    top: -1px;
+}
+
+.table-wrap {
+    overflow:auto;
+    padding-right:10px;
+}
+
+.divMatHang {
+    padding-left: 10px;
+    width: 100%;
+}

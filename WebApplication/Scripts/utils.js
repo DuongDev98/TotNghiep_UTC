@@ -283,9 +283,9 @@ function setTableScroll() {
             if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
         });
         //fix table details
-        heightSc = window.innerHeight;
-        heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
-        $('.divDetails').find(".table_wrap").height(heightSc);
+        //heightSc = window.innerHeight;
+        //heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
+        //$('.divDetails').find(".table_wrap").height(heightSc);
     }
 }
 
@@ -462,7 +462,7 @@ $(document).ready(function () {
                 //'        <td>0</td>' +
                 //'        <td>0</td>' +
                 '        <td>' + 1 * gianhap + '</td>' +
-                '        <td>' + imei + '</td>' +
+                '        <td><input type="text" value="' + imei + '" name="" hidden="hidden"/>' + imei + '</td>' +
                 '        <td><div class="btn btn-danger">Xóa</div></td>' +
                 '    </tr>');
             $('.tblChiTiet').find('tbody').append($tr);
@@ -499,6 +499,7 @@ $(document).ready(function () {
             $(ele).find("td:eq(3)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].DONGIA");
             $(ele).find("td:eq(4)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].SOLUONG");
             $(ele).find("td:eq(5)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].THANHTIEN");
+            $(ele).find("td:eq(6)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].IMEI");
         });
         tienGiamGia = tienHang * (tileGiam / 100);
         tongCong = tienHang - tienGiamGia;
@@ -524,5 +525,30 @@ $(document).ready(function () {
                         '<option value="4">Đã thanh toán</option>'+
                   '</select>';
         ShowAddEditForm("Chọn trạng thái", html, "/HoaDon/CapNhatTrangThai/" + dataId);
+    });
+
+    $('#btnNhapKho').click(function () {
+        //kiểm tra xem có dữ liệu chưa
+        var form = $(this).closest('form');
+        var tbody = form.find(".tblChiTiet").find("tbody");
+        if (tbody.find("tr").length == 0) {
+            alert("Dữ liệu chi tiết trống");
+        }
+        else {
+            var arr = [];
+            tbody.find("tr").each((index, element) => {
+                var imei = $(element).find("td:eq(6)").text();
+                if (imei.length > 0) arr.push(imei);
+            });
+            if (arr.length > 0) {
+                var TDONHANGID = form.find("#ipID").val();
+                $.post("/NhapKho/KiemTraTrungImeiNhapKho", { TDONHANGID: TDONHANGID, attrs: arr }, function (data) {
+                    if (data.length > 0) alert(data);
+                    else {
+                        form.submit();
+                    }
+                });
+            }
+        }
     });
 });

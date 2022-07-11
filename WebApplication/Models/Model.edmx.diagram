@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="DOANModel.DTHUONGHIEU" Width="1.5" PointX="7.5" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DOANModel.DTINHTHANH" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DOANModel.DTINTUC" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.TDONHANG" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.TDONHANG" Width="1.75" PointX="9.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DOANModel.TDONHANGCHITIET" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DOANModel.TTHUCHI" Width="1.5" PointX="2.75" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="DOANModel.FK_DMATHANG_DANHSANPHAM" ManuallyRouted="false" />
@@ -35,6 +35,7 @@
         <AssociationConnector Association="DOANModel.FK_TDONHANG_DQUANHUYEN" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_TDONHANG_DTINHTHANH" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_TDONHANGCHITIET_TDONHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="DOANModel.FK__TTHUCHI__DNHACUN__0697FACD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

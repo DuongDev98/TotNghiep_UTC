@@ -1,0 +1,100 @@
+﻿@model List<WebApplication.Models.TDONHANG>
+@{
+    ViewBag.Title = "Nhập kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-12">
+    @*header*@
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <input type="text" class="form-control ipSearch" placeholder="Tìm kiếm" value="@ViewBag.s">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2">
+                        <p>Từ ngày: </p>
+                    </div>
+                    <div class="col-4">
+                        <input type="date" class="form-control dtTuNgay" value="@ViewBag.fDate">
+                    </div>
+                    <div class="col-2">
+                        <p>Đến ngày: </p>
+                    </div>
+                    <div class="col-4">
+                        <input type="date" class="form-control dtDenNgay" value="@ViewBag.tDate">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="btn btn-info btnRefresh">Refresh</div>
+        </div>
+    </div>
+
+    <div class="divContent">
+        @*content*@
+        <div class="row table-wrap">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ngày</th>
+                        <th scope="col">Số phiếu</th>
+                        <th scope="col">Tiền hàng</th>
+                        <th scope="col">Tỉ lệ giảm</th>
+                        <th scope="col">Tiền giảm</th>
+                        <th scope="col">Tổng cộng</th>
+                        <th scope="col">Tiền thanh toán</th>
+                        <th scope="col">Ghi chú</th>
+                        <th scope="col" class="col-btn-125" colspan="2"><div class="btn btn-success">@Html.ActionLink("Thêm mới", "AddOrUpdate", "NhapKho", new { id = "" }, null)</div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.ID">
+                            <th scope="row">@i</th>
+                            <td>@Convert.ToDateTime(item.NGAY).ToString("dd/MM/yyyy")</td>
+                            <td>@item.NAME</td>
+                            <td>@Convert.ToDouble(item.TIENHANG).ToString("###,###")</td>
+                            <td>@Convert.ToDouble(item.TILEGIAMGIA).ToString("###.##")</td>
+                            <td>@Convert.ToDouble(item.TIENGIAMGIA).ToString("###,###")</td>
+                            <td>@Convert.ToDouble(item.TONGCONG).ToString("###,###")</td>
+                            <td>@Convert.ToDouble(item.TIENTHANHTOAN).ToString("###,###")</td>
+                            <td>@item.GHICHU</td>
+                            <td class="col-btn-125"><div class="btn btn-warning">@Html.ActionLink("Chỉnh sửa", "AddOrUpdate", "NhapKho", new { id = item.ID }, null)</div></td>
+                            <td class="col-btn-50"><div class="btn btn-danger btnDelete">Xóa</div></td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @*phan trang*@
+        <div class="row">
+            @if (ViewBag.numberOfPage != null && ViewBag.numberOfPage > 1)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        @for (i = 1; i <= ViewBag.numberOfPage; i++)
+                        {
+                            if (i == ViewBag.currentPage)
+                            {
+                                <li class="page-item active"><a href="/NhapKho/Index?page=@ViewBag.currentPage&s=@ViewBag.s&fDate=@ViewBag.fDate&tDate=@ViewBag.tDate" class="page-link">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a href="/NhapKho/Index?page=@ViewBag.currentPage&s=@ViewBag.s&fDate=@ViewBag.fDate&tDate=@ViewBag.tDate" class="page-link">@i</a></li>
+                            }
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>

@@ -24,6 +24,8 @@ namespace WebApplication.Models
         public string DKHUYENMAIID { get; set; }
         public string TDONHANGID { get; set; }
         public string IMEI { get; set; }
+        public Nullable<decimal> DONGIABAOCAO { get; set; }
+        public Nullable<decimal> THANHTIENBAOCAO { get; set; }
     
         public virtual DKHUYENMAI DKHUYENMAI { get; set; }
         public virtual DMATHANG DMATHANG { get; set; }

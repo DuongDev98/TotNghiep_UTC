@@ -95,5 +95,26 @@ namespace WebApplication.Controllers
             }
             return View(dt);
         }
+
+        [HttpGet]
+        public ActionResult LoiNhuanTheoNgay(string fDate, string tDate)
+        {
+            DateTime fromDate = (fDate != null && fDate.Length > 0 ? Convert.ToDateTime(fDate) : DateTime.Now).Date;
+            DateTime toDate = (tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now).Date;
+            ViewBag.fDate = fromDate.ToString("yyyy-MM-dd");
+            ViewBag.tDate = toDate.ToString("yyyy-MM-dd");
+
+            string query = @"SELECT CODE, NAME, 0 AS GIANHAP, 0 AS GIABAN FROM DMATHANG";
+
+            Dictionary<string, object> attrs = new Dictionary<string, object>();
+            attrs.Add("@FromDate", fromDate);
+            attrs.Add("@ToDate", toDate);
+            DataTable dt = DatabaseUtils.GetTable(query, attrs);
+            if (dt.Rows.Count == 0)
+            {
+                ViewBag.error = "Dữ liệu giao dịch trống";
+            }
+            return View(dt);
+        }
     }
 }

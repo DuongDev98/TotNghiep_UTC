@@ -1,0 +1,145 @@
+﻿@model WebApplication.Models.DMATHANG
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Mathang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @if (Model.ID == null)
+    {
+        <h4>Thêm mới</h4>
+    }
+    else
+    {
+        <h4>Chỉnh sửa</h4>
+    }
+    <hr />
+    @if (ViewBag.error != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.error</div>
+    }
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CODE, "Mã hàng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CODE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.CODE, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NAME, "Mặt hàng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+        </div>
+        <div class="col-md-10">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="ipCheck" @if (Model.COIMEI != null && Model.COIMEI > 0) { <text> checked</text> }>
+                <label class="form-check-label" for="ipCheck">Có Imei</label>
+                <input type="number" name="COIMEI" value="@Model.COIMEI" id="ipValCheck" hidden="hidden" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GIANHAP, "Giá nhập", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GIANHAP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GIANHAP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GIABAN, "Giá bán", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GIABAN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GIABAN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DNHOMMATHANGID, "Nhóm hàng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("DNHOMMATHANGID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DNHOMMATHANGID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DTHUONGHIEUID, "Thương hiệu", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("DTHUONGHIEUID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DTHUONGHIEUID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Ảnh
+        </div>
+        <div class="col-md-10">
+            <div class="input-images" name="files" style="padding-top: .5rem;"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            Mô tả
+        </div>
+        <div class="col-md-10">
+            <textarea id="editor1" rows="10" cols="80" name="MOTA">@Html.Raw(Model.MOTA)</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Danh sách mặt hàng", "Index")
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/Scripts/image-uploader.js"></script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('editor1', {
+        htmlEncodeOutput: true
+    });
+
+    let preloaded = [];
+    @{
+        if (ViewBag.imgs != null)
+        {
+            Dictionary<string, string> dic = ViewBag.imgs;
+            foreach (string key in dic.Keys)
+            {
+                <Text>preloaded.push({ id: '@key', src: '@dic[key]' });</Text>
+            }
+        }
+    }
+    $('.input-images').imageUploader({
+        preloaded: preloaded
+    });
+    $("#ipCheck").change(function () {
+        let val = $("#ipCheck").is(":checked") ? 30 : 0;
+        $("#ipValCheck").val(val);
+    });
+</script>

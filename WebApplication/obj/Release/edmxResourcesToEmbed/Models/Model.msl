@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DOANModelStoreContainer" CdmEntityContainer="DOANEntities">
+    <EntitySetMapping Name="DANHSANPHAMs">
+      <EntityTypeMapping TypeName="DOANModel.DANHSANPHAM">
+        <MappingFragment StoreEntitySet="DANHSANPHAM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
+          <ScalarProperty Name="STT" ColumnName="STT" />
+          <ScalarProperty Name="LINK" ColumnName="LINK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DKHACHHANGs">
+      <EntityTypeMapping TypeName="DOANModel.DKHACHHANG">
+        <MappingFragment StoreEntitySet="DKHACHHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="TAIKHOAN" ColumnName="TAIKHOAN" />
+          <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+          <ScalarProperty Name="FACEBOOKID" ColumnName="FACEBOOKID" />
+          <ScalarProperty Name="GOOGLEID" ColumnName="GOOGLEID" />
+          <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DKHUYENMAIs">
+      <EntityTypeMapping TypeName="DOANModel.DKHUYENMAI">
+        <MappingFragment StoreEntitySet="DKHUYENMAI">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="TUGIO" ColumnName="TUGIO" />
+          <ScalarProperty Name="DENGIO" ColumnName="DENGIO" />
+          <ScalarProperty Name="TUNGAY" ColumnName="TUNGAY" />
+          <ScalarProperty Name="DENNGAY" ColumnName="DENNGAY" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="DNHOMMATHANGID" ColumnName="DNHOMMATHANGID" />
+          <ScalarProperty Name="PHANTRAMGIAMGIA" ColumnName="PHANTRAMGIAMGIA" />
+          <ScalarProperty Name="TONGBILL" ColumnName="TONGBILL" />
+          <ScalarProperty Name="DTHUONGHIEUID" ColumnName="DTHUONGHIEUID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DMATHANGs">
+      <EntityTypeMapping TypeName="DOANModel.DMATHANG">
+        <MappingFragment StoreEntitySet="DMATHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="GIANHAP" ColumnName="GIANHAP" />
+          <ScalarProperty Name="GIABAN" ColumnName="GIABAN" />
+          <ScalarProperty Name="DNHOMMATHANGID" ColumnName="DNHOMMATHANGID" />
+          <ScalarProperty Name="DTHUONGHIEUID" ColumnName="DTHUONGHIEUID" />
+          <ScalarProperty Name="MOTA" ColumnName="MOTA" />
+          <ScalarProperty Name="COIMEI" ColumnName="COIMEI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DNHACUNGCAPs">
+      <EntityTypeMapping TypeName="DOANModel.DNHACUNGCAP">
+        <MappingFragment StoreEntitySet="DNHACUNGCAP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DNHOMMATHANGs">
+      <EntityTypeMapping TypeName="DOANModel.DNHOMMATHANG">
+        <MappingFragment StoreEntitySet="DNHOMMATHANG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DPHUONGXAs">
+      <EntityTypeMapping TypeName="DOANModel.DPHUONGXA">
+        <MappingFragment StoreEntitySet="DPHUONGXA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DQUANHUYENs">
+      <EntityTypeMapping TypeName="DOANModel.DQUANHUYEN">
+        <MappingFragment StoreEntitySet="DQUANHUYEN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTHUONGHIEUx">
+      <EntityTypeMapping TypeName="DOANModel.DTHUONGHIEU">
+        <MappingFragment StoreEntitySet="DTHUONGHIEU">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTINHTHANHs">
+      <EntityTypeMapping TypeName="DOANModel.DTINHTHANH">
+        <MappingFragment StoreEntitySet="DTINHTHANH">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DTINTUCs">
+      <EntityTypeMapping TypeName="DOANModel.DTINTUC">
+        <MappingFragment StoreEntitySet="DTINTUC">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIMECREATED" ColumnName="TIMECREATED" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TDONHANGs">
+      <EntityTypeMapping TypeName="DOANModel.TDONHANG">
+        <MappingFragment StoreEntitySet="TDONHANG">
+          <ScalarProperty Name="HINHTHUCTHANHTOAN" ColumnName="HINHTHUCTHANHTOAN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="DKHACHHANGID" ColumnName="DKHACHHANGID" />
+          <ScalarProperty Name="DNHACUNGCAPID" ColumnName="DNHACUNGCAPID" />
+          <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
+          <ScalarProperty Name="TIENHANG" ColumnName="TIENHANG" />
+          <ScalarProperty Name="TILEGIAMGIA" ColumnName="TILEGIAMGIA" />
+          <ScalarProperty Name="TIENGIAMGIA" ColumnName="TIENGIAMGIA" />
+          <ScalarProperty Name="TONGCONG" ColumnName="TONGCONG" />
+          <ScalarProperty Name="TIENTHANHTOAN" ColumnName="TIENTHANHTOAN" />
+          <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+          <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+          <ScalarProperty Name="TENNGUOINHAN" ColumnName="TENNGUOINHAN" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="DIENTHOAI" ColumnName="DIENTHOAI" />
+          <ScalarProperty Name="DTINHTHANHID" ColumnName="DTINHTHANHID" />
+          <ScalarProperty Name="DQUANHUYENID" ColumnName="DQUANHUYENID" />
+          <ScalarProperty Name="DPHUONGXAID" ColumnName="DPHUONGXAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TDONHANGCHITIETs">
+      <EntityTypeMapping TypeName="DOANModel.TDONHANGCHITIET">
+        <MappingFragment StoreEntitySet="TDONHANGCHITIET">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
+          <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
+          <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+          <ScalarProperty Name="TILEGIAMGIA" ColumnName="TILEGIAMGIA" />
+          <ScalarProperty Name="TIENGIAMGIA" ColumnName="TIENGIAMGIA" />
+          <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+          <ScalarProperty Name="DKHUYENMAIID" ColumnName="DKHUYENMAIID" />
+          <ScalarProperty Name="TDONHANGID" ColumnName="TDONHANGID" />
+          <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TTHUCHIs">
+      <EntityTypeMapping TypeName="DOANModel.TTHUCHI">
+        <MappingFragment StoreEntitySet="TTHUCHI">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="DNHACUNGCAPID" ColumnName="DNHACUNGCAPID" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+          <ScalarProperty Name="THU" ColumnName="THU" />
+          <ScalarProperty Name="CHI" ColumnName="CHI" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

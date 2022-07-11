@@ -77,6 +77,7 @@
     <Property Name="DIACHI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TDONHANGs" Relationship="Self.FK_TDONHANG_DNHACUNGCAP" FromRole="DNHACUNGCAP" ToRole="TDONHANG" />
+    <NavigationProperty Name="TTHUCHIs" Relationship="DOANModel.FK__TTHUCHI__DNHACUN__0697FACD" FromRole="DNHACUNGCAP" ToRole="TTHUCHI" />
   </EntityType>
   <EntityType Name="DNHOMMATHANG">
     <Key>
@@ -189,6 +190,8 @@
     <NavigationProperty Name="DKHUYENMAI" Relationship="Self.FK_TDONHANGCHITIET_DKHUYENMAI" FromRole="TDONHANGCHITIET" ToRole="DKHUYENMAI" />
     <NavigationProperty Name="DMATHANG" Relationship="Self.FK_TDONHANGCHITIET_DMATHANG" FromRole="TDONHANGCHITIET" ToRole="DMATHANG" />
     <NavigationProperty Name="TDONHANG" Relationship="Self.FK_TDONHANGCHITIET_TDONHANG" FromRole="TDONHANGCHITIET" ToRole="TDONHANG" />
+    <Property Name="DONGIABAOCAO" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="THANHTIENBAOCAO" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="TTHUCHI">
     <Key>
@@ -201,6 +204,7 @@
     <Property Name="THU" Type="Int32" />
     <Property Name="CHI" Type="Int32" />
     <Property Name="NGAY" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="DNHACUNGCAP" Relationship="DOANModel.FK__TTHUCHI__DNHACUN__0697FACD" FromRole="TTHUCHI" ToRole="DNHACUNGCAP" />
   </EntityType>
   <Association Name="FK_DMATHANG_DANHSANPHAM">
     <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
@@ -473,5 +477,21 @@
       <End Role="TDONHANG" EntitySet="TDONHANGs" />
       <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIETs" />
     </AssociationSet>
+    <AssociationSet Name="FK__TTHUCHI__DNHACUN__0697FACD" Association="DOANModel.FK__TTHUCHI__DNHACUN__0697FACD">
+      <End Role="DNHACUNGCAP" EntitySet="DNHACUNGCAPs" />
+      <End Role="TTHUCHI" EntitySet="TTHUCHIs" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK__TTHUCHI__DNHACUN__0697FACD">
+    <End Type="DOANModel.DNHACUNGCAP" Role="DNHACUNGCAP" Multiplicity="0..1" />
+    <End Type="DOANModel.TTHUCHI" Role="TTHUCHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHACUNGCAP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHUCHI">
+        <PropertyRef Name="DNHACUNGCAPID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

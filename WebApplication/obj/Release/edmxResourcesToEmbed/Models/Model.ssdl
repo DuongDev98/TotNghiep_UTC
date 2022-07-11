@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DOANModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DANHSANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="DMATHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="STT" Type="int" />
+    <Property Name="LINK" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="DKHACHHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIENTHOAI" Type="varchar" MaxLength="10" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+    <Property Name="TAIKHOAN" Type="nvarchar" MaxLength="255" />
+    <Property Name="MATKHAU" Type="nvarchar" MaxLength="255" />
+    <Property Name="FACEBOOKID" Type="varchar" MaxLength="255" />
+    <Property Name="GOOGLEID" Type="varchar" MaxLength="255" />
+    <Property Name="AVATAR" Type="nvarchar" MaxLength="255" />
+    <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
+    <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
+    <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
+  </EntityType>
+  <EntityType Name="DKHUYENMAI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="TUGIO" Type="datetime" />
+    <Property Name="DENGIO" Type="datetime" />
+    <Property Name="TUNGAY" Type="datetime" />
+    <Property Name="DENNGAY" Type="datetime" />
+    <Property Name="LOAI" Type="int" />
+    <Property Name="DNHOMMATHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="PHANTRAMGIAMGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TONGBILL" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DTHUONGHIEUID" Type="varchar" MaxLength="36" />
+  </EntityType>
+  <EntityType Name="DMATHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="CODE" Type="nvarchar" MaxLength="255" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="GIANHAP" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="GIABAN" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DNHOMMATHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="DTHUONGHIEUID" Type="varchar" MaxLength="36" />
+    <Property Name="MOTA" Type="nvarchar(max)" />
+    <Property Name="COIMEI" Type="int" />
+  </EntityType>
+  <EntityType Name="DNHACUNGCAP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIENTHOAI" Type="varchar" MaxLength="10" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DNHOMMATHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="CODE" Type="nvarchar" MaxLength="255" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DPHUONGXA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="CODE" Type="varchar" MaxLength="255" />
+    <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DQUANHUYEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="CODE" Type="varchar" MaxLength="255" />
+    <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DTHUONGHIEU">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DTINHTHANH">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="CODE" Type="varchar" MaxLength="255" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="DTINTUC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="TIMECREATED" Type="datetime" />
+    <Property Name="TITLE" Type="nvarchar(max)" />
+    <Property Name="NOIDUNG" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TDONHANG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="LOAI" Type="int" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="NGAY" Type="datetime" />
+    <Property Name="DKHACHHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="DNHACUNGCAPID" Type="varchar" MaxLength="36" />
+    <Property Name="DKHUYENMAIID" Type="varchar" MaxLength="36" />
+    <Property Name="TIENHANG" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TILEGIAMGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TIENGIAMGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TONGCONG" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TIENTHANHTOAN" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TRANGTHAI" Type="int" />
+    <Property Name="GHICHU" Type="nvarchar" MaxLength="255" />
+    <Property Name="TENNGUOINHAN" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIENTHOAI" Type="nvarchar" MaxLength="255" />
+    <Property Name="DTINHTHANHID" Type="varchar" MaxLength="36" />
+    <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
+    <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
+    <Property Name="HINHTHUCTHANHTOAN" Type="int" />
+  </EntityType>
+  <EntityType Name="TDONHANGCHITIET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="DMATHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="DONGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="SOLUONG" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TILEGIAMGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TIENGIAMGIA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="THANHTIEN" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DKHUYENMAIID" Type="varchar" MaxLength="36" />
+    <Property Name="TDONHANGID" Type="varchar" MaxLength="36" />
+    <Property Name="IMEI" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TTHUCHI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="36" Nullable="false" />
+    <Property Name="NAME" Type="nchar" MaxLength="10" />
+    <Property Name="DNHACUNGCAPID" Type="varchar" MaxLength="36" />
+    <Property Name="LOAI" Type="int" />
+    <Property Name="THU" Type="int" />
+    <Property Name="CHI" Type="int" />
+    <Property Name="NGAY" Type="date" />
+  </EntityType>
+  <Association Name="FK_DKHACHHANG_DPHUONGXA">
+    <End Role="DPHUONGXA" Type="Self.DPHUONGXA" Multiplicity="0..1" />
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPHUONGXA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DKHACHHANG">
+        <PropertyRef Name="DPHUONGXAID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DKHACHHANG_DQUANHUYEN">
+    <End Role="DQUANHUYEN" Type="Self.DQUANHUYEN" Multiplicity="0..1" />
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DQUANHUYEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DKHACHHANG">
+        <PropertyRef Name="DQUANHUYENID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DKHACHHANG_DTINHTHANH">
+    <End Role="DTINHTHANH" Type="Self.DTINHTHANH" Multiplicity="0..1" />
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTINHTHANH">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DKHACHHANG">
+        <PropertyRef Name="DTINHTHANHID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DMATHANG_DANHSANPHAM">
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
+    <End Role="DANHSANPHAM" Type="Self.DANHSANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DANHSANPHAM">
+        <PropertyRef Name="DMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DMATHANG_DNHOMMATHANG">
+    <End Role="DNHOMMATHANG" Type="Self.DNHOMMATHANG" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHOMMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DNHOMMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DMATHANG_DTHUONGHIEU">
+    <End Role="DTHUONGHIEU" Type="Self.DTHUONGHIEU" Multiplicity="0..1" />
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTHUONGHIEU">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DMATHANG">
+        <PropertyRef Name="DTHUONGHIEUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DPHUONGXA_DQUANHUYEN">
+    <End Role="DQUANHUYEN" Type="Self.DQUANHUYEN" Multiplicity="0..1" />
+    <End Role="DPHUONGXA" Type="Self.DPHUONGXA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DQUANHUYEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DPHUONGXA">
+        <PropertyRef Name="DQUANHUYENID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DQUANHUYEN_DTINHTHANH">
+    <End Role="DTINHTHANH" Type="Self.DTINHTHANH" Multiplicity="0..1" />
+    <End Role="DQUANHUYEN" Type="Self.DQUANHUYEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTINHTHANH">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DQUANHUYEN">
+        <PropertyRef Name="DTINHTHANHID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANG_DKHACHHANG">
+    <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DKHACHHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DKHACHHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANG_DNHACUNGCAP">
+    <End Role="DNHACUNGCAP" Type="Self.DNHACUNGCAP" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHACUNGCAP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DNHACUNGCAPID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANG_DPHUONGXA">
+    <End Role="DPHUONGXA" Type="Self.DPHUONGXA" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DPHUONGXA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DPHUONGXAID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANG_DQUANHUYEN">
+    <End Role="DQUANHUYEN" Type="Self.DQUANHUYEN" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DQUANHUYEN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DQUANHUYENID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANG_DTINHTHANH">
+    <End Role="DTINHTHANH" Type="Self.DTINHTHANH" Multiplicity="0..1" />
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DTINHTHANH">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANG">
+        <PropertyRef Name="DTINHTHANHID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANGCHITIET_DKHUYENMAI">
+    <End Role="DKHUYENMAI" Type="Self.DKHUYENMAI" Multiplicity="0..1" />
+    <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DKHUYENMAI">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANGCHITIET">
+        <PropertyRef Name="DKHUYENMAIID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANGCHITIET_DMATHANG">
+    <End Role="DMATHANG" Type="Self.DMATHANG" Multiplicity="0..1" />
+    <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DMATHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANGCHITIET">
+        <PropertyRef Name="DMATHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TDONHANGCHITIET_TDONHANG">
+    <End Role="TDONHANG" Type="Self.TDONHANG" Multiplicity="0..1" />
+    <End Role="TDONHANGCHITIET" Type="Self.TDONHANGCHITIET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TDONHANG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TDONHANGCHITIET">
+        <PropertyRef Name="TDONHANGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DOANModelStoreContainer">
+    <EntitySet Name="DANHSANPHAM" EntityType="Self.DANHSANPHAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DKHACHHANG" EntityType="Self.DKHACHHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DKHUYENMAI" EntityType="Self.DKHUYENMAI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DMATHANG" EntityType="Self.DMATHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DNHACUNGCAP" EntityType="Self.DNHACUNGCAP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DNHOMMATHANG" EntityType="Self.DNHOMMATHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DPHUONGXA" EntityType="Self.DPHUONGXA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DQUANHUYEN" EntityType="Self.DQUANHUYEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DTHUONGHIEU" EntityType="Self.DTHUONGHIEU" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DTINHTHANH" EntityType="Self.DTINHTHANH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DTINTUC" EntityType="Self.DTINTUC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TTHUCHI" EntityType="Self.TTHUCHI" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DKHACHHANG_DPHUONGXA" Association="Self.FK_DKHACHHANG_DPHUONGXA">
+      <End Role="DPHUONGXA" EntitySet="DPHUONGXA" />
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DKHACHHANG_DQUANHUYEN" Association="Self.FK_DKHACHHANG_DQUANHUYEN">
+      <End Role="DQUANHUYEN" EntitySet="DQUANHUYEN" />
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DKHACHHANG_DTINHTHANH" Association="Self.FK_DKHACHHANG_DTINHTHANH">
+      <End Role="DTINHTHANH" EntitySet="DTINHTHANH" />
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DMATHANG_DANHSANPHAM" Association="Self.FK_DMATHANG_DANHSANPHAM">
+      <End Role="DMATHANG" EntitySet="DMATHANG" />
+      <End Role="DANHSANPHAM" EntitySet="DANHSANPHAM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DMATHANG_DNHOMMATHANG" Association="Self.FK_DMATHANG_DNHOMMATHANG">
+      <End Role="DNHOMMATHANG" EntitySet="DNHOMMATHANG" />
+      <End Role="DMATHANG" EntitySet="DMATHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DMATHANG_DTHUONGHIEU" Association="Self.FK_DMATHANG_DTHUONGHIEU">
+      <End Role="DTHUONGHIEU" EntitySet="DTHUONGHIEU" />
+      <End Role="DMATHANG" EntitySet="DMATHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DPHUONGXA_DQUANHUYEN" Association="Self.FK_DPHUONGXA_DQUANHUYEN">
+      <End Role="DQUANHUYEN" EntitySet="DQUANHUYEN" />
+      <End Role="DPHUONGXA" EntitySet="DPHUONGXA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DQUANHUYEN_DTINHTHANH" Association="Self.FK_DQUANHUYEN_DTINHTHANH">
+      <End Role="DTINHTHANH" EntitySet="DTINHTHANH" />
+      <End Role="DQUANHUYEN" EntitySet="DQUANHUYEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANG_DKHACHHANG" Association="Self.FK_TDONHANG_DKHACHHANG">
+      <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANG_DNHACUNGCAP" Association="Self.FK_TDONHANG_DNHACUNGCAP">
+      <End Role="DNHACUNGCAP" EntitySet="DNHACUNGCAP" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANG_DPHUONGXA" Association="Self.FK_TDONHANG_DPHUONGXA">
+      <End Role="DPHUONGXA" EntitySet="DPHUONGXA" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANG_DQUANHUYEN" Association="Self.FK_TDONHANG_DQUANHUYEN">
+      <End Role="DQUANHUYEN" EntitySet="DQUANHUYEN" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANG_DTINHTHANH" Association="Self.FK_TDONHANG_DTINHTHANH">
+      <End Role="DTINHTHANH" EntitySet="DTINHTHANH" />
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANGCHITIET_DKHUYENMAI" Association="Self.FK_TDONHANGCHITIET_DKHUYENMAI">
+      <End Role="DKHUYENMAI" EntitySet="DKHUYENMAI" />
+      <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANGCHITIET_DMATHANG" Association="Self.FK_TDONHANGCHITIET_DMATHANG">
+      <End Role="DMATHANG" EntitySet="DMATHANG" />
+      <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDONHANGCHITIET_TDONHANG" Association="Self.FK_TDONHANGCHITIET_TDONHANG">
+      <End Role="TDONHANG" EntitySet="TDONHANG" />
+      <End Role="TDONHANGCHITIET" EntitySet="TDONHANGCHITIET" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

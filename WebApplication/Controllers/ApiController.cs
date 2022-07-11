@@ -245,6 +245,11 @@ ORDER BY TONGBILL ASC";
                 chiTietRow.SOLUONG = ConvertTo.Decimal(o["SOLUONG"]);
                 chiTietRow.TDONHANGID = dhRow.ID;
                 chiTietRow.THANHTIEN = chiTietRow.SOLUONG * chiTietRow.DONGIA;
+
+                //đơn giá báo cáo
+                chiTietRow.DONGIABAOCAO = chiTietRow.DONGIA - (dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TILEGIAMGIA * dhRow.TILEGIAMGIA / 100));
+                chiTietRow.THANHTIENBAOCAO = chiTietRow.DONGIABAOCAO * chiTietRow.SOLUONG;
+
                 dhRow.TIENHANG += chiTietRow.THANHTIEN;
                 chitiets.Add(chiTietRow);
             }
@@ -286,6 +291,7 @@ ORDER BY TONGBILL ASC";
             while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
             while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
             kq = JObject.FromObject(mhRow);
+            kq["TONKHO"] = 0;
             return kq;
         }
 

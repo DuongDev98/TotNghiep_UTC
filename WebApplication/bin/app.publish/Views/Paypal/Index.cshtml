@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Thanh toán Paypal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (ViewBag.error != null)
+    {
+        <div>@ViewBag.error</div>
+    }
+    else
+    {
+        <form action="/Paypal/PaymentMethod">
+            <button type="submit">Thực hiện thanh toán</button>
+        </form>
+    }
+}

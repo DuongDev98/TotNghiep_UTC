@@ -21,5 +21,7 @@ namespace WebApplication.Models
         public Nullable<int> THU { get; set; }
         public Nullable<int> CHI { get; set; }
         public Nullable<System.DateTime> NGAY { get; set; }
+    
+        public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }
     }
 }
