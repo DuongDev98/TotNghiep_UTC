@@ -51,6 +51,30 @@
                         </div>
                     </div>
                 </div>
+                <hr />
+                <div class="col divFooter">
+                    @*btn thanh toan, huy bo*@
+                    <div class="row">
+                        <label class="col-2">Tiền hàng</label>
+                        <input id="numTienHang" type="number" class="form-control col-3" value="@Model.TIENHANG" readonly="readonly" />
+                        <label class="col-2">Tỉ lệ giảm</label>
+                        <input id="numTiLeGiam" name="TILEGIAMGIA" type="number" class="form-control col-1" value="@Model.TILEGIAMGIA" @{ if (Model.ID != null && Model.ID.Length > 0) { <text> readonly="readonly" </text>  } } />
+                        <label class="col-2">Tiền giảm</label>
+                        <input id="numTienGiam" type="number" class="form-control col-2" value="@Model.TIENGIAMGIA" readonly="readonly" />
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-2">Tổng cộng</label>
+                        <input id="numTongCong" type="number" class="form-control col-3" value="@Model.TONGCONG" readonly="readonly" />
+                        <div class="col-2"></div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-success" id="btnNhapKho" value="Lưu phiếu nhập" />
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="form-group">
+                            <a href="/NhapKho/Index?page=1&s=&fDate=&tDate="><div class="btn btn-danger">Hủy bỏ</div></a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row table_wrap tblChiTiet">
                 @*Chi tiet hoa don*@
@@ -63,7 +87,7 @@
                             <th scope="col">Đơn giá</th>
                             <th scope="col">SL</th>
                             @*<th scope="col">% giảm</th>
-                        <th scope="col">Giảm giá</th>*@
+                            <th scope="col">Giảm giá</th>*@
                             <th scope="col">T.tiền</th>
                             <th scope="col">Imei</th>
                             <th scope="col"></th>
@@ -87,30 +111,6 @@
                         }
                     </tbody>
                 </table>
-            </div>
-            <hr />
-            <div class="col divFooter">
-                @*btn thanh toan, huy bo*@
-                <div class="row">
-                    <label class="col-2">Tiền hàng</label>
-                    <input id="numTienHang" type="number" class="form-control col-3" value="@Model.TIENHANG" readonly="readonly" />
-                    <label class="col-2">Tỉ lệ giảm</label>
-                    <input id="numTiLeGiam" name="TILEGIAMGIA" type="number" class="form-control col-1" value="@Model.TILEGIAMGIA" @{ if (Model.ID != null && Model.ID.Length > 0) { <text> readonly="readonly" </text>  } } />
-                    <label class="col-2">Tiền giảm</label>
-                    <input id="numTienGiam" type="number" class="form-control col-2" value="@Model.TIENGIAMGIA" readonly="readonly" />
-                </div>
-                <div class="row mt-2">
-                    <label class="col-2">Tổng cộng</label>
-                    <input id="numTongCong" type="number" class="form-control col-3" value="@Model.TONGCONG" readonly="readonly" />
-                    <div class="col-2"></div>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-success" id="btnNhapKho" value="Lưu phiếu nhập" />
-                    </div>
-                    <div class="col-1"></div>
-                    <div class="form-group">
-                        <a href="/NhapKho/Index?page=1&s=&fDate=&tDate="><div class="btn btn-danger">Hủy bỏ</div></a>
-                    </div>
-                </div>
             </div>
             @*hidden*@
             <input id="ipID" type="number" class="form-control col-3" value="@Model.ID" readonly="readonly" hidden/>

@@ -1,5 +1,5 @@
-﻿@model IEnumerable<WebApplication.Models.TDONHANG>
-
+﻿@model PagedList.IPagedList<WebApplication.Models.TDONHANG>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,48 +28,53 @@
         </th>
         <th></th>
     </tr>
-
-                @*case 0: <p>Chờ xử lý</p>; break;
-                case 1: <p>Đã hủy</p>; break;
-                case 2: <p>Đang giao hàng</p>; break;
-                case 3: <p>Đã nhận hàng</p>; break;
-                case 4: <p>Đã thanh toán</p>; break;*@
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @{
-            string time = (item.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
-        }
-        @time
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NAME)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DKHACHHANG.NAME)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TONGCONG)
-    </td>
-    <td>
-        @{
-            switch (item.TRANGTHAI)
-            {
-                case 0: <p>Chờ xử lý</p>; break;
-                case 1: <p>Đã hủy</p>; break;
-                case 2: <p>Đang giao hàng</p>; break;
-                case 3: <p>Đã nhận hàng</p>; break;
-                case 4: <p>Đã thanh toán</p>; break;
-            }
-        }
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.GHICHU)
-    </td>
-    <td>
-        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    string time = (item.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+                }
+                @time
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DKHACHHANG.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TONGCONG)
+            </td>
+            <td>
+                @{
+                    switch (item.TRANGTHAI)
+                    {
+                        case 0: <p>Chờ xử lý</p>; break;
+                        case 1: <p>Đã hủy</p>; break;
+                        case 2: <p>Đang giao hàng</p>; break;
+                        case 3: <p>Đã nhận hàng</p>; break;
+                        case 4: <p>Đã thanh toán</p>; break;
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GHICHU)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+@*case 0: <p>Chờ xử lý</p>; break;
+    case 1: <p>Đã hủy</p>; break;
+    case 2: <p>Đang giao hàng</p>; break;
+    case 3: <p>Đã nhận hàng</p>; break;
+    case 4: <p>Đã thanh toán</p>; break;*@

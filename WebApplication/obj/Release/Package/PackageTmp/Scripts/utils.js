@@ -283,9 +283,9 @@ function setTableScroll() {
             if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
         });
         //fix table details
-        heightSc = window.innerHeight;
-        heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
-        $('.divDetails').find(".table_wrap").height(heightSc);
+        //heightSc = window.innerHeight;
+        //heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
+        //$('.divDetails').find(".table_wrap").height(heightSc);
     }
 }
 
@@ -462,7 +462,7 @@ $(document).ready(function () {
                 //'        <td>0</td>' +
                 //'        <td>0</td>' +
                 '        <td>' + 1 * gianhap + '</td>' +
-                '        <td>' + imei + '</td>' +
+                '        <td><input type="text" value="' + imei + '" name="" hidden="hidden"/>' + imei + '</td>' +
                 '        <td><div class="btn btn-danger">Xóa</div></td>' +
                 '    </tr>');
             $('.tblChiTiet').find('tbody').append($tr);

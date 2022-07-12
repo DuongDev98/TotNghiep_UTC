@@ -159,6 +159,8 @@
     <EntitySetMapping Name="TDONHANGCHITIETs">
       <EntityTypeMapping TypeName="DOANModel.TDONHANGCHITIET">
         <MappingFragment StoreEntitySet="TDONHANGCHITIET">
+          <ScalarProperty Name="THANHTIENBAOCAO" ColumnName="THANHTIENBAOCAO" />
+          <ScalarProperty Name="DONGIABAOCAO" ColumnName="DONGIABAOCAO" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DMATHANGID" ColumnName="DMATHANGID" />
           <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />

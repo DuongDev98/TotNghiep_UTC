@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -13,7 +14,7 @@ namespace WebApplication.Controllers
     public class HoaDonController : Controller
     {
         private DOANEntities db = new DOANEntities();
-        public ActionResult Index(int trangThai)
+        public ActionResult Index(int? page)
         {
             var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH).
                 OrderByDescending(t=>t.NGAY).OrderByDescending(t => t.NAME);
@@ -24,7 +25,9 @@ namespace WebApplication.Controllers
                 t.TIENGIAMGIA = t.TIENGIAMGIA ?? 0;
                 t.TONGCONG = t.TONGCONG ?? 0;
             }
-            return View(tDONHANGs.ToList());
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return View(tDONHANGs.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Details(string id)

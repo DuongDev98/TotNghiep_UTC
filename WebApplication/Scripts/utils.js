@@ -549,6 +549,10 @@ $(document).ready(function () {
                     }
                 });
             }
+            else
+            {
+                form.submit();
+            }
         }
     });
 });

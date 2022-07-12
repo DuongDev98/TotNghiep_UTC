@@ -15,13 +15,13 @@ namespace WebApplication.Controllers
         // GET: ThuChi
         public ActionResult Index()
         {
-            string query = @"SELECT ID, NAME, (SELECT NAME FROM DNHACUNGCAP WHERE DNHACUNGCAPID = DNHACUNGCAP.ID) AS NHACUNGCAP, CHI FROM TTHUCHI";
+            string query = @"SELECT ID, NAME, FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, (SELECT NAME FROM DNHACUNGCAP WHERE DNHACUNGCAPID = DNHACUNGCAP.ID) AS NHACUNGCAP, CHI FROM TTHUCHI ORDER BY NAME DESC";
             DataTable dt = DatabaseUtils.GetTable(query);
             return View(dt);
         }
 
         [HttpGet]
-        public ActionResult AddOrEdit(string id, string DNHACUNGCAPID, int soTien)
+        public ActionResult AddOrEdit(string id, string DNHACUNGCAPID, int? soTien)
         {
             TTHUCHI kq = null;
             if (id == null || id.Length == 0)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -14,12 +15,14 @@ namespace WebApplication.Controllers
     public class MatHangController : Controller
     {
         private DOANEntities db = new DOANEntities();
-
         // GET: MatHang
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var dMATHANGs = db.DMATHANGs.Include(d => d.DNHOMMATHANG).Include(d => d.DTHUONGHIEU);
-            return View(dMATHANGs.ToList());
+            var dMATHANGs = db.DMATHANGs.Include(d => d.DNHOMMATHANG).Include(d => d.DTHUONGHIEU)
+                .OrderBy(x => x.CODE);
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return View(dMATHANGs.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: MatHang/Edit/5
@@ -32,6 +35,9 @@ namespace WebApplication.Controllers
                 dMATHANG.CODE = "Tự động";
             }
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
+            //ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID?? "e7bb4072-9099-4269-a67a-3f7ddfe09f79");
+            //ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", dMATHANG.DTHUONGHIEUID?? "73a50a0a-7489-4bab-b452-6a62b88f7f41");
+
             ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID);
             ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
             return View(dMATHANG);

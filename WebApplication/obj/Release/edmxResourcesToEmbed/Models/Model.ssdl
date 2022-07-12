@@ -157,6 +157,8 @@
     <Property Name="DKHUYENMAIID" Type="varchar" MaxLength="36" />
     <Property Name="TDONHANGID" Type="varchar" MaxLength="36" />
     <Property Name="IMEI" Type="nvarchar" MaxLength="255" />
+    <Property Name="DONGIABAOCAO" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="THANHTIENBAOCAO" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="TTHUCHI">
     <Key>
@@ -170,6 +172,18 @@
     <Property Name="CHI" Type="int" />
     <Property Name="NGAY" Type="date" />
   </EntityType>
+  <Association Name="FK__TTHUCHI__DNHACUN__0697FACD">
+    <End Role="DNHACUNGCAP" Type="Self.DNHACUNGCAP" Multiplicity="0..1" />
+    <End Role="TTHUCHI" Type="Self.TTHUCHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNHACUNGCAP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TTHUCHI">
+        <PropertyRef Name="DNHACUNGCAPID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DKHACHHANG_DPHUONGXA">
     <End Role="DPHUONGXA" Type="Self.DPHUONGXA" Multiplicity="0..1" />
     <End Role="DKHACHHANG" Type="Self.DKHACHHANG" Multiplicity="*" />
@@ -377,6 +391,10 @@
     <EntitySet Name="TDONHANG" EntityType="Self.TDONHANG" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDONHANGCHITIET" EntityType="Self.TDONHANGCHITIET" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TTHUCHI" EntityType="Self.TTHUCHI" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TTHUCHI__DNHACUN__0697FACD" Association="Self.FK__TTHUCHI__DNHACUN__0697FACD">
+      <End Role="DNHACUNGCAP" EntitySet="DNHACUNGCAP" />
+      <End Role="TTHUCHI" EntitySet="TTHUCHI" />
+    </AssociationSet>
     <AssociationSet Name="FK_DKHACHHANG_DPHUONGXA" Association="Self.FK_DKHACHHANG_DPHUONGXA">
       <End Role="DPHUONGXA" EntitySet="DPHUONGXA" />
       <End Role="DKHACHHANG" EntitySet="DKHACHHANG" />

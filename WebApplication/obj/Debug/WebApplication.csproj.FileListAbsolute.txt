@@ -249,3 +249,7 @@ E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.dll
 E:\UTC\UTC_WebService\WebApplication\obj\Debug\WebApplication.pdb
 E:\UTC\UTC_WebService\WebApplication\bin\PayPal.dll
 E:\UTC\UTC_WebService\WebApplication\bin\PayPal.xml
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.dll
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.dll
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.xml
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.xml

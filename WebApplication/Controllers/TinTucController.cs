@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,9 +16,11 @@ namespace WebApplication.Controllers
         private DOANEntities db = new DOANEntities();
 
         // GET: TinTuc
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.DTINTUCs.ToList());
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return View(db.DTINTUCs.OrderByDescending(x=>x.TIMECREATED).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: TinTuc/Create
