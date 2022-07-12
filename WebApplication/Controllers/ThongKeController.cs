@@ -103,9 +103,7 @@ namespace WebApplication.Controllers
             DateTime toDate = (tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now).Date;
             ViewBag.fDate = fromDate.ToString("yyyy-MM-dd");
             ViewBag.tDate = toDate.ToString("yyyy-MM-dd");
-
-            string query = @"SELECT CODE, NAME, 0 AS GIANHAP, 0 AS GIABAN FROM DMATHANG";
-
+            string query = @"SELECT CODE, NAME, 0 AS SOLUONG, 0 AS GIANHAP, 0 AS GIABAN FROM DMATHANG";
             Dictionary<string, object> attrs = new Dictionary<string, object>();
             attrs.Add("@FromDate", fromDate);
             attrs.Add("@ToDate", toDate);

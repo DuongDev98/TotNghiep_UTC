@@ -48,7 +48,7 @@
 @if (ViewBag.numberOfPage != null && ViewBag.numberOfPage > 1)
 {
     <nav aria-label="Page navigation example">
-        <ul class="pagination" style="margin: 0!important">
+        <ul class="pagination" style="margin: 0!important; display: flex !important">
             @for (i = 1; i <= ViewBag.numberOfPage; i++)
             {
             <li class="page-item">

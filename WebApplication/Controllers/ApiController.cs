@@ -639,9 +639,13 @@ ORDER BY TONGBILL ASC";
                 if (ConvertTo.String(khRow.AVATAR).Length == 0) khRow.AVATAR = img + "noavatar.jpg";
                 else khRow.AVATAR = img + khRow.AVATAR;
 
-                string DTINHTHANH_NAME = khRow.DTINHTHANH.NAME;
-                string DQUANHUYEN_NAME = khRow.DQUANHUYEN.NAME;
-                string DPHUONGXA_NAME = khRow.DPHUONGXA.NAME;
+                string DTINHTHANH_NAME = "";
+                string DQUANHUYEN_NAME = "";
+                string DPHUONGXA_NAME = "";
+
+                if (khRow.DTINHTHANH != null) DTINHTHANH_NAME = khRow.DTINHTHANH.NAME;
+                if (khRow.DQUANHUYEN != null) DQUANHUYEN_NAME = khRow.DQUANHUYEN.NAME;
+                if (khRow.DPHUONGXA != null) DPHUONGXA_NAME = khRow.DPHUONGXA.NAME;
 
                 while (khRow.DTINHTHANH != null) khRow.DTINHTHANH = null;
                 while (khRow.DQUANHUYEN != null) khRow.DQUANHUYEN = null;

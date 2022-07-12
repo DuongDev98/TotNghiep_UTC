@@ -286,6 +286,10 @@ function setTableScroll() {
         //heightSc = window.innerHeight;
         //heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
         //$('.divDetails').find(".table_wrap").height(heightSc);
+
+        heightSc = window.innerHeight;
+        heightSc -= $(".divTop").height() + 93;
+        $('.divDetails').find(".table_wrap").css("max-height", heightSc + "px").css("overflow", "auto");
     }
 }
 
@@ -298,6 +302,8 @@ $(document).ready(function () {
         });
         $(this).addClass("table-active");
     });
+
+    $('.table-hover').find("thead").css("background-color", "whitesmoke");
 
     //set height table
     setTableScroll();
