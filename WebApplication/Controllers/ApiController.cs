@@ -269,7 +269,7 @@ ORDER BY TONGBILL ASC";
             return null;
         }
 
-        private TDONHANGCHITIET ThemMatHangVaoHoaDon(string DMATHANGID, decimal soLuong, decimal donGia, TDONHANG dhRow)
+        public static TDONHANGCHITIET ThemMatHangVaoHoaDon(string DMATHANGID, decimal soLuong, decimal donGia, TDONHANG dhRow)
         {
             TDONHANGCHITIET chiTietRow = new TDONHANGCHITIET();
             chiTietRow.ID = Guid.NewGuid().ToString();

@@ -96,7 +96,7 @@ namespace WebApplication.Controllers
                         ID = Guid.NewGuid().ToString();
                         dhRow = new TDONHANG();
                         dhRow.NGAY = temp.NGAY;
-                        dhRow.NAME = GenCodeHD("NK", 1);
+                        dhRow.NAME = GenCodeHD(db, "NK", 1);
                         dhRow.LOAI = 1;
                     }
                     else
@@ -138,7 +138,7 @@ namespace WebApplication.Controllers
                         ctRow.DONGIA = tempRow.DONGIA;
                         ctRow.SOLUONG = tempRow.SOLUONG;
                         ctRow.THANHTIEN = tempRow.THANHTIEN;
-                        ctRow.IMEI = tempRow.IMEI;
+                        //ctRow.IMEI = tempRow.IMEI;
 
                         //đơn giá báo cáo
                         ctRow.DONGIABAOCAO = ctRow.DONGIA - (dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TILEGIAMGIA * dhRow.TILEGIAMGIA / 100));
@@ -163,7 +163,7 @@ namespace WebApplication.Controllers
             return RedirectToAction("Index", new { page = 1, s = "", fDate = "", tDate = "" });
         }
 
-        string GenCodeHD(string startStr, int loai)
+        public static string GenCodeHD(DOANEntities db, string startStr, int loai)
         {
             string code = "", temp = "";
             //lấy số thứ tự
