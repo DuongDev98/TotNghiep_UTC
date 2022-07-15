@@ -84,17 +84,18 @@ namespace WebApplication.Controllers
                     var rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANG.LOAI == 0 && ctRow.DMATHANGID == x.DMATHANGID && x.IMEI == imei).ToList();
                     if (rs.Count == 0)
                     {
-                        rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANG.LOAI == 1 && ctRow.DMATHANGID == x.DMATHANGID && x.IMEI == imei).ToList();
-                        if (rs.Count == 0)
-                        {
-                            error = "Sản phẩm có imei không tồn tại trong kho";
-                        }
-                        else
-                        {
-                            ctRow.IMEI = imei;
-                            db.Entry(ctRow);
-                            db.SaveChanges();
-                        }
+                        //rs = db.TDONHANGCHITIETs.Where(x => x.TDONHANG.LOAI == 1 && ctRow.DMATHANGID == x.DMATHANGID && x.IMEI == imei).ToList();
+                        //if (rs.Count == 0)
+                        //{
+                        //    error = "Sản phẩm có imei không tồn tại trong kho";
+                        //}
+                        //else
+                        //{
+                        //}
+
+                        ctRow.IMEI = imei;
+                        db.Entry(ctRow);
+                        db.SaveChanges();
                     }
                     else
                     {
@@ -116,6 +117,9 @@ namespace WebApplication.Controllers
                 dhRow.TRANGTHAI = int.Parse(trangThai);
                 db.Entry(dhRow);
                 db.SaveChanges();
+                //gui email
+                string noiDung = ThuChiController.RenderRazorViewToString(ControllerContext, ViewData, TempData, "ViewPdf", dhRow);
+                ApiController.SendEmail("Thay đổi trạng thái đơn hàng", dhRow.DKHACHHANG.EMAIL, noiDung);
             }
             catch (Exception ex)
             {
@@ -131,6 +135,14 @@ namespace WebApplication.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ExportPdf(string id)
+        {
+            TDONHANG dhRow = db.TDONHANGs.Find(id);
+            byte[] dataArr = ThuChiController.GetFilePDF(ControllerContext, ViewData, TempData, "ViewPdf", dhRow);
+            return File(dataArr, "application/pdf", dhRow.NAME + ".pdf");
+            //return View("ViewPdf", dhRow);
         }
     }
 }

@@ -6,6 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.Utils;
 using WebApplication.Models;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.tool.xml;
 
 namespace WebApplication.Controllers
 {
@@ -107,6 +112,56 @@ namespace WebApplication.Controllers
             temp += max.ToString();
             code += temp;
             return code;
+        }
+
+        public ActionResult ExportPdf(string id)
+        {
+            TTHUCHI tcRow = db.TTHUCHIs.Find(id);
+            byte[] dataArr = GetFilePDF(ControllerContext, ViewData, TempData, "ViewPdf", tcRow);
+            return File(dataArr, "application/pdf", tcRow.NAME + ".pdf");
+        }
+
+        public static byte[] GetFilePDF(ControllerContext controls, ViewDataDictionary ViewData, TempDataDictionary TempData, string viewName, object model)
+        {
+            string htmlContent = RenderRazorViewToString(controls, ViewData, TempData, viewName, model);
+            using (MemoryStream stream = new MemoryStream())
+            {
+                StringReader sr = new StringReader(htmlContent);
+                Document pdfDoc = new Document(PageSize.POSTCARD, 10f, 10f, 10f, 0f);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                byte[] arr = System.Text.Encoding.UTF8.GetBytes(htmlContent);
+                MemoryStream ms = new MemoryStream(arr);
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, ms, null, System.Text.Encoding.UTF8,
+                    new UnicodeFontFactory(controls.HttpContext.Server.MapPath("~/fonts/tahoma.ttf")));
+                pdfDoc.Close();
+                return stream.ToArray();
+            }
+        }
+
+        public static string RenderRazorViewToString(ControllerContext ControllerContext, ViewDataDictionary ViewData, TempDataDictionary TempData, string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+    }
+    public class UnicodeFontFactory : FontFactoryImp
+    {
+        private readonly BaseFont _baseFont;
+        public UnicodeFontFactory(string FontPath)
+        {
+            _baseFont = BaseFont.CreateFont(FontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        }
+        public override Font GetFont(string fontname, string encoding, bool embedded, float size, int style, BaseColor color, bool cached)
+        {
+            return new Font(_baseFont, size, style, color);
         }
     }
 }

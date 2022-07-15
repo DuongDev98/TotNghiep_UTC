@@ -286,6 +286,10 @@ function setTableScroll() {
         //heightSc = window.innerHeight;
         //heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
         //$('.divDetails').find(".table_wrap").height(heightSc);
+
+        heightSc = window.innerHeight;
+        heightSc -= $(".divTop").height() + 93;
+        $('.divDetails').find(".table_wrap").css("max-height", heightSc + "px").css("overflow", "auto");
     }
 }
 
@@ -298,6 +302,8 @@ $(document).ready(function () {
         });
         $(this).addClass("table-active");
     });
+
+    $('.table-hover').find("thead").css("background-color", "whitesmoke");
 
     //set height table
     setTableScroll();
@@ -418,7 +424,8 @@ $(document).ready(function () {
                 '    </div>\n' +
                 '</div>');
             $('#modal-dialog').modal('show');
-            $('#modal-dialog').on("click", "#btnYes", function () {
+            $('#modal-dialog').on("click", "#btnYes", function (e) {
+                e.preventDefault();
                 $('#modal-dialog').modal('hide');
                 let txt = $('#modal-dialog').find("#txtImei").val();
                 let lines = txt.split("\n");
@@ -548,6 +555,10 @@ $(document).ready(function () {
                         form.submit();
                     }
                 });
+            }
+            else
+            {
+                form.submit();
             }
         }
     });

@@ -129,7 +129,6 @@ namespace WebApplication.Controllers
                         db.Entry(dhRow).State = EntityState.Modified;
                     }
                     db.SaveChanges();
-
                     foreach (TDONHANGCHITIET tempRow in temp.TDONHANGCHITIETs)
                     {
                         TDONHANGCHITIET ctRow = new TDONHANGCHITIET();

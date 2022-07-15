@@ -103,11 +103,31 @@ namespace WebApplication.Controllers
             DateTime toDate = (tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now).Date;
             ViewBag.fDate = fromDate.ToString("yyyy-MM-dd");
             ViewBag.tDate = toDate.ToString("yyyy-MM-dd");
-            string query = @"SELECT CODE, NAME, 0 AS SOLUONG, 0 AS GIANHAP, 0 AS GIABAN FROM DMATHANG";
+            string query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 1";
             Dictionary<string, object> attrs = new Dictionary<string, object>();
             attrs.Add("@FromDate", fromDate);
             attrs.Add("@ToDate", toDate);
             DataTable dt = DatabaseUtils.GetTable(query, attrs);
+            ViewBag.tblNhapKho = dt;
+            decimal tongNhap = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                tongNhap += ConvertTo.Decimal(row["TONGCONG"]);
+            }
+
+            query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 0 AND COALESCE(TRANGTHAI, 0)<>1";
+            dt = DatabaseUtils.GetTable(query, attrs);
+            ViewBag.tblHoaDon = dt;
+            decimal tongXuat = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                tongXuat += ConvertTo.Decimal(row["TONGCONG"]);
+            }
+            decimal loiNhuan = tongXuat - tongNhap;
+            ViewBag.tongNhap = tongNhap;
+            ViewBag.tongXuat = tongXuat;
+            ViewBag.loiNhuan = loiNhuan;
+
             if (dt.Rows.Count == 0)
             {
                 ViewBag.error = "Dữ liệu giao dịch trống";

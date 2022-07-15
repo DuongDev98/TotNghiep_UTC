@@ -172,6 +172,7 @@
     <NavigationProperty Name="DTINHTHANH" Relationship="Self.FK_TDONHANG_DTINHTHANH" FromRole="TDONHANG" ToRole="DTINHTHANH" />
     <NavigationProperty Name="TDONHANGCHITIETs" Relationship="Self.FK_TDONHANGCHITIET_TDONHANG" FromRole="TDONHANG" ToRole="TDONHANGCHITIET" />
     <Property Name="HINHTHUCTHANHTOAN" Type="Int32" />
+    <Property Name="DATHANHTOAN" Type="Int32" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

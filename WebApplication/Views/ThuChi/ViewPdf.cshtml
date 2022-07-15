@@ -1,0 +1,76 @@
+﻿@model WebApplication.Models.TTHUCHI
+@{
+    ViewBag.Title = "ViewPdf";
+    string ngay = (Model.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+    decimal sotien = Model.CHI ?? 0;
+}
+<style>
+    .container {
+        margin-left: auto;
+        padding: 10px;
+    }
+    .textCenter {
+        text-align: center;
+    }
+    table {
+        width: 100%;
+    }
+</style>
+<div class="container">
+    <table border="0">
+        <tr class="textCenter">
+            <td colspan="2"><h3 style="margin: 0px;">Khánh Store</h3></td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">0357192939</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">Tam Cường-Vĩnh Bảo-Hải Phòng</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2"><h3 style="padding: 20px;">PHIẾU CHI</h3></td>
+        </tr>
+        <tr>
+            <td>Ngày</td>
+            <td>@ngay</td>
+        </tr>
+        <tr>
+            <td>Số phiếu</td>
+            <td>@Model.NAME</td>
+        </tr>
+        <tr>
+            <td>Nhà cung cấp</td>
+            <td>@Model.DNHACUNGCAP.NAME</td>
+        </tr>
+        <tr>
+            <td>Số tiền</td>
+            <td>@sotien.ToString("###,###")</td>
+        </tr>
+    </table>
+
+    <table border="0" style="margin-top: 20px;">
+        <tr class="textCenter">
+            <td><b>Người nhận</b></td>
+            <td><b>Thủ quỹ</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td>Ký và ghi rõ họ tên</td>
+            <td>Ký và ghi rõ họ tên</td>
+        </tr>
+    </table>
+</div>
+
+
+@*<div style="width: 100%;">
+        <div style="width: 50%; height: auto; margin-left: auto">
+            <div style="margin-left: 35%">
+                <h1 style="">Payment</h1>
+                <p>Date: @ngay</p>
+                <p>Name: <span style="color: blue;">@Model.NAME</span></p>
+                <p>Supplier: <span style="color: red; font-weight: bold;">@Model.DNHACUNGCAP.NAME</span></p>
+                <p>Amount: <span style="color:blue; text-decoration: underline;">@sotien.ToString("###,###")</span> Vnđ</p>
+                <br />
+                <p style="float: right">Signature</p>
+            </div>
+        </div>
+    </div>*@

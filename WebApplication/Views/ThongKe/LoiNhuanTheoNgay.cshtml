@@ -2,7 +2,6 @@
     ViewBag.Title = "Lợi nhuận theo ngày";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <form action="" method="get">
     <div class="row">
         <div class="col-6">
@@ -29,33 +28,30 @@
     </div>
 </form>
 
+<div class="row">
+    <div class="col-12" style="height: 35px; font-weight: bold;">Nhập kho: @WebApplication.Utils.ConvertTo.Int(ViewBag.tongNhap)</div>
+</div>
 <table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Mã hàng</th>
-            <th scope="col">Mặt hàng</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Giá nhập</th>
-            <th scope="col">Giá bán</th>
-            <th scope="col">Lợi nhuận</th>
+            <th scope="col">Ngày</th>
+            <th scope="col">Số phiếu</th>
+            <th scope="col">Tổng cộng</th>
         </tr>
     </thead>
     <tbody>
         @{
-            if (Model != null && Model.Rows.Count > 0)
+            if (ViewBag.tblNhapKho != null && ViewBag.tblNhapKho.Rows.Count > 0)
             {
                 int i = 1;
-                foreach (System.Data.DataRow row in Model.Rows)
+                foreach (System.Data.DataRow row in ViewBag.tblNhapKho.Rows)
                 {
                     <tr>
                         <th scope="row">@i</th>
-                        <td>@row["CODE"]</td>
+                        <td>@row["NGAY"]</td>
                         <td>@row["NAME"]</td>
-                        <td>@row["SOLUONG"]</td>
-                        <td>@row["GIANHAP"]</td>
-                        <td>@row["GIABAN"]</td>
-                        <td>0</td>
+                        <td>@WebApplication.Utils.ConvertTo.Int(@row["TONGCONG"])</td>
                     </tr>
                     i++;
                 }
@@ -63,3 +59,39 @@
         }
     </tbody>
 </table>
+
+<div class="row">
+    <div class="col-12" style="height: 35px; font-weight: bold;">Xuất kho: @WebApplication.Utils.ConvertTo.Int(ViewBag.tongXuat)</div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ngày</th>
+            <th scope="col">Số phiếu</th>
+            <th scope="col">Tổng cộng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (ViewBag.tblHoaDon != null && ViewBag.tblHoaDon.Rows.Count > 0)
+            {
+                int i = 1;
+                foreach (System.Data.DataRow row in ViewBag.tblHoaDon.Rows)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@row["NGAY"]</td>
+                        <td>@row["NAME"]</td>
+                        <td>@WebApplication.Utils.ConvertTo.Int(@row["TONGCONG"])</td>
+                    </tr>
+                    i++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-12" style="height: 35px; font-weight: bold;">Lợi nhuận: @WebApplication.Utils.ConvertTo.Int(ViewBag.loiNhuan)</div>
+</div>

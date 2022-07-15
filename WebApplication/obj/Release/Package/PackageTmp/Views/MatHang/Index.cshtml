@@ -1,5 +1,6 @@
-﻿@model IEnumerable<WebApplication.Models.DMATHANG>
-
+﻿@*@model IEnumerable<WebApplication.Models.DMATHANG>*@
+@model PagedList.IPagedList<WebApplication.Models.DMATHANG>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -34,36 +35,44 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NAME)
-        </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.COIMEI > 0 ? "Có" : "Không")*@
-            @{ if (item.COIMEI == null || item.COIMEI == 0) { <text>Không</text> } else { <text>Có</text> } }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GIANHAP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GIABAN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DNHOMMATHANG.NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DTHUONGHIEU.NAME)
-        </td>
-        <td>
-            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CODE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.COIMEI > 0 ? "Có" : "Không")*@
+                @{ if (item.COIMEI == null || item.COIMEI == 0)
+                    { <text>Không</text> }
+                else
+                { <text>Có</text> } }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GIANHAP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GIABAN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNHOMMATHANG.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTHUONGHIEU.NAME)
+            </td>
+            <td>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

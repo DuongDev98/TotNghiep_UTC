@@ -35,10 +35,10 @@ namespace WebApplication.Controllers
                 dMATHANG.CODE = "Tự động";
             }
             ViewBag.imgs = GetDicAnhs(db, dMATHANG);
-            //ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID?? "e7bb4072-9099-4269-a67a-3f7ddfe09f79");
+            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID?? "e7bb4072-9099-4269-a67a-3f7ddfe09f79");
             //ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", dMATHANG.DTHUONGHIEUID?? "73a50a0a-7489-4bab-b452-6a62b88f7f41");
 
-            ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID);
+            //ViewBag.DNHOMMATHANGID = new SelectList(db.DNHOMMATHANGs, "ID", "NAME", dMATHANG.DNHOMMATHANGID);
             ViewBag.DTHUONGHIEUID = new SelectList(db.DTHUONGHIEUx, "ID", "NAME", dMATHANG.DTHUONGHIEUID);
             return View(dMATHANG);
         }

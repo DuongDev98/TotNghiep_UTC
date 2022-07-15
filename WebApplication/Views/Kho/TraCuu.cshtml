@@ -42,9 +42,10 @@
                                 int i = 1;
                                 foreach (WebApplication.Models.TDONHANGCHITIET row in Model)
                                 {
+                                    string ngay = (row.TDONHANG.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
                                     <tr>
                                         <th scope="row">@i</th>
-                                        <td>@(row.TDONHANG.NGAY ?? DateTime.Now)</td>
+                                        <td>@ngay</td>
                                         <td>@row.TDONHANG.NAME</td>
                                         <td>@row.TDONHANG.DKHACHHANG.NAME</td>
                                         <td>@row.DONGIA</td>

@@ -1,0 +1,125 @@
+﻿@model Newtonsoft.Json.Linq.JObject
+@{
+    ViewBag.Title = "ViewPdf";
+    //string ngay = (Model.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+    //decimal tienHang = Model.TIENHANG ?? 0;
+    //decimal tiLe = Model.TILEGIAMGIA ?? 0;
+    //decimal tienGiam = Model.TIENGIAMGIA ?? 0;
+    //decimal tongCong = Model.TONGCONG ?? 0;
+}
+<style>
+    .container {
+        padding: 10px;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .textCenter {
+        text-align: center;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    table, th, td {
+        border-collapse: collapse;
+    }
+</style>
+
+<div class="container">
+    <table border="0">
+        <tr class="textCenter">
+            <td colspan="2"><h3 style="margin: 0px;">Khánh Store</h3></td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">0357192939</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">Tam Cường-Vĩnh Bảo-Hải Phòng</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2"><h4 style="">XÁC NHẬN ĐẶT HÀNG</h4></td>
+        </tr>
+        <tr>
+            <td>Ngày</td>
+            <td>@DateTime.Now.ToString("dd/MM/yyyy")</td>
+        </tr>
+        <tr>
+            <td>Tên người nhận</td>
+            <td>@Model["TENNGUOINHAN"]</td>
+        </tr>
+        <tr>
+            <td>SĐT</td>
+            <td>@Model["DIENTHOAI"]</td>
+        </tr>
+        <tr>
+            <td>Địa chỉ</td>
+            <td>@Model["DIACHI"]</td>
+        </tr>
+        <tr>
+            <td>Ghi chú</td>
+            <td>@Model["GHICHU"]</td>
+        </tr>
+    </table>
+
+    <table border="1" style="margin-top: 10px; font-size: 9px;">
+        <tr class="textCenter">
+            <td><b>Mặt hàng</b></td>
+            <td><b>Số lượng</b></td>
+            <td><b>Đơn giá</b></td>
+            <td><b>Thành tiền</b></td>
+        </tr>
+        @{
+            decimal tienHang = 0, tiLeGiam = WebApplication.Utils.ConvertTo.Decimal(Model["TILEGIAMGIA"]), tienGiam = 0, tongCong = 0;
+            Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.FromObject(Model["TDONHANGCHITIETs"]);
+            foreach (var item in arr)
+            {
+                decimal donGia = WebApplication.Utils.ConvertTo.Decimal(item["DONGIA"]),
+                        soLuong = WebApplication.Utils.ConvertTo.Decimal(item["SOLUONG"]),
+                        thanhTien = donGia * soLuong;
+                tienHang += thanhTien;
+                <tr class="textCenter">
+                    <td>@item["NAME"]</td>
+                    <td>@donGia.ToString("n0")</td>
+                    <td>@soLuong.ToString("n0")</td>
+                    <td>@thanhTien.ToString("n0")</td>
+                </tr>
+            }
+            tienGiam = tiLeGiam == 0 ? 0 : (tienHang * tiLeGiam / 100);
+            tongCong = tienHang - tienGiam;
+        }
+    </table>
+
+    <table border="0" style="margin-top: 10px;">
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tiền hàng</b></td>
+            <td class="textRight"><b>@tienHang.ToString("n0")</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tỉ lệ giảm giá</b></td>
+            <td class="textRight"><b>@tiLeGiam.ToString("n0")</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tiền giảm giá</b></td>
+            <td class="textRight"><b>@tienGiam.ToString("n0")</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tổng cộng</b></td>
+            <td class="textRight"><b>@tongCong.ToString("n0")</b></td>
+        </tr>
+    </table>
+
+    <table border="0" style="margin-top: 10px;">
+        <tr class="textCenter">
+            <td class="textLeft"><b>Mã xác nhận</b></td>
+            <td class="textRight"><b>@Model["CODE"]</b></td>
+        </tr>
+    </table>
+</div>

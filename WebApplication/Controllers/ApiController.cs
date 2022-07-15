@@ -116,9 +116,11 @@ ORDER BY TONGBILL ASC";
         {
             string code = ConvertTo.String(param["CODE"]);
             string email = ConvertTo.String(param["EMAIL"]);
-            string noiDung = "Mã xác nhận của bạn là: " + code;
+            JObject obj = JObject.Parse(ConvertTo.String(param["donHang"]));
+            obj["CODE"] = code;
+            string noiDung = ThuChiController.RenderRazorViewToString(ControllerContext, ViewData, TempData, "XacNhanDatHangPdf", obj);
             try {
-                SendEmail(email, noiDung);
+                SendEmail("Xác nhận đơn hàng", email, noiDung);
             }
             catch (Exception ex)
             {
@@ -127,13 +129,11 @@ ORDER BY TONGBILL ASC";
             JObject kq = new JObject();
             return kq;
         }
-
-        void SendEmail(string email, string noiDung)
+        public static void SendEmail(string Subject, string email, string noiDung)
         {
             string To = email;
             string From = "duongdev98@gmail.com";
             string GoogleAppPassword = "qdirmnqeoxdmzdzk";
-            string Subject = "Mã xác nhận";
             string Body = "<p>"+noiDung+"</p>";
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
@@ -197,7 +197,6 @@ ORDER BY TONGBILL ASC";
                 case 1: return "Đã hủy";
                 case 2: return "Đang giao hàng";
                 case 3: return "Đã nhận hàng";
-                case 4: return "Đã thanh toán";
                 default: return "Chờ xử lý";
             }
         }
@@ -238,20 +237,26 @@ ORDER BY TONGBILL ASC";
             JArray arrChiTiet = JArray.FromObject(param["TDONHANGCHITIETs"]);
             foreach (JObject o in arrChiTiet)
             {
-                TDONHANGCHITIET chiTietRow = new TDONHANGCHITIET();
-                chiTietRow.ID = Guid.NewGuid().ToString();
-                chiTietRow.DMATHANGID = ConvertTo.String(o["DMATHANGID"]);
-                chiTietRow.DONGIA = ConvertTo.Decimal(o["DONGIA"]);
-                chiTietRow.SOLUONG = ConvertTo.Decimal(o["SOLUONG"]);
-                chiTietRow.TDONHANGID = dhRow.ID;
-                chiTietRow.THANHTIEN = chiTietRow.SOLUONG * chiTietRow.DONGIA;
-
-                //đơn giá báo cáo
-                chiTietRow.DONGIABAOCAO = chiTietRow.DONGIA - (dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TILEGIAMGIA * dhRow.TILEGIAMGIA / 100));
-                chiTietRow.THANHTIENBAOCAO = chiTietRow.DONGIABAOCAO * chiTietRow.SOLUONG;
-
-                dhRow.TIENHANG += chiTietRow.THANHTIEN;
-                chitiets.Add(chiTietRow);
+                string DMATHANGID = ConvertTo.String(o["DMATHANGID"]);
+                decimal soLuong = ConvertTo.Decimal(o["SOLUONG"]);
+                decimal donGia = ConvertTo.Decimal(o["DONGIA"]);
+                DMATHANG mhRow = db.DMATHANGs.Find(DMATHANGID);
+                if (ConvertTo.Int(mhRow.COIMEI) > 0)
+                {
+                    //Thêm từng cái 1
+                    for (int i = 0; i < soLuong; i++)
+                    {
+                        TDONHANGCHITIET chiTietRow = ThemMatHangVaoHoaDon(DMATHANGID, 1, donGia, dhRow);
+                        dhRow.TIENHANG += chiTietRow.THANHTIEN;
+                        chitiets.Add(chiTietRow);
+                    }
+                }
+                else
+                {
+                    TDONHANGCHITIET chiTietRow = ThemMatHangVaoHoaDon(DMATHANGID, soLuong, donGia, dhRow);
+                    dhRow.TIENHANG += chiTietRow.THANHTIEN;
+                    chitiets.Add(chiTietRow);
+                }
             }
             dhRow.TIENGIAMGIA = dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TIENHANG * dhRow.TILEGIAMGIA / 100);
             dhRow.TONGCONG = dhRow.TIENHANG - dhRow.TIENGIAMGIA;
@@ -262,6 +267,21 @@ ORDER BY TONGBILL ASC";
             db.TDONHANGCHITIETs.AddRange(chitiets);
             db.SaveChanges();
             return null;
+        }
+
+        private TDONHANGCHITIET ThemMatHangVaoHoaDon(string DMATHANGID, decimal soLuong, decimal donGia, TDONHANG dhRow)
+        {
+            TDONHANGCHITIET chiTietRow = new TDONHANGCHITIET();
+            chiTietRow.ID = Guid.NewGuid().ToString();
+            chiTietRow.DMATHANGID = DMATHANGID;
+            chiTietRow.DONGIA = donGia;
+            chiTietRow.SOLUONG = soLuong;
+            chiTietRow.TDONHANGID = dhRow.ID;
+            chiTietRow.THANHTIEN = chiTietRow.SOLUONG * chiTietRow.DONGIA;
+            //đơn giá báo cáo
+            chiTietRow.DONGIABAOCAO = chiTietRow.DONGIA - (dhRow.TILEGIAMGIA == 0 ? 0 : (dhRow.TILEGIAMGIA * dhRow.TILEGIAMGIA / 100));
+            chiTietRow.THANHTIENBAOCAO = chiTietRow.DONGIABAOCAO * chiTietRow.SOLUONG;
+            return chiTietRow;
         }
 
         private JObject thongTinMatHang(JObject param, ref string error)
@@ -291,7 +311,18 @@ ORDER BY TONGBILL ASC";
             while (mhRow.DNHOMMATHANG != null) mhRow.DNHOMMATHANG = null;
             while (mhRow.DTHUONGHIEU != null) mhRow.DTHUONGHIEU = null;
             kq = JObject.FromObject(mhRow);
-            kq["TONKHO"] = 0;
+
+            string query = @"SELECT CODE, NAME, GIANHAP, GIABAN,
+            (SELECT NAME FROM DNHOMMATHANG WHERE DNHOMMATHANG.ID = DNHOMMATHANGID) AS NHOM,
+            (SELECT NAME FROM DTHUONGHIEU WHERE DTHUONGHIEU.ID = DTHUONGHIEUID) AS THUONGHIEU,
+            (
+	            COALESCE((SELECT SUM(CASE WHEN TDONHANG.LOAI = 1 THEN COALESCE(SOLUONG, 0) ELSE -COALESCE(SOLUONG, 0) END) FROM TDONHANGCHITIET
+	            INNER JOIN TDONHANG ON TDONHANGID = TDONHANG.ID WHERE DMATHANGID = DMATHANG.ID AND COALESCE(TRANGTHAI, 0) <> 1), 0)
+            ) AS TON
+            FROM DMATHANG WHERE ID = '"+ mhRow.ID +"'";
+            DataTable dt = DatabaseUtils.GetTable(query);
+            int tonKho = ConvertTo.Int(dt.Rows[0]["TON"]);
+            kq["TONKHO"] = tonKho;
             return kq;
         }
 

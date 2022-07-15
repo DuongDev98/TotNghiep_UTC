@@ -204,24 +204,6 @@ function showMatHang(id) {
     });
 }
 
-//function QuanLyAnhMatHang(id, name) {
-//    let html = '<form id="data" method="post" enctype="multipart/form-data"><div class="input-images"></div></form>';
-//    ShowAddEditForm(name, html, "/MatHang/UploadAnh/" + id);
-//    $.get("/MatHang/GetImage/" + id, function (dataStr) {
-//        let preloaded = [];
-//        if (dataStr != "[]") {
-//            let dataArr = JSON.parse(dataStr);
-//            for (let i = 0; i < dataArr.length; i++) {
-//                let item = dataArr[i];
-//                preloaded.push({ id: item.ID, src: item.LINK });
-//            }
-//        }
-//        $('.input-images').imageUploader({
-//            preloaded: preloaded
-//        });
-//    });
-//}
-
 function deleteMatHang(id) {
     ShowYesNo("Lựa chọn", "Bạn muốn xóa mặt hàng đang chọn?", () => {
         $.post("/MatHang/Delete/" + id, function (data) {
@@ -282,11 +264,8 @@ function setTableScroll() {
         $('.divMatHang').find(".table-wrap").find("tr").each(function (i, e) {
             if ($('.divMatHang').find(".table-wrap").find("tr").length - 1 != i) $(e).css("height", "10px");
         });
-        //fix table details
-        //heightSc = window.innerHeight;
-        //heightSc -= $(".divTop").height() + $(".divFooter").height() + 93;
-        //$('.divDetails').find(".table_wrap").height(heightSc);
 
+        //fix table details
         heightSc = window.innerHeight;
         heightSc -= $(".divTop").height() + 93;
         $('.divDetails').find(".table_wrap").css("max-height", heightSc + "px").css("overflow", "auto");
@@ -333,14 +312,6 @@ $(document).ready(function () {
         else if (url.indexOf("MatHang") > -1) deleteMatHang(id);
         else if (url.indexOf("NhapKho") > -1) deleteNhapKho(id);
     });
-
-    //Quản lý ảnh
-    //$('.btnUplloadFile').click(function () {
-    //    let id = $(this).closest("tr").attr("data-id");
-    //    if (url.indexOf("MatHang") > -1) {
-    //        QuanLyAnhMatHang(id, $(this).closest("tr").find('td')[1].innerText);
-    //    }
-    //});
 
     //lọc mặt hàng
     $('.tvMain').find("tbody").on("click", "tr", function () {
@@ -398,45 +369,8 @@ $(document).ready(function () {
         let code = $(this).data("code");
         let name = $(this).data("name");
         let giaNhap = convertToInt($(this).data("gianhap"));
-        let coImei = $(this).data("coimei") == "30";
-        //Tìm xem trong chi tiết có không, có thì cộng thêm, không có thì
-        if (coImei) {
-            //Nhập form nhập imei
-            let title = "Nhập danh sách imei";
-            let html = "<textarea id='txtImei' rows='5' style='width: 100%'></textarea>";
-            $('#modal-dialog').empty();
-            $('#modal-dialog').append('<div class="modal-dialog" role="document">\n' +
-                '    <div class="modal-content">\n' +
-                '      <div class="modal-header">\n' +
-                '        <h5 class="modal-title">' + title + '</h5>\n' +
-                '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
-                '          <span aria-hidden="true">&times;</span>\n' +
-                '        </button>\n' +
-                '      </div>\n' +
-                '      <div class="modal-body">\n' +
-                '           <div class="alert alert-danger" role="alert" hidden="hidden"></div >' +
-                '         ' + html + '    ' +
-                '      </div>\n' +
-                '   <div class="modal-footer">' +
-                '       <button type="button" id="btnYes" class="btn btn-success">Chấp nhận</button>' +
-                '       <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>' +
-                '   </div>' +
-                '    </div>\n' +
-                '</div>');
-            $('#modal-dialog').modal('show');
-            $('#modal-dialog').on("click", "#btnYes", function () {
-                $('#modal-dialog').modal('hide');
-                let txt = $('#modal-dialog').find("#txtImei").val();
-                let lines = txt.split("\n");
-                lines.forEach((val, index) => {
-                    if (val.length > 0) addItemToNhapKho(id, code, name, giaNhap, coImei, val);
-                });
-            });
-        }
-        else {
-            //kiểm tra có tồn tại chưa, chưa thì thêm mới, không thì cộng số lượng
-            addItemToNhapKho(id, code, name, giaNhap, coImei, "");
-        }
+        //kiểm tra có tồn tại chưa, chưa thì thêm mới, không thì cộng số lượng
+        addItemToNhapKho(id, code, name, giaNhap);
     });
 
     function convertToInt(s) {
@@ -447,32 +381,33 @@ $(document).ready(function () {
         return val;
     }
 
-    function addItemToNhapKho(id, code, name, gianhap, coImei, imei) {
+    function addItemToNhapKho(id, code, name, gianhap) {
         let added = false;
-        if (!coImei) {
-            $('.tblChiTiet').find('tbody').find("tr").each((index, ele) => {
-                if (id == ele.dataset.id) {
-                    added = true;
-                    let val = convertToInt($(ele).find("td:eq(4)").find("input").val()) + 1;
-                    $(ele).find("td:eq(4)").find("input").val(val);
-                }
-            });
-        }
+
+        $('.tblChiTiet').find('tbody').find("tr").each((index, ele) => {
+            if (id == ele.dataset.id) {
+                added = true;
+                let val = convertToInt($(ele).find("td:eq(4)").find("input").val()) + 1;
+                $(ele).find("td:eq(4)").find("input").val(val);
+            }
+        });
+
         if (!added) {
             $tr = $('<tr data-id="' + id + '">' +
                 '        <td>#</td>' +
                 '        <td><input type="text" value="' + id + '" name="" hidden="hidden"/>' + code+'</td>' +
                 '        <td>' + name+'</td>' +
-                '        <td><input type="number" value="' + gianhap + '" name="" readonly/></td>' +
-                '        <td><input type="number" value="1" name="" readonly/></td>' +
+                '        <td><input style="width: 100px" type="number" value="' + gianhap + '" name="" readonly/></td>' +
+                '        <td><input style="width: 50px" type="number" value="1" name="" readonly/></td>' +
                 //'        <td>0</td>' +
                 //'        <td>0</td>' +
                 '        <td>' + 1 * gianhap + '</td>' +
-                '        <td><input type="text" value="' + imei + '" name="" hidden="hidden"/>' + imei + '</td>' +
+/*                '        <td><input type="text" value="' + imei + '" name="" hidden="hidden"/>' + imei + '</td>' +*/
                 '        <td><div class="btn btn-danger">Xóa</div></td>' +
                 '    </tr>');
             $('.tblChiTiet').find('tbody').append($tr);
         }
+
         CalculateRow();
     }
 
@@ -498,14 +433,13 @@ $(document).ready(function () {
             let soluong = convertToInt($(ele).find("td:eq(4)").find("input").val());
             let thanhtien = dongia * soluong;
             tienHang += thanhtien;
-            $(ele).find("td:eq(5)").val(thanhtien);
+            $(ele).find("td:eq(5)").text(thanhtien);
             //find field
             $(ele).find("td:eq(0)").text(index);
-            $(ele).find("td:eq(1)").find("input:eq(0)").attr("name","TDONHANGCHITIETs[" + index + "].DMATHANGID");
+            $(ele).find("td:eq(1)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].DMATHANGID");
             $(ele).find("td:eq(3)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].DONGIA");
             $(ele).find("td:eq(4)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].SOLUONG");
             $(ele).find("td:eq(5)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].THANHTIEN");
-            $(ele).find("td:eq(6)").find("input").attr("name","TDONHANGCHITIETs[" + index + "].IMEI");
         });
         tienGiamGia = tienHang * (tileGiam / 100);
         tongCong = tienHang - tienGiamGia;
@@ -528,7 +462,6 @@ $(document).ready(function () {
                         '<option value="1">Đã hủy</option>' +
                         '<option value="2">Đang giao hàng</option>' +
                         '<option value="3">Đã nhận hàng</option>'+
-                        '<option value="4">Đã thanh toán</option>'+
                   '</select>';
         ShowAddEditForm("Chọn trạng thái", html, "/HoaDon/CapNhatTrangThai/" + dataId);
     });

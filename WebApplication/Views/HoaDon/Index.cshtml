@@ -54,7 +54,6 @@
                         case 1: <p>Đã hủy</p>; break;
                         case 2: <p>Đang giao hàng</p>; break;
                         case 3: <p>Đã nhận hàng</p>; break;
-                        case 4: <p>Đã thanh toán</p>; break;
                     }
                 }
             </td>
@@ -62,7 +61,8 @@
                 @Html.DisplayFor(modelItem => item.GHICHU)
             </td>
             <td>
-                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID })
+                <a style="margin-right: 10px;" href="/HoaDon/ExportPdf?id=@item.ID"><div class="btn btn-warning">Xuất file</div></a>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, new { @class = "btn btn-info" })
             </td>
         </tr>
     }

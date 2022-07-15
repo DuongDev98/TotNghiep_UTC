@@ -1,0 +1,134 @@
+﻿@model WebApplication.Models.TDONHANG
+@{
+    ViewBag.Title = "ViewPdf";
+    string ngay = (Model.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
+    decimal tienHang = Model.TIENHANG ?? 0;
+    decimal tiLe = Model.TILEGIAMGIA ?? 0;
+    decimal tienGiam = Model.TIENGIAMGIA ?? 0;
+    decimal tongCong = Model.TONGCONG ?? 0;
+}
+<style>
+    .container {
+        padding: 10px;
+    }
+
+    .textLeft {
+        text-align: left;
+    }
+
+    .textCenter {
+        text-align: center;
+    }
+
+    .textRight {
+        text-align: right;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    table, th, td {
+        border-collapse: collapse;
+    }
+</style>
+
+<div class="container">
+    <table border="0">
+        <tr class="textCenter">
+            <td colspan="2"><h3 style="margin: 0px;">Khánh Store</h3></td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">0357192939</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2">Tam Cường-Vĩnh Bảo-Hải Phòng</td>
+        </tr>
+        <tr class="textCenter">
+            <td colspan="2"><h4 style="">HÓA ĐƠN BÁN HÀNG</h4></td>
+        </tr>
+        <tr>
+            <td>Ngày</td>
+            <td>@ngay</td>
+        </tr>
+        <tr>
+            <td>Số phiếu</td>
+            <td>@Model.NAME</td>
+        </tr>
+        <tr>
+            <td>Kh.hàng</td>
+            <td>@Model.DKHACHHANG.NAME</td>
+        </tr>
+        <tr>
+            <td>Người nhận</td>
+            <td>@Model.TENNGUOINHAN</td>
+        </tr>
+        <tr>
+            <td>SĐT</td>
+            <td>@Model.DIENTHOAI</td>
+        </tr>
+        <tr>
+            <td>Địa chỉ</td>
+            <td>@Model.DIACHI - @Model.DPHUONGXA.NAME - @Model.DQUANHUYEN.NAME - @Model.DTINHTHANH.NAME</td>
+        </tr>
+        <tr>
+            <td>Trạng thái</td>
+            <td>
+                @{
+                    switch (Model.TRANGTHAI)
+                    {
+                        case 0: <p>Chờ xử lý</p>; break;
+                        case 1: <p>Đã hủy</p>; break;
+                        case 2: <p>Đang giao hàng</p>; break;
+                        case 3: <p>Đã nhận hàng</p>; break;
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+
+    <table border="1" style="margin-top: 10px; font-size: 9px;">
+        <thead>
+            <tr class="textCenter" style="background-color: yellow">
+                <td>Mặt hàng</td>
+                <td>Số lượng</td>
+                <td>Đơn giá</td>
+                <td>Thành tiền</td>
+                <td>Imei/Seri</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                foreach (var chiTiet in Model.TDONHANGCHITIETs)
+                {
+                    <tr class="textCenter">
+                        <td>@chiTiet.DMATHANG.NAME</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(chiTiet.SOLUONG).ToString("n0")</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(chiTiet.DONGIA).ToString("n0")</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(chiTiet.THANHTIEN).ToString("n0")</td>
+                        <td>@chiTiet.IMEI</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <table border="0" style="margin-top: 10px;">
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tiền hàng</b></td>
+            <td class="textRight"><b>1.000.000</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tỉ lệ giảm giá</b></td>
+            <td class="textRight"><b>10</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tiền giảm giá</b></td>
+            <td class="textRight"><b>100.000</b></td>
+        </tr>
+        <tr class="textCenter">
+            <td class="textLeft"><b>Tổng cộng</b></td>
+            <td class="textRight"><b>900.000</b></td>
+        </tr>
+    </table>
+</div>

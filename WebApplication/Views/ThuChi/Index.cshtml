@@ -26,7 +26,11 @@
                         <td>@row["NAME"]</td>
                         <td>@row["NHACUNGCAP"]</td>
                         <td>@row["CHI"]</td>
-                        <td class="justify-content-end"><a href="/ThuChi/AddOrEdit?id=@row["ID"]&DNHACUNGCAPID=&soTien=0"><div class="btn btn-warning">Chỉnh sửa</div></a><a style="margin-left: 10px;" href="/ThuChi/Delete?id=@row["ID"]"><div class="btn btn-danger">Xóa</div></a></td>
+                        <td class="justify-content-end">
+                            <a href="/ThuChi/ExportPdf?id=@row["ID"]"><div class="btn btn-success">Xuất file</div></a>
+                            <a style="margin-left: 10px;" href="/ThuChi/AddOrEdit?id=@row["ID"]&DNHACUNGCAPID=&soTien=0"><div class="btn btn-warning">Chỉnh sửa</div></a>
+                            <a style="margin-left: 10px;" href="/ThuChi/Delete?id=@row["ID"]"><div class="btn btn-danger">Xóa</div></a>
+                        </td>
                     </tr>
                     i++;
                 }

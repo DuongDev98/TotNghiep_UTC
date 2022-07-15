@@ -4,21 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="da54007a243649cb9ddec8afa4a625f8" Name="Diagram1" ZoomLevel="56">
-        <EntityTypeShape EntityType="DOANModel.DANHSANPHAM" Width="1.5" PointX="12" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DKHACHHANG" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DKHUYENMAI" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DMATHANG" Width="1.5" PointX="9.75" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DNHACUNGCAP" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DNHOMMATHANG" Width="1.5" PointX="7.5" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DPHUONGXA" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DQUANHUYEN" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DTHUONGHIEU" Width="1.5" PointX="7.5" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DTINHTHANH" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.DTINTUC" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.TDONHANG" Width="1.75" PointX="9.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.TDONHANGCHITIET" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DOANModel.TTHUCHI" Width="1.5" PointX="2.75" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="da54007a243649cb9ddec8afa4a625f8" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="DOANModel.DANHSANPHAM" Width="1.875" PointX="10.875" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DKHACHHANG" Width="1.5" PointX="0.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DKHUYENMAI" Width="1.75" PointX="10.875" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DMATHANG" Width="1.75" PointX="8.125" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DNHACUNGCAP" Width="1.625" PointX="0.625" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DNHOMMATHANG" Width="1.875" PointX="10.875" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DPHUONGXA" Width="1.5" PointX="3.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DQUANHUYEN" Width="1.5" PointX="3.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DTHUONGHIEU" Width="1.875" PointX="10.875" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DTINHTHANH" Width="1.5" PointX="3.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.DTINTUC" Width="1.5" PointX="5.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.TDONHANG" Width="2" PointX="5.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.TDONHANGCHITIET" Width="1.75" PointX="8.125" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DOANModel.TTHUCHI" Width="1.5" PointX="3.5" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="DOANModel.FK_DMATHANG_DANHSANPHAM" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_DKHACHHANG_DPHUONGXA" ManuallyRouted="false" />
         <AssociationConnector Association="DOANModel.FK_DKHACHHANG_DQUANHUYEN" ManuallyRouted="false" />

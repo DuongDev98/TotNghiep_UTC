@@ -161,3 +161,7 @@ E:\UTC\UTC_WebService\WebApplication\obj\Release\WebApplication.csproj.CoreCompi
 E:\UTC\UTC_WebService\WebApplication\obj\Release\WebApplication.csproj.CopyComplete
 E:\UTC\UTC_WebService\WebApplication\obj\Release\WebApplication.dll
 E:\UTC\UTC_WebService\WebApplication\obj\Release\WebApplication.pdb
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.dll
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.dll
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.xml
+E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.xml

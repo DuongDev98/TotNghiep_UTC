@@ -253,3 +253,7 @@ E:\UTC\UTC_WebService\WebApplication\bin\PagedList.dll
 E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.dll
 E:\UTC\UTC_WebService\WebApplication\bin\PagedList.xml
 E:\UTC\UTC_WebService\WebApplication\bin\PagedList.Mvc.xml
+E:\UTC\UTC_WebService\WebApplication\bin\BouncyCastle.Crypto.dll
+E:\UTC\UTC_WebService\WebApplication\bin\itextsharp.dll
+E:\UTC\UTC_WebService\WebApplication\bin\itextsharp.xml
+E:\UTC\UTC_WebService\WebApplication\bin\itextsharp.xmlworker.dll

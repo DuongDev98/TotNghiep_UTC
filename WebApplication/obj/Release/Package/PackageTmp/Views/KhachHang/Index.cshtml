@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<WebApplication.Models.DKHACHHANG>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table">
+    <tr>
+        <th>
+            Khách hàng
+        </th>
+        <th>
+            Điện thoại
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Phường/Xã
+        </th>
+        <th>
+            Quận/Huyện
+        </th>
+        <th>
+            Tỉnh/Thành
+        </th>
+        <th>
+            Facebook
+        </th>
+        <th>
+            Google
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIENTHOAI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DIACHI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMAIL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DPHUONGXA.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DQUANHUYEN.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTINHTHANH.NAME)
+            </td>
+            <td>
+                <input type="checkbox" @{ if (item.FACEBOOKID != null && item.FACEBOOKID.Length > 0) { <text> checked</text> } } disabled/>
+            </td>
+            <td>
+                <input type="checkbox" @{ if (item.GOOGLEID != null && item.GOOGLEID.Length > 0) { <text> checked</text> } } disabled/>
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

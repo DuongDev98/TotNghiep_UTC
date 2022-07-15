@@ -142,6 +142,7 @@
     <Property Name="DQUANHUYENID" Type="varchar" MaxLength="36" />
     <Property Name="DPHUONGXAID" Type="varchar" MaxLength="36" />
     <Property Name="HINHTHUCTHANHTOAN" Type="int" />
+    <Property Name="DATHANHTOAN" Type="int" />
   </EntityType>
   <EntityType Name="TDONHANGCHITIET">
     <Key>

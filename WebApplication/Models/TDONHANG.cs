@@ -41,6 +41,7 @@ namespace WebApplication.Models
         public string DQUANHUYENID { get; set; }
         public string DPHUONGXAID { get; set; }
         public Nullable<int> HINHTHUCTHANHTOAN { get; set; }
+        public Nullable<int> DATHANHTOAN { get; set; }
     
         public virtual DKHACHHANG DKHACHHANG { get; set; }
         public virtual DNHACUNGCAP DNHACUNGCAP { get; set; }
