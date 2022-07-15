@@ -14,10 +14,16 @@ namespace WebApplication.Controllers
     public class HoaDonController : Controller
     {
         private DOANEntities db = new DOANEntities();
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, int? trangThai)
         {
-            var tDONHANGs = db.TDONHANGs.Where(t=>t.LOAI == 0).Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH).
-                OrderByDescending(t=>t.NGAY).OrderByDescending(t => t.NAME);
+            var queryAble = db.TDONHANGs.Where(t=>t.LOAI == 0);
+            if (trangThai != null)
+            {
+                queryAble = queryAble.Where(x => x.TRANGTHAI == trangThai);
+            }
+            trangThai = trangThai ?? 0;
+            var tDONHANGs = queryAble.Include(t => t.DKHACHHANG).Include(t => t.DNHACUNGCAP).Include(t => t.DPHUONGXA).Include(t => t.DQUANHUYEN).Include(t => t.DTINHTHANH).
+                OrderByDescending(t => t.NGAY).OrderByDescending(t => t.NAME);
             foreach (var t in tDONHANGs)
             {
                 t.TIENHANG = t.TIENHANG ?? 0;
@@ -25,6 +31,7 @@ namespace WebApplication.Controllers
                 t.TIENGIAMGIA = t.TIENGIAMGIA ?? 0;
                 t.TONGCONG = t.TONGCONG ?? 0;
             }
+            ViewBag.trangThai = trangThai;
             int pageSize = 10;
             int pageNumber = page ?? 1;
             return View(tDONHANGs.ToPagedList(pageNumber, pageSize));

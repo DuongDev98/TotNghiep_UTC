@@ -1,11 +1,6 @@
 ﻿@model Newtonsoft.Json.Linq.JObject
 @{
     ViewBag.Title = "ViewPdf";
-    //string ngay = (Model.NGAY ?? DateTime.Now).ToString("dd/MM/yyyy");
-    //decimal tienHang = Model.TIENHANG ?? 0;
-    //decimal tiLe = Model.TILEGIAMGIA ?? 0;
-    //decimal tienGiam = Model.TIENGIAMGIA ?? 0;
-    //decimal tongCong = Model.TONGCONG ?? 0;
 }
 <style>
     .container {
@@ -61,7 +56,7 @@
         </tr>
         <tr>
             <td>Địa chỉ</td>
-            <td>@Model["DIACHI"]</td>
+            <td>@Model["DIACHI"] - @Model["PHUONGXA"] - @Model["QUANHUYEN"] - @Model["TINHTHANH"]</td>
         </tr>
         <tr>
             <td>Ghi chú</td>

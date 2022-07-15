@@ -25,7 +25,7 @@
                         <td>@row["NGAY"]</td>
                         <td>@row["NAME"]</td>
                         <td>@row["NHACUNGCAP"]</td>
-                        <td>@row["CHI"]</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(row["CHI"]).ToString("n0")</td>
                         <td class="justify-content-end">
                             <a href="/ThuChi/ExportPdf?id=@row["ID"]"><div class="btn btn-success">Xuất file</div></a>
                             <a style="margin-left: 10px;" href="/ThuChi/AddOrEdit?id=@row["ID"]&DNHACUNGCAPID=&soTien=0"><div class="btn btn-warning">Chỉnh sửa</div></a>

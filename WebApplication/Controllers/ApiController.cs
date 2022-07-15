@@ -118,6 +118,13 @@ ORDER BY TONGBILL ASC";
             string email = ConvertTo.String(param["EMAIL"]);
             JObject obj = JObject.Parse(ConvertTo.String(param["donHang"]));
             obj["CODE"] = code;
+
+            DTINHTHANH tinhRow = db.DTINHTHANHs.Find(ConvertTo.String(obj["DTINHTHANHID"]));
+            obj["TINHTHANH"] = tinhRow.NAME;
+            DQUANHUYEN quanRow = db.DQUANHUYENs.Find(ConvertTo.String(obj["DQUANHUYENID"]));
+            obj["QUANHUYEN"] = quanRow.NAME;
+            DPHUONGXA phuongRow = db.DPHUONGXAs.Find(ConvertTo.String(obj["DPHUONGXAID"]));
+            obj["PHUONGXA"] = phuongRow.NAME;
             string noiDung = ThuChiController.RenderRazorViewToString(ControllerContext, ViewData, TempData, "XacNhanDatHangPdf", obj);
             try {
                 SendEmail("Xác nhận đơn hàng", email, noiDung);

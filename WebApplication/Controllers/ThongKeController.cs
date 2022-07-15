@@ -20,7 +20,7 @@ namespace WebApplication.Controllers
             ViewBag.nccSelect = DNHACUNGCAPID;
             string query = @"SELECT * FROM
             (
-                SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG, TIENTHANHTOAN, 0 AS LUYKE FROM TDONHANG WHERE LOAI = 1 AND DNHACUNGCAPID = '{0}'
+                SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG, TIENTHANHTOAN, CAST(0 AS DECIMAL(18,2)) AS LUYKE FROM TDONHANG WHERE LOAI = 1 AND DNHACUNGCAPID = '{0}'
                 UNION
                 SELECT FORMAT(NGAY, 'dd/MM/yyyy'), NAME, 0, CHI, 0 FROM TTHUCHI WHERE LOAI = 1 AND DNHACUNGCAPID = '{0}'
             ) A
@@ -103,7 +103,7 @@ namespace WebApplication.Controllers
             DateTime toDate = (tDate != null && tDate.Length > 0 ? Convert.ToDateTime(tDate) : DateTime.Now).Date;
             ViewBag.fDate = fromDate.ToString("yyyy-MM-dd");
             ViewBag.tDate = toDate.ToString("yyyy-MM-dd");
-            string query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 1";
+            string query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 1 AND NGAY BETWEEN @FromDate AND @ToDate";
             Dictionary<string, object> attrs = new Dictionary<string, object>();
             attrs.Add("@FromDate", fromDate);
             attrs.Add("@ToDate", toDate);
@@ -115,7 +115,7 @@ namespace WebApplication.Controllers
                 tongNhap += ConvertTo.Decimal(row["TONGCONG"]);
             }
 
-            query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 0 AND COALESCE(TRANGTHAI, 0)<>1";
+            query = @"SELECT FORMAT(NGAY, 'dd/MM/yyyy') AS NGAY, NAME, TONGCONG FROM TDONHANG WHERE LOAI = 0 AND COALESCE(TRANGTHAI, 0)<>1 AND NGAY BETWEEN @FromDate AND @ToDate";
             dt = DatabaseUtils.GetTable(query, attrs);
             ViewBag.tblHoaDon = dt;
             decimal tongXuat = 0;

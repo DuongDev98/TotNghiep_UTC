@@ -4,8 +4,30 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Quản lý hóa đơn</h2>
+
+<div class="row">
+    <form method="get" action="">
+        <div class="row" style="margin-left: 15px;">
+            <div class="col-10">
+                <div class="form-group">
+                    <div class="row">
+                        <select class="custom-select" name="trangThai">
+                            <option value="0" @{ if (ViewBag.trangThai == 0) { <text>selected</text> } }>Chờ xử lý</option>
+                            <option value="1" @{ if (ViewBag.trangThai == 1) { <text>selected</text> } }>Đã hủy</option>
+                            <option value="2" @{ if (ViewBag.trangThai == 2) { <text>selected</text> } }>Đang giao hàng</option>
+                            <option value="3" @{ if (ViewBag.trangThai == 3) { <text>selected</text> } }>Đã nhận hàng</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-info btnRefresh">Refresh</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -44,7 +66,7 @@
                 @Html.DisplayFor(modelItem => item.DKHACHHANG.NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TONGCONG)
+                @WebApplication.Utils.ConvertTo.Decimal(item.TONGCONG).ToString("n0")
             </td>
             <td>
                 @{
@@ -71,10 +93,9 @@
 
 <br />
 Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, trangThai = ViewBag.trangThai }))
 
 @*case 0: <p>Chờ xử lý</p>; break;
     case 1: <p>Đã hủy</p>; break;
     case 2: <p>Đang giao hàng</p>; break;
-    case 3: <p>Đã nhận hàng</p>; break;
-    case 4: <p>Đã thanh toán</p>; break;*@
+    case 3: <p>Đã nhận hàng</p>; break;*@

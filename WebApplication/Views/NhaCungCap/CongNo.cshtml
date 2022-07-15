@@ -28,12 +28,12 @@
                         <td>@row["DIENTHOAI"]</td>
                         <td>@row["DIACHI"]</td>
                         <td>@row["EMAIL"]</td>
-                        <td>@row["CONGNO"]</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(row["CONGNO"]).ToString("n0")</td>
                         <td data-id="@row["ID"]">
                             @{
                                 if (WebApplication.Utils.ConvertTo.Decimal(row["CONGNO"]) != 0)
                                 {
-                                    <a href="/ThuChi/AddOrEdit?id=&DNHACUNGCAPID=@row["ID"]&soTien=@(-WebApplication.Utils.ConvertTo.Int(row["CONGNO"]))">
+                                    <a href="/ThuChi/AddOrEdit?id=&DNHACUNGCAPID=@row["ID"]&soTien=@(-WebApplication.Utils.ConvertTo.Decimal(row["CONGNO"]))">
                                         <div class="btnTaoPhieuChi btn btn-warning">Thanh toán</div>
                                     </a>
                                 }

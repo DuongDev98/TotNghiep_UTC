@@ -58,9 +58,9 @@
                         <td>@row["DNHACUNGCAP_NAME"]</td>
                         <td>@row["CODE"]</td>
                         <td>@row["NAME"]</td>
-                        <td>@row["DONGIA"]</td>
-                        <td>@row["SOLUONG"]</td>
-                        <td>@row["THANHTIEN"]</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(row["DONGIA"]).ToString("n0")</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(row["SOLUONG"]).ToString("n0")</td>
+                        <td>@WebApplication.Utils.ConvertTo.Decimal(row["THANHTIEN"]).ToString("n0")</td>
                     </tr>
                     i++;
                 }

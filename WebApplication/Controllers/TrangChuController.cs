@@ -14,7 +14,7 @@ namespace WebApplication.Controllers
         {
             //SinhDuLieuNhaCungCap();
             //SinhDuLieuKhachHang();
-            //SinhDuLieuGiaoDich();
+            SinhDuLieuGiaoDich();
             return View();
         }
 
@@ -59,6 +59,30 @@ namespace WebApplication.Controllers
                 db.Entry(dhRow);
                 db.SaveChanges();
 
+                //tạo phiêu chi. mỗi phiếu 50tr
+                decimal phieuChi = 0;
+                int dem = 1;
+                do
+                {
+                    TTHUCHI tcRow = new TTHUCHI();
+                    tcRow.ID = Guid.NewGuid().ToString();
+                    tcRow.NAME = ThuChiController.GenCode(db, "PC");
+                    tcRow.DNHACUNGCAPID = dhRow.DNHACUNGCAPID;
+                    tcRow.NGAY = DateTime.Now;
+                    tcRow.LOAI = 1;
+                    tcRow.THU = 0;
+
+                    do {
+                        tcRow.CHI = rd.Next(100000000, 500000000);
+                    }
+                    while (tcRow.CHI % 100000 != 0);
+
+                    db.TTHUCHIs.Add(tcRow);
+                    phieuChi += tcRow.CHI ?? 0;
+                    dem++;
+                }
+                while (phieuChi < dhRow.TONGCONG && dem <= 8);
+
                 //thêm hóa đơn
                 foreach (string key in dicMatHang.Keys)
                 {
@@ -80,21 +104,31 @@ namespace WebApplication.Controllers
                     hdRow.DPHUONGXAID = khRow.DPHUONGXAID;
                     hdRow.HINHTHUCTHANHTOAN = 0;
                     hdRow.TILEGIAMGIA = 0;
-                    hdRow.TIENHANG = mhRow.GIABAN;
-                    dhRow.TRANGTHAI = 3;
-
-                    //tính toán
-                    List<TDONHANGCHITIET> chitiets = new List<TDONHANGCHITIET>();
-                    TDONHANGCHITIET ctRow = ApiController.ThemMatHangVaoHoaDon(mhRow.ID, slBan, mhRow.GIANHAP ?? 0, dhRow);
-                    chitiets.Add(ctRow);
-
+                    hdRow.TIENHANG = mhRow.GIABAN * slBan;
+                    hdRow.TRANGTHAI = 3;
                     hdRow.TIENGIAMGIA = hdRow.TILEGIAMGIA == 0 ? 0 : (hdRow.TIENHANG * hdRow.TILEGIAMGIA / 100);
                     hdRow.TONGCONG = hdRow.TIENHANG - hdRow.TIENGIAMGIA;
                     //luu hoa don
                     db.TDONHANGs.Add(hdRow);
                     db.SaveChanges();
-                    //luu chi tiet
-                    db.TDONHANGCHITIETs.AddRange(chitiets);
+
+                    //tính toán
+                    List<TDONHANGCHITIET> lstChitiet = new List<TDONHANGCHITIET>();
+                    if (mhRow.COIMEI > 0)
+                    {
+                        for (int d = 0; d < slBan; d++)
+                        {
+                            TDONHANGCHITIET ctRow = ApiController.ThemMatHangVaoHoaDon(mhRow.ID, slBan, mhRow.GIABAN ?? 0, hdRow);
+                            ctRow.IMEI = Guid.NewGuid().ToString();
+                            lstChitiet.Add(ctRow);
+                        }
+                    }
+                    else
+                    {
+                        TDONHANGCHITIET ctRow = ApiController.ThemMatHangVaoHoaDon(mhRow.ID, slBan, mhRow.GIABAN ?? 0, hdRow);
+                        lstChitiet.Add(ctRow);
+                    }
+                    db.TDONHANGCHITIETs.AddRange(lstChitiet);
                     db.SaveChanges();
                 }
             }
